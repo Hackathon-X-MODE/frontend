@@ -2,8 +2,8 @@ import React from "react";
 
 function App() {
   return (
-     <div>
-       PSTMT
+     <div className={'max-w-[1080px] mx-auto'}>
+        <h1 className={'font-bold'}>POSTAMAT APP</h1>
      </div>
   );
 }
