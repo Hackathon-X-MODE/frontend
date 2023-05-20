@@ -9,6 +9,9 @@ const Navigation = () => {
                 <li className={'text-white p-2 cursor-pointer hover:text-gray-400'}>
                     <Link to={'/registration'}>Регистрация</Link>
                 </li>
+                <li className={'text-white p-2 cursor-pointer hover:text-gray-400'}>
+                    <Link to={'/view'}>Просмотр</Link>
+                </li>
             </ul>
         </nav>
     )
