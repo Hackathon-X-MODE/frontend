@@ -12,7 +12,12 @@ root.render(
     <BrowserRouter>
         <React.StrictMode>
             <Provider store={store}>
-                <YMaps>
+                <YMaps
+                    query={{
+                        ns: "use-load-option",
+                        load: "Map,Placemark,control.ZoomControl,control.FullscreenControl,geoObject.addon.balloon",
+                    }}
+                >
                     <App />
                 </YMaps>
             </Provider>

@@ -1,9 +1,10 @@
 import React from 'react';
 import {useGetVendorsQuery} from "../../redux/postamatApi";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 const Vendors = (props) => {
     const {data = [], isLoading} = useGetVendorsQuery()
+    const history = useHistory()
 
     if (isLoading) return  <div>Loading data....</div>
     return(
@@ -15,8 +16,8 @@ const Vendors = (props) => {
                     {
                         data.map((vendor) => {
                             return(
-                                <Link
-                                    to={`/view/vendors/${vendor.id}`}
+                                <li
+
                                     className={'flex flex-col h-fit p-2 gap-2 rounded bg-white cursor-pointer hover:bg-secondary hover:text-white transition duration-500 ease-in-out'}
                                     key={vendor.id}
                                 >
@@ -24,7 +25,9 @@ const Vendors = (props) => {
                                     <div className={'text-lg '}>Наименование: {vendor.name}</div>
                                     <div className={'text-sm '}>Webhook: {vendor.webhook}</div>
                                     <div className={'text-sm '}>Реквезиты: {vendor.legalEntity}</div>
-                                </Link>
+                                    <Link className={'bg-primary p-1 w-[100px] rounded text-white text-center'} to={`/view/vendors/update/${vendor.id}`}>Обновить</Link>
+                                    <Link className={'bg-primary p-1 w-[100px] rounded text-white text-center'} to={`/view/vendors/${vendor.id}`}>Постоматы</Link>
+                                </li>
                             )
                         })
                     }

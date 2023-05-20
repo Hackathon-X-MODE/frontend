@@ -56,19 +56,19 @@ const Registration = (props) => {
                 <span className={'text-center font-bold'}>Регистрация /Вендора/</span>
                 <div>
                     <label>Буквенный ID</label>
-                    <Input name={'code'} contentValue={registrationData.code} updateFunc={updateInput} />
+                    <Input isRequired={true} name={'code'} contentValue={registrationData.code} updateFunc={updateInput} />
                 </div>
                 <div>
                     <label>Наименовани</label>
-                    <Input name={'name'} contentValue={registrationData.name} updateFunc={updateInput}   />
+                    <Input isRequired={true} name={'name'} contentValue={registrationData.name} updateFunc={updateInput}   />
                 </div>
                 <div>
                     <label>Webhook(URL)</label>
-                    <Input name={'webhook'} contentValue={registrationData.webhook} updateFunc={updateInput} />
+                    <Input isRequired={true} name={'webhook'} contentValue={registrationData.webhook} updateFunc={updateInput} />
                 </div>
                 <div>
                     <label>Реквезиты</label>
-                    <Input name={'legalEntity'} contentValue={registrationData.legalEntity} updateFunc={updateInput} />
+                    <Input isRequired={true} name={'legalEntity'} contentValue={registrationData.legalEntity} updateFunc={updateInput} />
                 </div>
                 <button className={'bg-primary p-2 rounded text-third hover:text-white hover:bg-secondary duration-700 ease-in-out '}>Отправить</button>
             </form>
