@@ -7,9 +7,6 @@ const ViewTables = (props) => {
             <li className={'p-5'}>
                 <Link className={' border border-secondary text-center cursor-pointer rounded p-5 bg-white'} to={'/view/vendors'}>Вендоры</Link>
             </li>
-            <li className={'p-5'}>
-                <Link className={' border border-secondary text-center cursor-pointer rounded p-5 bg-white'} to={'#'}>Постоматы</Link>
-            </li>
         </ul>
     )
 }

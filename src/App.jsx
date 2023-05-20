@@ -8,6 +8,8 @@ import Registration from "./components/registration/Registration";
 import ViewTables from "./components/View/ViewTables";
 import Vendors from "./components/card/Vendors";
 import VendorUpdate from "./components/vendor/VendorUpdate";
+import Postamat from "./components/card/Postamat";
+import PostamatCreate from "./components/postamat/PostamatCreate";
 
 function App() {
     return (
@@ -15,13 +17,17 @@ function App() {
             <Navigation />
             {/*<UserPanel />*/}
             {/*<FilterNavigation />*/}
-            <Switch>
-                {/*<Route path={"/"} component={ViewComponent} />*/}
-                <Route path={"/registration"} component={Registration} />
-                <Route path={"/view/vendors/:id"} component={VendorUpdate} />
-                <Route path={"/view/vendors"} component={Vendors} />
-                <Route path={"/view"} component={ViewTables} />
-            </Switch>
+            <div className={'relative w-5/6'}>
+                <Switch>
+                    {/*<Route path={"/"} component={ViewComponent} />*/}
+                    <Route path={"/registration"} component={Registration} />
+                    <Route path={"/view/vendors/update/:id"} component={VendorUpdate} />
+                    {/*<Route path={"/view/vendors/:id/create"} component={PostamatCreate} />*/}
+                    <Route path={"/view/vendors/:id"} component={Postamat} />
+                    <Route path={"/view/vendors/"} component={Vendors} />
+                    <Route path={"/view"} component={ViewTables} />
+                </Switch>
+            </div>
         </div>
     );
 }
