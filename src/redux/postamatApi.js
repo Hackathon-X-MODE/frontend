@@ -6,8 +6,15 @@ export const postamatApi = createApi({
     endpoints: (build => ({
         getPostamatData: build.query({
             query: () => `orders/api-docs`
+        }),
+        addVendor: build.mutation({
+            query: (body) => ({
+                url: 'vendors',
+                method: 'POST',
+                body
+            })
         })
     }))
 })
 
-export const {useGetPostamatDataQuery} = postamatApi
+export const {useGetPostamatDataQuery, useAddVendorMutation} = postamatApi
