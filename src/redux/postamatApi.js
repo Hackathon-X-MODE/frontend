@@ -16,7 +16,18 @@ export const postamatApi = createApi({
                     : [{ type: 'Vendors', id: 'LIST' }],
         }),
         getVendorById: build.query({
-           query : (id) => `vendors/${id}`
+            query : (id) => `vendors/${id}`,
+            transformResponse: (res) => {
+                return [res]
+            },
+            providesTags: (result) =>
+                // console.log('res',result),
+                result
+                    ? [
+                        ...result.map(({ id }) => ({ type: 'Vendors', id })),
+                        { type: 'Vendors', id: 'LIST' },
+                    ]
+                    : [{ type: 'Vendors', id: 'LIST' }],
         }),
         addVendor: build.mutation({
             query: (body) => ({
