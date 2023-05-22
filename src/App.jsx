@@ -21,7 +21,7 @@ function App() {
                 <Switch>
                     {/*<Route path={"/"} component={ViewComponent} />*/}
                     {/*<Route path={"/registration"} component={Registration} />*/}
-                    <Route path={"/view/vendors/update/:id"} component={VendorUpdate} />
+                    {/*<Route path={"/view/vendors/update/:id"} component={VendorUpdate} />*/}
                     {/*<Route path={"/view/vendors/:id/create"} component={PostamatCreate} />*/}
                     <Route path={"/view/vendors/:id"} component={Postamat} />
                     <Route path={"/view/vendors/"} component={Vendors} />

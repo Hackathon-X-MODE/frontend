@@ -12,19 +12,19 @@ const Navigation = () => {
         <nav className={' w-[330px]  flex flex-col h-screen  bg-[#21243A]  pt-[41px] font-primary text-white text-[18px]'}>
             <img className={'px-[38px]'} src={logo} />
             <div className={'mt-[50px] flex flex-col  px-[20px]'}>
-                <Link to={'/view/vendors'} className={'flex px-[18px] py-[18px] hover:bg-[#F62E46] rounded-[15px] transition duration-500 ease-in-out'}>
+                <Link to={'/view/vendors'} className={'flex h-[60px] px-[18px] py-[18px] hover:bg-[#F62E46] rounded-[15px] transition duration-500 ease-in-out'}>
                     <img className={'20px'} src={vendors} />
                     <span className={'ml-[20px]'} >Вендоры</span>
                 </Link>
-                <Link to={'/tickets'} className={'flex px-[18px] py-[18px] hover:bg-[#F62E46] rounded-[15px] transition duration-500 ease-in-out'}>
+                <Link to={'/tickets'} className={'flex px-[18px] h-[60px] py-[18px] hover:bg-[#F62E46] rounded-[15px] transition duration-500 ease-in-out'}>
                     <img className={'20px'} src={tickets} />
                     <span className={'ml-[20px]'} >Тикеты</span>
                 </Link>
-                <Link to={'/comments'} className={'flex px-[18px] py-[18px] hover:bg-[#F62E46] rounded-[15px] transition duration-500 ease-in-out'}>
+                <Link to={'/comments'} className={'flex px-[18px] h-[60px] py-[18px] hover:bg-[#F62E46] rounded-[15px] transition duration-500 ease-in-out'}>
                     <img className={'20px'} src={comments} />
                     <span className={'ml-[20px]'} >Комментарии</span>
                 </Link>
-                <Link to={'/postamates'} className={'flex px-[18px] py-[18px] hover:bg-[#F62E46] rounded-[15px] transition duration-500 ease-in-out'}>
+                <Link to={'/postamates'} className={'flex px-[18px] h-[60px] py-[18px] hover:bg-[#F62E46] rounded-[15px] transition duration-500 ease-in-out'}>
                     <img className={'20px'} src={postamat} />
                     <span className={'ml-[20px]'} >Постаматы</span>
                 </Link>

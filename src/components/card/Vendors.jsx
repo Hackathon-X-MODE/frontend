@@ -16,9 +16,9 @@ const Vendors = (props) => {
     return(
         <div className={'w-full flex flex-col gap-5 px-[77px] py-[48px] font-primary max-h-screen overflow-y-scroll'}>
             <div className={'flex justify-between'}>
-                <button className={'w-max-[290px] flex gap-5 text-white px-[20px] py-[18px] border rounded-[15px] text-[18px] items-center '}>
+                <button className={'w-max-[290px] h-[60px] flex gap-[25px] text-white px-[22px] pr-[36px] pl-[18px] border rounded-[15px] text-[18px] items-center '}>
                     <img src={reg} />
-                    <span className={'text-[18px] translate-y-1'}>Регистрация вендора</span>
+                    <span className={'text-[18px] translate-y-0.5'}>Регистрация вендора</span>
                 </button>
                 <div className={' border w-[450px] rounded-[15px] flex gap-5 items-center px-[20px] py-[20px] border-[#6C7094] text-white'}>
                     <img src={search}/>
@@ -27,7 +27,7 @@ const Vendors = (props) => {
             </div>
             {
                 data &&
-                <ul className={'w-full flex gap-[40px] flex-wrap justify-between'}>
+                <ul className={'w-full flex gap-[43px] flex-wrap '}>
                     {
                         data.map((vendor) => {
                             return(
