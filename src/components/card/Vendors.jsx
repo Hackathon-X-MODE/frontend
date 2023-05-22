@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import {useAddVendorMutation, useGetVendorsQuery} from "../../redux/postamatApi";
+import {
+    useAddVendorMutation,
+    useGetVendorsQuery
+} from "../../redux/postamatApi";
 import { Link } from "react-router-dom";
 
 import reg from "../../assets/ico/vendors/reg.svg";
 import search from "../../assets/ico/vendors/search.svg";
-import VendorUpdate1 from "../vendor/VendorUpdate1";
+import VendorUpdate from "../vendor/VendorUpdate";
 import Input from "../form/Input";
 import VendorCreate from "../vendor/VendorCreate";
 
@@ -20,7 +23,6 @@ const Vendors = (props) => {
     });
     const [isRegistrationVendor, setRegistrationVendorForm] = useState(false);
 
-
     const handleForm = async (e) => {
         e.preventDefault();
         if (registrationData) {
@@ -32,20 +34,19 @@ const Vendors = (props) => {
                     webhook: "",
                     legalEntity: ""
                 });
-                setRegistrationVendorForm(!isRegistrationVendor)
-
+                setRegistrationVendorForm(!isRegistrationVendor);
             } catch (e) {
                 console.log(e);
             }
         }
-    }
+    };
 
     const updateInput = (e) => {
         setRegistrationData({
             ...registrationData,
             [e.target.name]: e.target.value
-        })
-    }
+        });
+    };
 
     if (isLoading) return <div>Loading data....</div>;
     return (
@@ -87,7 +88,7 @@ const Vendors = (props) => {
                     <ul className={"w-full flex gap-[43px] flex-wrap "}>
                         {data.map((vendor) => {
                             return (
-                                <VendorUpdate1
+                                <VendorUpdate
                                     key={vendor.id}
                                     vendor={vendor}
                                 />
@@ -96,7 +97,12 @@ const Vendors = (props) => {
                     </ul>
                 )}
             </div>
-            <VendorCreate registrationData={registrationData} handleForm={handleForm} updateInput={updateInput} isRegistrationVendor={isRegistrationVendor} />
+            <VendorCreate
+                registrationData={registrationData}
+                handleForm={handleForm}
+                updateInput={updateInput}
+                isRegistrationVendor={isRegistrationVendor}
+            />
         </>
     );
 };

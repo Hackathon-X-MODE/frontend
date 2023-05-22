@@ -7,13 +7,18 @@ import Navigation from "./components/navigation/Navigation";
 import Registration from "./components/registration/Registration";
 import ViewTables from "./components/View/ViewTables";
 import Vendors from "./components/card/Vendors";
-import VendorUpdate from "./components/vendor/VendorUpdate";
+import VendorUpdateDepricated from "./components/vendor/VendorUpdateDepricated";
 import Postamat from "./components/card/Postamat";
 import PostamatCreate from "./components/postamat/PostamatCreate";
+import Ticket from "./components/ticket/Ticket";
 
 function App() {
     return (
-        <div className={"relative max-w-[1920px] overflow-x-hidden mx-auto flex bg-[#373A54]"}>
+        <div
+            className={
+                "relative max-w-[1920px] overflow-x-hidden mx-auto flex bg-[#373A54]"
+            }
+        >
             <Navigation />
             {/*<UserPanel />*/}
             {/*<FilterNavigation />*/}
@@ -21,10 +26,11 @@ function App() {
                 <Switch>
                     {/*<Route path={"/"} component={ViewComponent} />*/}
                     {/*<Route path={"/registration"} component={Registration} />*/}
-                    {/*<Route path={"/view/vendors/update/:id"} component={VendorUpdate} />*/}
+                    {/*<Route path={"/view/vendors/update/:id"} component={VendorUpdateDepricated} />*/}
                     {/*<Route path={"/view/vendors/:id/create"} component={PostamatCreate} />*/}
                     <Route path={"/view/vendors/:id"} component={Postamat} />
                     <Route path={"/view/vendors/"} component={Vendors} />
+                    <Route path={"/view/tickets"} component={Ticket} />
                     <Route path={"/view"} component={ViewTables} />
                 </Switch>
             </div>

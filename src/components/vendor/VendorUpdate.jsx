@@ -1,113 +1,149 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import {
-    useGetVendorByIdQuery,
-    useUpdateVendorMutation
-} from "../../redux/postamatApi";
-import Input from "../form/Input";
+import edit from "../../assets/ico/vendors/edit.svg";
+import postaIco from "../../assets/ico/vendors/postaIco.svg";
+import { useUpdateVendorMutation } from "../../redux/postamatApi";
+import { Link } from "react-router-dom";
 
-const VendorUpdate = (props) => {
-    const history = useHistory();
-    const { id } = useParams();
-    const [vendorData, setVendorData] = useState({});
-    const {
-        data = [],
-        isLoading,
-        isSuccess: successVendorQuery
-    } = useGetVendorByIdQuery(id, { refetchOnFocus: true });
+const VendorUpdate = ({ vendor, handleUpdateVendor }) => {
     const [updateVendor, { isSuccess, isError }] = useUpdateVendorMutation();
+    const [isActive, setActive] = useState(true);
+    const [vendorData, setVendorData] = useState({});
 
     useEffect(() => {
         setVendorData({
-            id: `${data[0]?.id}`,
-            code: `${data[0]?.code}`,
-            legalEntity: `${data[0]?.legalEntity}`,
-            name: `${data[0]?.name}`,
-            webhook: `${data[0]?.webhook}`
+            id: `${vendor.id}`,
+            code: `${vendor.code}`,
+            legalEntity: `${vendor.legalEntity}`,
+            name: `${vendor.name}`,
+            webhook: `${vendor.webhook}`
         });
-    }, [successVendorQuery]);
+    }, []);
 
-    if (isLoading) return <div>Loading..</div>;
-
-    const updateInput = (e) => {
+    const updateDataFunc = (e) => {
         setVendorData({
             ...vendorData,
             [e.target.name]: e.target.value
         });
     };
 
-    const handleForm = async (e) => {
-        e.preventDefault();
+    const handleBtn = async () => {
         if (vendorData) {
             try {
-                await updateVendor({ ...vendorData, id }).unwrap();
+                await updateVendor({
+                    ...vendorData,
+                    id: vendorData.id
+                }).unwrap();
                 // setVendorData(null)
             } catch (e) {
                 console.log(e);
             }
         }
+        setActive(!isActive);
     };
 
-    if (isSuccess) {
-        history.push("/view/vendors");
-    }
-
     return (
-        <>
-            <form
-                onSubmit={handleForm}
-                className={
-                    "w-[500px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2  p-2"
-                }
-            >
-                <span className={"text-center font-bold"}>
-                    Обновлние /Вендора/
-                </span>
-                <div>
-                    <label>Буквенный ID</label>
-                    <Input
-                        isRequired={true}
-                        name={"code"}
-                        contentValue={vendorData.code}
-                        updateFunc={updateInput}
-                    />
-                </div>
-                <div>
-                    <label>Наименовани</label>
-                    <Input
-                        isRequired={true}
+        <li
+            className={
+                "w-[450px] h-[610px] bg-[#21243A] flex flex-col  pt-[25px] rounded-[15px] font-primary"
+            }
+            key={vendor.id}
+        >
+            <div className={"flex justify-between px-[37px]"}>
+                <div className={"flex flex-col w-full"}>
+                    <label className={"text-white text-[18px]"}>
+                        Наименование
+                    </label>
+                    <textarea
                         name={"name"}
-                        contentValue={vendorData.name}
-                        updateFunc={updateInput}
+                        onChange={updateDataFunc}
+                        disabled={isActive}
+                        className={
+                            "w-5/6 bg-transparent text-white outline-0 text-[32px] resize-none"
+                        }
+                        value={vendorData.name}
                     />
                 </div>
-                <div>
-                    <label>Webhook(URL)</label>
-                    <Input
-                        isRequired={true}
-                        name={"webhook"}
-                        contentValue={vendorData.webhook}
-                        updateFunc={updateInput}
-                    />
+                <img src={edit} className={"self-start"} />
+            </div>
+            <div className={"px-[20px] mt-[30px]"}>
+                <div className={"flex flex-col "}>
+                    <div className={"flex flex-col gap-[5px] "}>
+                        <label className={"text-white text-[18px] ml-[20px]"}>
+                            Буквенный код
+                        </label>
+                        <div className={"flex justify-between "}>
+                            <input
+                                name={"code"}
+                                onChange={updateDataFunc}
+                                disabled={isActive}
+                                className={
+                                    "w-[358px] h-[60px] px-[18px] py-[10px] bg-[#5C5F7E] text-black outline-0 text-[18px] bg-[#5C5F7E] rounded-[15px] text-[18px]"
+                                }
+                                defaultValue={vendorData.code}
+                            />
+                            <img src={edit} className={"self-center"} />
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label>Реквезиты</label>
-                    <Input
-                        isRequired={true}
-                        name={"legalEntity"}
-                        contentValue={vendorData.legalEntity}
-                        updateFunc={updateInput}
-                    />
+                <div className={"flex flex-col mt-[20px]"}>
+                    <div className={"flex flex-col gap-[5px]  "}>
+                        <label className={"text-white text-[18px] ml-[20px]"}>
+                            Webhook
+                        </label>
+                        <div className={"flex justify-between "}>
+                            <input
+                                name={"webhook"}
+                                onChange={updateDataFunc}
+                                disabled={isActive}
+                                className={
+                                    "w-[358px] h-[60px] px-[18px] py-[10px] bg-[#5C5F7E] text-black outline-0 text-[18px] bg-[#5C5F7E] rounded-[15px] text-[18px]"
+                                }
+                                defaultValue={vendorData.webhook}
+                            />
+                            <img src={edit} className={"self-center"} />
+                        </div>
+                    </div>
                 </div>
-                <button
-                    className={
-                        "bg-primary p-2 rounded text-third hover:text-white hover:bg-secondary duration-700 ease-in-out "
-                    }
-                >
-                    Обновить
-                </button>
-            </form>
-        </>
+                <div className={"flex flex-col mt-[20px]"}>
+                    <div className={"flex flex-col gap-[5px]  "}>
+                        <label className={"text-white text-[18px] ml-[20px]"}>
+                            Реквизиты
+                        </label>
+                        <div className={"flex justify-between "}>
+                            <input
+                                name={"legalEntity"}
+                                onChange={updateDataFunc}
+                                disabled={isActive}
+                                className={
+                                    "w-[358px] h-[60px] px-[18px] py-[10px] bg-[#5C5F7E] text-black outline-0 text-[18px] bg-[#5C5F7E] rounded-[15px] text-[18px]"
+                                }
+                                defaultValue={vendorData.legalEntity}
+                            />
+                            <img src={edit} className={"self-center"} />
+                        </div>
+                    </div>
+                </div>
+                <div className={"flex justify-between gap-[20px] mt-[40px]"}>
+                    <button
+                        onClick={handleBtn}
+                        className={
+                            "py-[18px] px-[25px] w-[196px] h-[60px] text-white text-[18px] bg-[#F62E46] rounded-[15px]"
+                        }
+                    >
+                        {isActive ? "Редактивровать" : "Обновить"}
+                    </button>
+                    <Link
+                        to={`/view/vendors/${vendor.id}`}
+                        className={
+                            "flex items-center justify-center w-[196px] h-[60px] py-[18px] px-[25px] gap-[10px] text-white text-[18px] bg-transparent rounded-[15px] border"
+                        }
+                    >
+                        <img src={postaIco} />
+                        <span>Постаматы</span>
+                    </Link>
+                </div>
+            </div>
+        </li>
     );
 };
 

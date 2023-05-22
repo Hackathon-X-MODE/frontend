@@ -26,7 +26,7 @@ const Navigation = () => {
                     <span className={"ml-[20px]"}>Вендоры</span>
                 </Link>
                 <Link
-                    to={"/tickets"}
+                    to={"/view/tickets"}
                     className={
                         "flex px-[18px] h-[60px] py-[18px] hover:bg-[#F62E46] rounded-[15px] transition duration-500 ease-in-out"
                     }
