@@ -13,7 +13,7 @@ import PostamatCreate from "./components/postamat/PostamatCreate";
 
 function App() {
     return (
-        <div className={"relative max-w-[1920px] mx-auto flex bg-[#373A54]"}>
+        <div className={"relative max-w-[1920px] overflow-x-hidden mx-auto flex bg-[#373A54]"}>
             <Navigation />
             {/*<UserPanel />*/}
             {/*<FilterNavigation />*/}
