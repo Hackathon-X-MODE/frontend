@@ -53,7 +53,7 @@ const Vendors = (props) => {
         <>
             <div
                 className={
-                    "w-full relative flex flex-col gap-5 px-[77px] py-[48px] font-primary max-h-screen overflow-y-scroll z-0"
+                    "w-full relative flex flex-col gap-5 px-[40px] py-[48px] font-primary max-h-screen overflow-y-scroll z-0"
                 }
             >
                 <div className={"flex justify-between"}>
@@ -85,7 +85,7 @@ const Vendors = (props) => {
                     </div>
                 </div>
                 {data && (
-                    <ul className={"w-full flex gap-[43px] flex-wrap "}>
+                    <ul className={"w-full flex gap-[30px] justify-between flex-wrap "}>
                         {data.map((vendor) => {
                             return (
                                 <VendorUpdate
