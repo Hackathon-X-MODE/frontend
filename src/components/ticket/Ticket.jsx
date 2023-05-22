@@ -1,8 +1,6 @@
 import React from 'react';
 import edit from "../../assets/ico/vendors/edit.svg";
 
-
-
 const Ticket = (props) => {
     return(
         <>
