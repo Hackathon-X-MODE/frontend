@@ -13,14 +13,14 @@ import PostamatCreate from "./components/postamat/PostamatCreate";
 
 function App() {
     return (
-        <div className={"relative max-w-full mx-auto flex bg-third"}>
+        <div className={"relative max-w-[1920px] mx-auto flex bg-[#373A54]"}>
             <Navigation />
             {/*<UserPanel />*/}
             {/*<FilterNavigation />*/}
             <div className={'relative w-5/6'}>
                 <Switch>
                     {/*<Route path={"/"} component={ViewComponent} />*/}
-                    <Route path={"/registration"} component={Registration} />
+                    {/*<Route path={"/registration"} component={Registration} />*/}
                     <Route path={"/view/vendors/update/:id"} component={VendorUpdate} />
                     {/*<Route path={"/view/vendors/:id/create"} component={PostamatCreate} />*/}
                     <Route path={"/view/vendors/:id"} component={Postamat} />

@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@font-face {
+    font-family: Firs;
+    src: url("fonts/TTFirsNeue-Regular.woff2") format("woff2");
+}
