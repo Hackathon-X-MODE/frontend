@@ -4,12 +4,12 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-              primary: "Firs"
+                primary: "Firs"
             },
             colors: {
-                'primary': '#FF1935',
-                'secondary': '#2F3342',
-                'third': '#E2E7EE',
+                primary: "#FF1935",
+                secondary: "#2F3342",
+                third: "#E2E7EE"
             }
         }
     },

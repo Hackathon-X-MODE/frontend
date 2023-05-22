@@ -17,7 +17,7 @@ function App() {
             <Navigation />
             {/*<UserPanel />*/}
             {/*<FilterNavigation />*/}
-            <div className={'relative w-5/6'}>
+            <div className={"relative w-5/6"}>
                 <Switch>
                     {/*<Route path={"/"} component={ViewComponent} />*/}
                     {/*<Route path={"/registration"} component={Registration} />*/}
