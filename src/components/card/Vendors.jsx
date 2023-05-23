@@ -83,7 +83,7 @@ const Vendors = (props) => {
                     </button>
                     <div
                         className={
-                            " border w-[450px] rounded-[15px] flex gap-5 items-center px-[20px] py-[20px] border-[#6C7094] text-white"
+                            " border w-[450px] h-[60px] rounded-[15px] flex gap-5 items-center px-[20px] py-[20px] border-[#6C7094] text-white"
                         }
                     >
                         <img src={search} />
