@@ -101,5 +101,8 @@ module.exports = {
             }
         }
     },
+    variants: {
+        bg: ['responsive', 'hover', 'focus', 'active'],
+    },
     plugins: []
 };

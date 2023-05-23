@@ -144,6 +144,7 @@ export const postamatApi = createApi({
 
 export const {
     useAddVendorMutation,
+    useLazyGetVendorsQuery,
     useGetVendorsQuery,
     useGetVendorByIdQuery,
     useUpdateVendorMutation,

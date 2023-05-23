@@ -19,7 +19,7 @@ const Navigation = () => {
                 <Link
                     to={"/view/vendors"}
                     className={
-                        "flex h-[60px] px-[18px] py-[18px] hover:bg-[#F62E46] rounded-[15px] transition duration-500 ease-in-out"
+                        " flex h-[60px] px-[18px] py-[18px] hover:bg-[#F62E46] rounded-[15px] transition duration-500 ease-in-out"
                     }
                 >
                     <img className={"20px"} src={vendors} />
