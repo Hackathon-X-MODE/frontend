@@ -28,6 +28,19 @@ export const postamatApi = createApi({
                       ]
                     : [{ type: "Vendors", id: "LIST" }]
         }),
+        getVendorsByIds: build.query({
+            query: (...id) => `vendors/${id}`,
+            transformResponse: (res) => {
+                return [res];
+            },
+            providesTags: (result) =>
+                result
+                    ? [
+                        ...result.map(({ id }) => ({ type: "Vendors", id })),
+                        { type: "Vendors", id: "LIST" }
+                    ]
+                    : [{ type: "Vendors", id: "LIST" }]
+        }),
         addVendor: build.mutation({
             query: (body) => ({
                 url: "vendors",
@@ -43,6 +56,13 @@ export const postamatApi = createApi({
                 body: body
             }),
             invalidatesTags: [{ type: "Vendors", id: "LIST" }]
+        }),
+        getVendorsByList: build.query({
+           query: (body) => ({
+              url: `vendors/list`,
+              method: 'POST',
+              body
+           }),
         }),
         getPostamates: build.query({
             query: (id) => `vendors/${id}/postamates`,
@@ -121,9 +141,17 @@ export const postamatApi = createApi({
            }),
            invalidatesTags: [{ type: "Tickets", id: "LIST" }]
         }),
+        updateComments: build.mutation({
+            query: ({body, id}) => ({
+                url: `comments/${id}`,
+                method: 'PATCH',
+                body
+            }),
+            invalidatesTags: [{ type: "Comments", id: "LIST"}]
+        }),
         //REFETCH TICKETS || COMMENTS
         getCommentsByOrderId: build.query({
-            query: (id) => `comments/${id}`,
+            query: (id) => `comments/?orderId=${id}`,
             providesTags: (result) =>
                 result
                     ? [
@@ -159,8 +187,14 @@ export const {
     useAddPostamatesMutation,
     useUpdatePostamatesMutation,
     useGetTicketsQuery,
-    userGetTicketsByIdQuery,
+    useGetTicketsByIdQuery,
     useUpdateTicketByIdMutation,
     useGetCommentsByOrderIdQuery,
-    useGetVendorsByPostamatIdQuery
+    useLazyGetCommentsByOrderIdQuery,
+    useUpdateCommentsMutation,
+    useGetVendorsByPostamatIdQuery,
+    useLazyGetVendorsByPostamatIdQuery,
+    useLazyGetOrderByIdQuery,
+    useGetVendorsByListQuery,
+    useLazyGetVendorsByListQuery,
 } = postamatApi;
