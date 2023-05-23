@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react';
 import edit from "../../assets/ico/vendors/edit.svg";
 import Loader from "../loader/Loader";
 import {
-    useGetCommentsByOrderIdQuery,
+    useConfirmTicketByIdMutation,
     useGetTicketsByIdQuery,
-    useGetVendorsByPostamatIdQuery,
     useLazyGetCommentsByOrderIdQuery,
     useLazyGetOrderByIdQuery, useLazyGetVendorsByListQuery,
     useLazyGetVendorsByPostamatIdQuery
@@ -16,6 +15,8 @@ const Ticket = (props) => {
     const  [getVendorsByPostamatId, {data: vendors = [], isLoading: vendorsLoading, isSuccess: vendorsSuccess}] = useLazyGetVendorsByPostamatIdQuery()
     const [getOrderById, {data: order = [], isLoading: orderLoading, isSuccess: orderSuccess }] = useLazyGetOrderByIdQuery()
     const [getVendorsByListQuery, {data: vendorsList = [], isLoading: vendorsListLoading, isSuccess: vendorsListSuccess }] = useLazyGetVendorsByListQuery()
+
+    const [confirmTicketById, {isLoading: confirmLoading, isSuccess: confirmSuccess}] = useConfirmTicketByIdMutation()
 
     const [ticketData, setTicketData] = useState()
     //PUT PROBLEM OWNERS COMMENTID (NOT_PROCESSED!)

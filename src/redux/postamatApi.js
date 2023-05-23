@@ -141,6 +141,13 @@ export const postamatApi = createApi({
            }),
            invalidatesTags: [{ type: "Tickets", id: "LIST" }]
         }),
+        confirmTicketById: build.mutation({
+           query: ({body, id}) =>({
+               url: `tickets/${id}/confirm`,
+               method: 'PUT',
+               body
+           })
+        }),
         updateComments: build.mutation({
             query: ({body, id}) => ({
                 url: `comments/${id}`,
@@ -197,4 +204,5 @@ export const {
     useLazyGetOrderByIdQuery,
     useGetVendorsByListQuery,
     useLazyGetVendorsByListQuery,
+    useConfirmTicketByIdMutation
 } = postamatApi;
