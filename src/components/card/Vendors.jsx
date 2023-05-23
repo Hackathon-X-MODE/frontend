@@ -73,7 +73,7 @@ const Vendors = (props) => {
                             setRegistrationVendorForm(!isRegistrationVendor)
                         }
                         className={
-                            "w-max-[290px] h-[60px] flex gap-[25px] text-white px-[22px] pr-[36px] pl-[18px] border rounded-[15px] text-[18px] items-center "
+                            "w-max-[290px] h-[60px] flex gap-[25px] text-white px-[22px] pr-[36px] pl-[18px] border rounded-[15px] text-[18px] items-center hover:opacity-70 transition duration-500 ease-in-out"
                         }
                     >
                         <img src={reg} />

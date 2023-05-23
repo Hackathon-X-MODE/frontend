@@ -137,7 +137,7 @@ const VendorUpdate = ({ vendor, handleUpdateVendor }) => {
                                 <button
                                     onClick={handleBtn}
                                     className={
-                                        "py-[18px] px-[25px] w-[196px] h-[60px] text-white text-[18px] bg-[#F62E46] rounded-[15px]"
+                                        "py-[18px] px-[25px] w-[196px] h-[60px] text-white text-[18px] bg-[#F62E46] rounded-[15px] hover:shadow-primary transition duration-500 ease-in-out"
                                     }
                                 >
                                     {isActive ? "Редактивровать" : "Обновить"}

@@ -113,6 +113,14 @@ export const postamatApi = createApi({
                     ]
                     : [{ type: "Tickets", id: "LIST" }]
         }),
+        updateTicketById: build.mutation({
+           query: ({body,id}) => ({
+               url: `tickets/${id}/confirm`,
+               method: 'PUT',
+               body
+           }),
+           invalidatesTags: [{ type: "Tickets", id: "LIST" }]
+        }),
         //REFETCH TICKETS || COMMENTS
         getCommentsByOrderId: build.query({
             query: (id) => `comments/${id}`,
@@ -138,7 +146,6 @@ export const postamatApi = createApi({
                     : [{ type: "Orders", id: "LIST" }]
         }),
 
-
     })
 });
 
@@ -153,6 +160,7 @@ export const {
     useUpdatePostamatesMutation,
     useGetTicketsQuery,
     userGetTicketsByIdQuery,
+    useUpdateTicketByIdMutation,
     useGetCommentsByOrderIdQuery,
     useGetVendorsByPostamatIdQuery
 } = postamatApi;

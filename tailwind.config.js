@@ -11,6 +11,9 @@ module.exports = {
                 secondary: "#2F3342",
                 third: "#E2E7EE"
             },
+            boxShadow: {
+              primary: '0px 0px 30px rgba(246, 46, 70, 0.8)'
+            },
             animation: {
                 'load': 'loading 2s linear infinite',
             },
@@ -102,7 +105,7 @@ module.exports = {
         }
     },
     variants: {
-        bg: ['responsive', 'hover', 'focus', 'active'],
+        backgroundColor: ['responsive', 'hover', 'focus', 'active'],
     },
     plugins: []
 };
