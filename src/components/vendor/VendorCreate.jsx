@@ -19,7 +19,7 @@ const VendorCreate = ({
                 className={`z-50 absolute right-0 top-0 w-[533px] h-screen text-white bg-[#373A54] opacity-100 ${
                     isRegistrationVendor
                         ? "  translate-x-0"
-                        : " translate-x-[500px]"
+                        : " translate-x-[1000px]"
                 } transition duration-500 ease-in-out `}
             >
                 <form

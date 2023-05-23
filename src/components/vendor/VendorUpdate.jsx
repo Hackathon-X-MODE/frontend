@@ -48,9 +48,9 @@ const VendorUpdate = ({ vendor, handleUpdateVendor }) => {
             }
             key={vendor.id}
         >
-            <div className={"flex justify-between px-[37px]"}>
+            <div className={`flex justify-between px-[20px] `}>
                 <div className={"flex flex-col w-full"}>
-                    <label className={"text-white text-[18px]"}>
+                    <label className={"text-white text-[18px] ml-[20px]"}>
                         Наименование
                     </label>
                     <textarea
@@ -58,7 +58,7 @@ const VendorUpdate = ({ vendor, handleUpdateVendor }) => {
                         onChange={updateDataFunc}
                         disabled={isActive}
                         className={
-                            "w-5/6 bg-transparent text-white outline-0 text-[32px] resize-none"
+                            `w-5/6 bg-transparent text-white outline-0 text-[32px] px-[18px] rounded-[15px]  resize-none ${isActive ? 'bg-transparent' : ' w-[340px]  bg-[#8C91B8] text-gray-900'}`
                         }
                         value={vendorData.name}
                     />
@@ -77,7 +77,7 @@ const VendorUpdate = ({ vendor, handleUpdateVendor }) => {
                                 onChange={updateDataFunc}
                                 disabled={isActive}
                                 className={
-                                    "w-[358px] h-[60px] px-[18px] py-[10px] bg-[#5C5F7E] text-black outline-0 text-[18px] bg-[#5C5F7E] rounded-[15px] text-[18px]"
+                                    `w-[358px] h-[60px] px-[18px] py-[10px] bg-[#5C5F7E] text-black outline-0 text-[18px]  rounded-[15px] text-[18px] ${isActive ? 'bg-[#5C5F7E]' : ' bg-[#8C91B8]'}`
                                 }
                                 defaultValue={vendorData.code}
                             />
@@ -96,7 +96,7 @@ const VendorUpdate = ({ vendor, handleUpdateVendor }) => {
                                 onChange={updateDataFunc}
                                 disabled={isActive}
                                 className={
-                                    "w-[358px] h-[60px] px-[18px] py-[10px] bg-[#5C5F7E] text-black outline-0 text-[18px] bg-[#5C5F7E] rounded-[15px] text-[18px]"
+                                    `w-[358px] h-[60px] px-[18px] py-[10px] bg-[#5C5F7E] text-black outline-0 text-[18px] bg-[#5C5F7E] rounded-[15px] text-[18px] ${isActive ? 'bg-[#5C5F7E]' : ' bg-[#8C91B8]'}`
                                 }
                                 defaultValue={vendorData.webhook}
                             />
@@ -115,7 +115,7 @@ const VendorUpdate = ({ vendor, handleUpdateVendor }) => {
                                 onChange={updateDataFunc}
                                 disabled={isActive}
                                 className={
-                                    "w-[358px] h-[60px] px-[18px] py-[10px] bg-[#5C5F7E] text-black outline-0 text-[18px] bg-[#5C5F7E] rounded-[15px] text-[18px]"
+                                    `w-[358px] h-[60px] px-[18px] py-[10px] bg-[#5C5F7E] text-black outline-0 text-[18px] bg-[#5C5F7E] rounded-[15px] text-[18px] ${isActive ? 'bg-[#5C5F7E]' : ' bg-[#8C91B8]'}`
                                 }
                                 defaultValue={vendorData.legalEntity}
                             />

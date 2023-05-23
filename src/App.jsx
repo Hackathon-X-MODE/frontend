@@ -31,7 +31,7 @@ function App() {
                     <Route path={"/view/vendors/:id"} component={Postamat} />
                     <Route path={"/view/vendors/"} component={Vendors} />
                     <Route path={"/view/tickets"} component={Ticket} />
-                    <Route path={"/view"} component={ViewTables} />
+                    {/*<Route path={"/view"} component={ViewTables} />*/}
                 </Switch>
             </div>
         </div>

@@ -1,10 +1,12 @@
 import React from 'react';
 import edit from "../../assets/ico/vendors/edit.svg";
+import Loader from "../loader/Loader";
 
 const Ticket = (props) => {
     return(
         <>
-            <h1 className={'text-4xl text-white'}>TEST VERSION</h1>
+            <Loader />
+            <h1 className={'text-4xl text-white '}>TEST VERSION</h1>
             <li
                 className={
                     "w-[450px] bg-[#21243A] flex flex-col  pt-[25px] rounded-[15px] font-primary absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%]"
