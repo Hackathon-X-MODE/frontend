@@ -10,6 +10,7 @@ import search from "../../assets/ico/vendors/search.svg";
 import VendorUpdate from "../vendor/VendorUpdate";
 import Input from "../form/Input";
 import VendorCreate from "../vendor/VendorCreate";
+import Loader from "../loader/Loader";
 
 const Vendors = (props) => {
     const { data = [], isLoading } = useGetVendorsQuery();
@@ -23,20 +24,30 @@ const Vendors = (props) => {
     });
     const [isRegistrationVendor, setRegistrationVendorForm] = useState(false);
 
-    const handleForm = async (e) => {
-        e.preventDefault();
-        if (registrationData) {
-            try {
-                await addVendor({ ...registrationData }).unwrap();
-                setRegistrationData({
-                    code: "",
-                    name: "",
-                    webhook: "",
-                    legalEntity: ""
-                });
-                setRegistrationVendorForm(!isRegistrationVendor);
-            } catch (e) {
-                console.log(e);
+    const handleForm = async (e, type) => {
+        if (type === 'default') {
+            setRegistrationData({
+                code: "",
+                name: "",
+                webhook: "",
+                legalEntity: ""
+            });
+            setRegistrationVendorForm(!isRegistrationVendor)
+        } else {
+            e.preventDefault();
+            if (registrationData) {
+                try {
+                    await addVendor({ ...registrationData }).unwrap();
+                    setRegistrationData({
+                        code: "",
+                        name: "",
+                        webhook: "",
+                        legalEntity: ""
+                    });
+                    setRegistrationVendorForm(!isRegistrationVendor);
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
     };
@@ -48,7 +59,7 @@ const Vendors = (props) => {
         });
     };
 
-    if (isLoading) return <div>Loading data....</div>;
+    if (isLoading) return <div><Loader /></div>;
     return (
         <>
             <div
@@ -62,11 +73,11 @@ const Vendors = (props) => {
                             setRegistrationVendorForm(!isRegistrationVendor)
                         }
                         className={
-                            "w-max-[290px] h-[60px] flex gap-[25px] text-white px-[22px] pr-[36px] pl-[18px] border rounded-[15px] text-[18px] items-center "
+                            "w-max-[290px] h-[60px] flex gap-[25px] text-white px-[22px] pr-[36px] pl-[18px] border rounded-[15px] text-[18px] items-center hover:opacity-70 transition duration-500 ease-in-out"
                         }
                     >
                         <img src={reg} />
-                        <span className={"text-[18px] translate-y-0.5"}>
+                        <span className={"text-[18px] translate-y-0.5 "}>
                             Регистрация вендора
                         </span>
                     </button>
