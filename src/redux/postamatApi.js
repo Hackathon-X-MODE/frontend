@@ -36,9 +36,9 @@ export const postamatApi = createApi({
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.map(({ id }) => ({ type: "Vendors", id })),
-                        { type: "Vendors", id: "LIST" }
-                    ]
+                          ...result.map(({ id }) => ({ type: "Vendors", id })),
+                          { type: "Vendors", id: "LIST" }
+                      ]
                     : [{ type: "Vendors", id: "LIST" }]
         }),
         addVendor: build.mutation({
@@ -58,11 +58,24 @@ export const postamatApi = createApi({
             invalidatesTags: [{ type: "Vendors", id: "LIST" }]
         }),
         getVendorsByList: build.query({
-           query: (body) => ({
-              url: `vendors/list`,
-              method: 'POST',
-              body
-           }),
+            query: (body) => ({
+                url: `vendors/list`,
+                method: "POST",
+                body
+            })
+        }),
+        getAllPostamates: build.query({
+            query: () => `vendors/postamates`,
+            providesTags: (result) =>
+                result
+                    ? [
+                          ...result.map(({ id }) => ({
+                              type: "Postamates",
+                              id
+                          })),
+                          { type: "Postamates", id: "LIST" }
+                      ]
+                    : [{ type: "Postamates", id: "LIST" }]
         }),
         getPostamates: build.query({
             query: (id) => `vendors/${id}/postamates`,
@@ -70,91 +83,90 @@ export const postamatApi = createApi({
                 result
                     ? [
                           ...result.map(({ id }) => ({
-                              type: "Postamats",
+                              type: "Postamates",
                               id
                           })),
-                          { type: "Postamats", id: "LIST" }
+                          { type: "Postamates", id: "LIST" }
                       ]
-                    : [{ type: "Postamats", id: "LIST" }]
+                    : [{ type: "Postamates", id: "LIST" }]
         }),
         addPostamates: build.mutation({
-            query: ({ body, id }) => (
-                {
-                    url: `vendors/${id}/postamates`,
-                    method: "POST",
-                    body
-                }
-            ),
-            invalidatesTags: [{ type: "Postamats", id: "LIST" }]
+            query: ({ body, id }) => ({
+                url: `vendors/${id}/postamates`,
+                method: "POST",
+                body
+            }),
+            invalidatesTags: [{ type: "Postamates", id: "LIST" }]
         }),
         updatePostamates: build.mutation({
-            query: ({ body, vendorId, postamatId }) => (
-                {
-                    url: `vendors/${vendorId}/postamates/${postamatId}`,
-                    method: "PATCH",
-                    body
-                }
-            )
+            query: ({ body, vendorId, postamatId }) => ({
+                url: `vendors/${vendorId}/postamates/${postamatId}`,
+                method: "PATCH",
+                body
+            }),
+            invalidatesTags: [{ type: "Postamates", id: "LIST" }]
         }),
         getVendorsByPostamatId: build.query({
             query: (id) => `vendors/postamates/${id}`,
             transformResponse: (res) => {
-              return [res]
+                return [res];
             },
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.map(({ id }) => ({ type: "Postamates", id })),
-                        { type: "Postamates", id: "LIST" }
-                    ]
+                          ...result.map(({ id }) => ({
+                              type: "Postamates",
+                              id
+                          })),
+                          { type: "Postamates", id: "LIST" }
+                      ]
                     : [{ type: "Postamates", id: "LIST" }]
-
         }),
         getTickets: build.query({
             query: () => `tickets/`,
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.map(({ id }) => ({ type: "Tickets", id })),
-                        { type: "Tickets", id: "LIST" }
-                    ]
+                          ...result.map(({ id }) => ({ type: "Tickets", id })),
+                          { type: "Tickets", id: "LIST" }
+                      ]
                     : [{ type: "Tickets", id: "LIST" }]
         }),
         getTicketsById: build.query({
             query: (id) => `tickets/${id}`,
             transformResponse: (res) => {
-              return [res]
+                return [res];
             },
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.map(({ id }) => ({ type: "Tickets", id })),
-                        { type: "Tickets", id: "LIST" }
-                    ]
+                          ...result.map(({ id }) => ({ type: "Tickets", id })),
+                          { type: "Tickets", id: "LIST" }
+                      ]
                     : [{ type: "Tickets", id: "LIST" }]
         }),
         updateTicketById: build.mutation({
-           query: ({body,id}) => ({
-               url: `tickets/${id}/confirm`,
-               method: 'PUT',
-               body
-           }),
-           invalidatesTags: [{ type: "Tickets", id: "LIST" }]
-        }),
-        confirmTicketById: build.mutation({
-           query: ({body, id}) =>({
-               url: `tickets/${id}/confirm`,
-               method: 'PUT',
-               body
-           })
-        }),
-        updateComments: build.mutation({
-            query: ({body, id}) => ({
-                url: `comments/${id}`,
-                method: 'PATCH',
+            query: ({ body, id }) => ({
+                url: `tickets/${id}/confirm`,
+                method: "PUT",
                 body
             }),
-            invalidatesTags: [{ type: "Comments", id: "LIST"}]
+            invalidatesTags: [{ type: "Tickets", id: "LIST" }]
+        }),
+        confirmTicketById: build.mutation({
+            query: ({ body, id }) => ({
+                url: `tickets/${id}/confirm`,
+                method: "PUT",
+                body
+            })
+        }),
+        updateComments: build.mutation({
+            query: ({ body, id }) => ({
+                url: `comments/${id}`,
+                method: "PATCH",
+                body
+            }),
+            invalidatesTags: [{ type: "Comments", id: "LIST" }]
         }),
         //REFETCH TICKETS || COMMENTS
         getCommentsByOrderId: build.query({
@@ -162,25 +174,24 @@ export const postamatApi = createApi({
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.map(({ id }) => ({ type: "Comments", id })),
-                        { type: "Comments", id: "LIST" }
-                    ]
+                          ...result.map(({ id }) => ({ type: "Comments", id })),
+                          { type: "Comments", id: "LIST" }
+                      ]
                     : [{ type: "Comments", id: "LIST" }]
         }),
         getOrderById: build.query({
             query: (id) => `orders/${id}`,
             transformResponse: (res) => {
-              return [res]
+                return [res];
             },
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.map(({ id }) => ({ type: "Orders", id })),
-                        { type: "Orders", id: "LIST" }
-                    ]
+                          ...result.map(({ id }) => ({ type: "Orders", id })),
+                          { type: "Orders", id: "LIST" }
+                      ]
                     : [{ type: "Orders", id: "LIST" }]
-        }),
-
+        })
     })
 });
 
@@ -190,6 +201,8 @@ export const {
     useGetVendorsQuery,
     useGetVendorByIdQuery,
     useUpdateVendorMutation,
+    useGetAllPostamatesQuery,
+    useLazyGetAllPostamatesQuery,
     useGetPostamatesQuery,
     useAddPostamatesMutation,
     useUpdatePostamatesMutation,

@@ -28,7 +28,7 @@ function App() {
                     {/*<Route path={"/registration"} component={Registration} />*/}
                     {/*<Route path={"/view/vendors/update/:id"} component={VendorUpdateDepricated} />*/}
                     {/*<Route path={"/view/vendors/:id/create"} component={PostamatCreate} />*/}
-                    <Route path={"/view/vendors/:id"} component={Postamat} />
+                    <Route path={"/view/postamates"} component={Postamat} />
                     <Route path={"/view/vendors/"} component={Vendors} />
                     <Route path={"/view/tickets"} component={Ticket} />
                     {/*<Route path={"/view"} component={ViewTables} />*/}

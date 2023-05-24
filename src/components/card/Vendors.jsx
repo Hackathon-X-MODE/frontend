@@ -25,14 +25,14 @@ const Vendors = (props) => {
     const [isRegistrationVendor, setRegistrationVendorForm] = useState(false);
 
     const handleForm = async (e, type) => {
-        if (type === 'default') {
+        if (type === "default") {
             setRegistrationData({
                 code: "",
                 name: "",
                 webhook: "",
                 legalEntity: ""
             });
-            setRegistrationVendorForm(!isRegistrationVendor)
+            setRegistrationVendorForm(!isRegistrationVendor);
         } else {
             e.preventDefault();
             if (registrationData) {
@@ -59,7 +59,12 @@ const Vendors = (props) => {
         });
     };
 
-    if (isLoading) return <div><Loader /></div>;
+    if (isLoading)
+        return (
+            <div>
+                <Loader />
+            </div>
+        );
     return (
         <>
             <div
@@ -96,13 +101,14 @@ const Vendors = (props) => {
                     </div>
                 </div>
                 {data && (
-                    <ul className={"w-full flex gap-[20px] justify-between flex-wrap "}>
+                    <ul
+                        className={
+                            "w-full flex gap-[20px] justify-between flex-wrap "
+                        }
+                    >
                         {data.map((vendor) => {
                             return (
-                                <VendorUpdate
-                                    key={vendor.id}
-                                    vendor={vendor}
-                                />
+                                <VendorUpdate key={vendor.id} vendor={vendor} />
                             );
                         })}
                     </ul>
