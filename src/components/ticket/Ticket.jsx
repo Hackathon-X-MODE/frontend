@@ -314,7 +314,7 @@ const Ticket = (props) => {
     if (!ticketData?.ord || !ticketData?.coms) return <Loader />
     if (vendorsListSuccess) {
     }
-    console.log(solveData)
+    console.log(ticketData)
     return (
         <>
             {
@@ -534,10 +534,14 @@ const Ticket = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className={'flex flex-col ml-[40px] '}>
                         {/*STORY SECTION*/}
-                        <div>
-
+                        <div className={'h-[461px] bg-[#21243A] px-[29px] py-[30px] rounded-[15px]'}>
+                            <h1 className={'text-white text-[32px]'}>Статус доставки</h1>
+                            <div className={'flex flex-col h-[111px]'}>
+                                <span>Создан</span>
+                                <span>{ticketData.ord[0].dateHistory.create}</span>
+                            </div>
                         </div>
                         {/*OWNER INFO*/}
                         <div>
