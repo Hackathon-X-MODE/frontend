@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import edit from "../../assets/ico/vendors/edit.svg";
 import profilePic from "../../assets/ico/ticket/profilePic.svg";
 import star from "../../assets/ico/ticket/star.svg";
+import elipse from "../../assets/ico/ticket/elipse.svg";
+
+import moment from 'moment'
 import Loader from "../loader/Loader";
 import {
     useConfirmTicketByIdMutation,
@@ -16,6 +19,7 @@ import {default as ReactSelect} from "react-select";
 import Option from "../form/CustomInput";
 import Delivery from "./Delivery";
 import CategoriesEditor from "../form/CategoriesEditor";
+import Moment from "react-moment";
 
 const Ticket = (props) => {
     const {
@@ -149,50 +153,6 @@ const Ticket = (props) => {
 
 
     const objectFunc = (name, idx, ...args) => {
-        // const productDesc = [
-        //     { value: '', label: '' },
-        // ]
-        // const prepareOrder = [
-        //     { value: 'SELECT_POSTAMAT', label: 'Выбор способа доставки в постамат' },
-        //     { value: 'SEARCH_POSTAMAT_AT_HOUSE', label: 'Поиск постамата в конкретном подъезде дома' },
-        // ]
-        //
-        // const gettingOrder = [
-        //     { value: 'PAY_ORDER', label: 'Оплата заказа' },
-        //     { value: 'OPEN_POSTAMAT', label: 'Открытие ячейки' },
-        // ]
-        //
-        // const gotOrder = [
-        //     { value: 'PACKING', label: 'Упаковка' },
-        //     { value: 'COMPLETENESS', label: 'Комплектность' },
-        // ]
-        //
-        // const product = [
-        //     { value: 'QUALITY', label: 'Качество' },
-        //     { value: 'DESCRIPTION', label: 'Несоответствие описанию на сайте' },
-        // ]
-        //
-        // const postBox = [
-        //     { value: 'WORK_POSTAMAT', label: 'Работа постамата' },
-        //     { value: 'LOCATION_POSTAMAT', label: 'Местоположение постамата' },
-        //     { value: 'VIEW_POSTAMAT', label: 'Внешний вид постамата' },
-        // ]
-        //
-        // const delivery = [
-        //     { value: 'DEADLINE', label: 'Сроки доставки' },
-        //     { value: 'COAST_DELIVERY', label: 'Стоимость доставки' },
-        //     { value: 'DELIVERY_GUY_REPORT', label: 'Жалоба на работу курьеров' },
-        // ]
-        //
-        // const notification = [
-        //     { value: 'CONFIRM_NOTIFICATION', label: 'Уведомление об оформленном заказе' },
-        //     { value: 'DELIVERY_NOTIFICATION', label: 'Уведомление о дате доставки' },
-        //     { value: 'READY_NOTIFICATION', label: 'Уведомление о готовности заказа к получению' },
-        // ]
-        //
-        // const other = [
-        //     { value: '', label: '' },
-        // ]
 
         setCommentaryMap((prevState) => ({
             ...prevState,
@@ -201,82 +161,10 @@ const Ticket = (props) => {
             }
         }))
 
-        // console.log(commentaryMap[`${idx}`])
-        // if (commentaryMap) {
-        //     switch (commentaryMap[`${idx}`]){
-        //         case 'PRODUCT_DESCRIPTION':
-        //             setArrValues({
-        //                 ...ticketData,
-        //                 arrVal: productDesc,
-        //             })
-        //             break
-        //         case 'GETTING_ORDER':
-        //             setArrValues({
-        //                 ...ticketData,
-        //                 arrVal: gettingOrder,
-        //             })
-        //             break
-        //         case 'GOT_ORDER':
-        //             setArrValues({
-        //                 ...ticketData,
-        //                 arrVal: gotOrder,
-        //             })
-        //             break
-        //         case 'PRODUCT':
-        //             setArrValues({
-        //                 ...ticketData,
-        //                 arrVal: product,
-        //             })
-        //             break
-        //         case 'POST_BOX':
-        //             setArrValues({
-        //                 ...ticketData,
-        //                 arrVal: postBox,
-        //             })
-        //             break
-        //         case 'DELIVERY':
-        //             setArrValues({
-        //                 ...ticketData,
-        //                 arrVal: delivery,
-        //             })
-        //             break
-        //         case 'NOTIFICATION':
-        //             setArrValues({
-        //                 ...ticketData,
-        //                 arrVal: notification,
-        //             })
-        //             break
-        //         case 'OTHER':
-        //             setArrValues({
-        //                 ...ticketData,
-        //                 arrVal: other,
-        //             })
-        //             break
-        //         case 'PREPARE_ORDER':
-        //             setArrValues({
-        //                 ...ticketData,
-        //                 arrVal: prepareOrder,
-        //             })
-        //             break
-        //         default:
-        //             break
-        //     }
 
-            // if (commentaryMap) {
-            //     console.log(arrValues)
-            //     Object.keys(commentaryMap[`${idx}`]).map((item) => {
-            //         setArrValues((prevState) =>({
-            //             ...prevState,
-            //             index: idx
-            //         }))
-            //
-            //     })
-            //
-            // }
-        // console.log(k,v)
 
         }
-        // console.log(commentaryMap)
+
 
     const handleChangeButton = (e) => {
         setUpdateComment(!isUpdateComment)
@@ -358,6 +246,13 @@ const Ticket = (props) => {
     if (ticketLoading) return <Loader />;
     if (!ticketData?.ord || !ticketData?.coms) return <Loader />
     if (vendorsListSuccess) {
+    }
+    const deliveryStatus = {
+        'Создан': ticketData.ord[0].dateHistory['create'],
+        'Заказ обработан': ticketData.ord[0].dateHistory['assembling'],
+        'Передан в доставку': ticketData.ord[0].dateHistory['send'],
+        'Заказ доставлен': ticketData.ord[0].dateHistory['receive'],
+        'Вручен': ticketData.ord[0].dateHistory['get'],
     }
     console.log(ticketData)
     return (
@@ -573,20 +468,49 @@ const Ticket = (props) => {
                     </div>
                     <div className={'flex flex-col ml-[40px] '}>
                         {/*STORY SECTION*/}
-                        <div className={'h-[461px] bg-[#21243A] px-[29px] py-[30px] rounded-[15px]'}>
+                        <div className={'h-[461px] bg-[#21243A] text-white px-[29px] py-[30px] rounded-[15px]'}>
                             <h1 className={'text-white text-[32px]'}>Статус доставки</h1>
-                            <div className={'flex flex-col h-[111px]'}>
-                                <span>Создан</span>
-                                <span>{ticketData.ord[0].dateHistory.create}</span>
+                            <div className={'flex flex-col gap-[20px] mt-[30px]'}>
+                                {
+                                    Object.entries(deliveryStatus).map(([k,v], idx) => {
+                                        moment.locale('ru-RU')
+                                        return(
+                                            <>
+                                                {
+                                                    deliveryStatus[k] &&
+                                                    <div className={'flex gap-[16px] items-start h-[40px]'}>
+                                                        <img src={elipse} />
+                                                        <div className={'flex-col flex'}>
+                                                            <span>{k}</span>
+                                                            <span className={'text-[#6C7094]'}>{moment(deliveryStatus[k]).format('MMMM Do YYYY, h:mm:ss a')}</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
                         {/*OWNER INFO*/}
-                        <div>
-
+                        <div className={'text-white px-[30px] py-[30px] mt-[26px] bg-[#21243A] rounded-[15px]'}>
+                            <div className={'flex-col flex gap-[18px]'}>
+                                <span className={'text-[32px]'}>Вендор</span>
+                                <div className={'flex flex-col'}>
+                                    <span className={'text-[#6C7094]'}>Наименование</span>
+                                    <span>Name</span>
+                                </div>
+                            </div>
                         </div>
                         {/*MACHINE INFO*/}
-                        <div>
-
+                        <div className={'text-white px-[30px] py-[30px] mt-[26px] bg-[#21243A] rounded-[15px]'}>
+                            <div className={'flex-col flex gap-[18px]'}>
+                                <span className={'text-[32px]'}>Постамат</span>
+                                <div className={'flex flex-col'}>
+                                    <span className={'text-[#6C7094]'}>Наименование</span>
+                                    <span>Name</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

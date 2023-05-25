@@ -13,6 +13,26 @@ const reactSelectValues = [
     {value: 'PREPARE_ORDER', label: 'Оформление заказа'},
 ]
 const Selector = ({selected, callable}) => {
+    const customStyles = {
+        option: (defaultStyles, state) => ({
+            ...defaultStyles,
+            color: '#fff',
+            backgroundColor: "#21243A",
+        }),
+
+        control: (defaultStyles) => ({
+            ...defaultStyles,
+
+            backgroundColor: "#5C5F7E",
+            height: '5px',
+            borderRadius: "15px",
+            overflow: 'hidden',
+            // padding: "10px",
+            border: "1px solid #5C5F7E",
+            boxShadow: "none",
+        }),
+        singleValue: (defaultStyles) => ({ ...defaultStyles, color: "#fff" }),
+    };
 
     const prev = selected;
 
@@ -33,7 +53,7 @@ const Selector = ({selected, callable}) => {
                         components={{
                             Option
                         }}
-                        // styles={customStyles}
+                        styles={customStyles}
                         onChange={(e) => handleReactSelect(e.value)}
                         value={selected}
                     />

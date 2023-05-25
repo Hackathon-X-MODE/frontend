@@ -48,7 +48,7 @@ const CategoriesEditor = ({comment, category, subCategory}) => {
                         {
                             commentTypes.map((commentType, idx) => {
                                 return (
-                                    <Selector key={`${commentType}-${idx}`} all={Object.keys(map)}
+                                    <Selector  key={`${commentType}-${idx}`} all={Object.keys(map)}
                                               selected={commentType.name} callable={category}/>
                                 )
                             })
