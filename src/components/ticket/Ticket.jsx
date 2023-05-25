@@ -15,6 +15,7 @@ import CustomSelect from "../form/CustomSelect";
 import {default as ReactSelect} from "react-select";
 import Option from "../form/CustomInput";
 import Delivery from "./Delivery";
+import CategoriesEditor from "../form/CategoriesEditor";
 
 const Ticket = (props) => {
     const {
@@ -59,6 +60,7 @@ const Ticket = (props) => {
 
     const [ticketData, setTicketData] = useState();
     const [isUpdateComment, setUpdateComment] = useState(false)
+    const [comments_, setComments] = useState();
     //PUT PROBLEM OWNERS COMMENTID (NOT_PROCESSED!)
     const [solveData, setSolveData] = useState([]);
     const [commentaryMap, setCommentaryMap] = useState()
@@ -79,6 +81,21 @@ const Ticket = (props) => {
                 }
 
                 if (commentsSuccess) {
+
+                    setComments(
+                        comments.map(com => {
+                            return {
+                                ...com,
+                                commentTypes: Object.entries(com.commentTypes).map(([k, v]) => {
+                                    return {
+                                        name: k,
+                                        value: v
+                                    }
+                                })
+                            }
+                        })
+                    )
+
                     setTicketData((prevState) => ({
                         ...prevState,
                         coms: comments
@@ -263,6 +280,7 @@ const Ticket = (props) => {
 
     const handleChangeButton = (e) => {
         setUpdateComment(!isUpdateComment)
+        console.log("FORUPDATE", comments_)
         // if (e.target.innerText === 'Редактировать') {
         //     const commentTypesArr = ticketData.coms.map(arr => {
         //         return Object.keys(arr.commentTypes).map((select) => {
@@ -308,6 +326,33 @@ const Ticket = (props) => {
         }
         setSolveData(items);
 
+    }
+
+
+    function handleCategory(id, prev, current) {
+        let items = [...comments_];
+        let index = items.findIndex(item => item.id === id);
+        let item = {...items[index]};
+        let prevCommentTypeIndex = item.commentTypes.findIndex(item => item.name === prev)
+        item.commentTypes[prevCommentTypeIndex] = {
+            name: current,
+            value: []
+        }
+        items[index] = item;
+        setComments(items);
+    }
+
+
+    function handleSubCategory(id, mainCategory, value) {
+        console.log(id, mainCategory, value)
+
+        let items = [...comments_];
+        let index = items.findIndex(item => item.id === id);
+        let item = {...items[index]};
+        let prevCommentTypeIndex = item.commentTypes.findIndex(item => item.name === mainCategory)
+        item.commentTypes[prevCommentTypeIndex].value = value
+        items[index] = item;
+        setComments(items);
     }
 
     if (ticketLoading) return <Loader />;
@@ -434,7 +479,7 @@ const Ticket = (props) => {
                             </div>
                             <div className={'flex flex-col w-full text-white text-[18px] gap-[27px] px-[30px]  bg-[#21243A] rounded-bl-[15px] rounded-br-[15px] pb-[10px]'}>
                                 {
-                                    ticketData?.coms.map(comment => {
+                                    comments_.map(comment => {
                                         return(
                                             <div key={comment.id} className={'mt-[32px] flex w-full gap-[29px]'}>
                                                 <img className={'self-start'} src={profilePic}/>
@@ -461,39 +506,29 @@ const Ticket = (props) => {
                                                     </div>
                                                     {
                                                         isUpdateComment
-                                                        ?
+                                                            ?
                                                             <>
-                                                                <div className={'flex mt-[30px]'}>
-                                                                    <div className={'w-5/12 flex flex-col '}>
-                                                                        {
-                                                                            Object.entries(comment.commentTypes).map(([k,v], idx) => {
-                                                                                return(
-                                                                                    <CustomSelect key={`${k}_${idx}`} nameObject={k} selectIdx={idx} objectFunc={objectFunc} />
-                                                                                )
-                                                                            })
-                                                                        }
-                                                                    </div>
-                                                                    <div className={'w-7/12 flex flex-col'}>
-                                                                        {
-                                                                            Object.entries(comment.commentTypes).map(([k,v],idx) => {
-                                                                                return(
-                                                                                     <CustomSelect key={`${v}_${idx}`} nameObject={v} multiselectIdx={idx} objectFunc={objectFunc} arrayValues={k} />
-                                                                                )
-                                                                            })
-                                                                        }
-                                                                    </div>
-                                                                </div>
+                                                                <CategoriesEditor comment={comment}
+                                                                                  category={(prev, current) => {
+                                                                                      handleCategory(comment.id, prev, current)
+                                                                                  }}
+                                                                                  subCategory={(category, current) => {
+                                                                                      handleSubCategory(comment.id, category, current)
+                                                                                  }}
+                                                                />
                                                             </>
-                                                        :
+                                                            :
                                                             <>
                                                                 <div className={'flex mt-[30px]'}>
                                                                     <div className={'w-5/12 flex flex-col '}>
                                                                         {
-                                                                            Object.entries(comment.commentTypes).map(([k,v], idx) => {
-                                                                                return(
-                                                                                    <div key={`${k}_${idx}`} className={'flex gap-1 flex-col border-b border-b-[#6C7094] py-[10px]'}>
-                                                                                        <span className={'text-[#6C7094]'}>Категория</span>
-                                                                                        <span>{k}</span>
+                                                                            comment.commentTypes.map((commentType, idx) => {
+                                                                                return (
+                                                                                    <div key={`${commentType.name}_${idx}`}
+                                                                                         className={'flex gap-1 flex-col border-b border-b-[#6C7094] py-[10px]'}>
+                                                                                        <span
+                                                                                            className={'text-[#6C7094]'}>Категория</span>
+                                                                                        <span>{commentType.name}</span>
                                                                                     </div>
                                                                                 )
                                                                             })
@@ -501,11 +536,13 @@ const Ticket = (props) => {
                                                                     </div>
                                                                     <div className={'w-7/12 flex flex-col'}>
                                                                         {
-                                                                            Object.entries(comment.commentTypes).map(([k,v],idx) => {
-                                                                                return(
-                                                                                    <div key={`${v}_${idx}`} className={'flex gap-1 flex-col border-b border-b-[#6C7094] py-[10px]'}>
-                                                                                        <span className={'text-[#6C7094]'}>Подкатегория</span>
-                                                                                        <span>{v.length === 0 ? ' -' : v.join(', ')}</span>
+                                                                            comment.commentTypes.map((commentType, idx) => {
+                                                                                return (
+                                                                                    <div key={`${commentType.value}_${idx}`}
+                                                                                         className={'flex gap-1 flex-col border-b border-b-[#6C7094] py-[10px]'}>
+                                                                                        <span
+                                                                                            className={'text-[#6C7094]'}>Подкатегория</span>
+                                                                                        <span>{commentType.value.length === 0 ? ' -' : commentType.value.join(', ')}</span>
                                                                                     </div>
                                                                                 )
                                                                             })
