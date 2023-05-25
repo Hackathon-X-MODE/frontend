@@ -2,6 +2,51 @@ import React, {useEffect, useState} from 'react';
 import {default as ReactSelect} from "react-select";
 import Option from "./CustomInput";
 
+const productDesc = [
+    { value: '', label: '' },
+]
+const prepareOrder = [
+    { value: 'SELECT_POSTAMAT', label: 'Выбор способа доставки в постамат' },
+    { value: 'SEARCH_POSTAMAT_AT_HOUSE', label: 'Поиск постамата в конкретном подъезде дома' },
+]
+
+const gettingOrder = [
+    { value: 'PAY_ORDER', label: 'Оплата заказа' },
+    { value: 'OPEN_POSTAMAT', label: 'Открытие ячейки' },
+]
+
+const gotOrder = [
+    { value: 'PACKING', label: 'Упаковка' },
+    { value: 'COMPLETENESS', label: 'Комплектность' },
+]
+
+const product = [
+    { value: 'QUALITY', label: 'Качество' },
+    { value: 'DESCRIPTION', label: 'Несоответствие описанию на сайте' },
+]
+
+const postBox = [
+    { value: 'WORK_POSTAMAT', label: 'Работа постамата' },
+    { value: 'LOCATION_POSTAMAT', label: 'Местоположение постамата' },
+    { value: 'VIEW_POSTAMAT', label: 'Внешний вид постамата' },
+]
+
+const delivery = [
+    { value: 'DEADLINE', label: 'Сроки доставки' },
+    { value: 'COAST_DELIVERY', label: 'Стоимость доставки' },
+    { value: 'DELIVERY_GUY_REPORT', label: 'Жалоба на работу курьеров' },
+]
+
+const notification = [
+    { value: 'CONFIRM_NOTIFICATION', label: 'Уведомление об оформленном заказе' },
+    { value: 'DELIVERY_NOTIFICATION', label: 'Уведомление о дате доставки' },
+    { value: 'READY_NOTIFICATION', label: 'Уведомление о готовности заказа к получению' },
+]
+
+const other = [
+    { value: '', label: '' },
+]
+
 
 const CustomSelect = ({nameObject, selectIdx, multiselectIdx, objectFunc, arrayValues}) => {
 
@@ -23,50 +68,7 @@ const CustomSelect = ({nameObject, selectIdx, multiselectIdx, objectFunc, arrayV
 
     useEffect(() => {
 
-        const productDesc = [
-            { value: '', label: '' },
-        ]
-        const prepareOrder = [
-            { value: 'SELECT_POSTAMAT', label: 'Выбор способа доставки в постамат' },
-            { value: 'SEARCH_POSTAMAT_AT_HOUSE', label: 'Поиск постамата в конкретном подъезде дома' },
-        ]
 
-        const gettingOrder = [
-            { value: 'PAY_ORDER', label: 'Оплата заказа' },
-            { value: 'OPEN_POSTAMAT', label: 'Открытие ячейки' },
-        ]
-
-        const gotOrder = [
-            { value: 'PACKING', label: 'Упаковка' },
-            { value: 'COMPLETENESS', label: 'Комплектность' },
-        ]
-
-        const product = [
-            { value: 'QUALITY', label: 'Качество' },
-            { value: 'DESCRIPTION', label: 'Несоответствие описанию на сайте' },
-        ]
-
-        const postBox = [
-            { value: 'WORK_POSTAMAT', label: 'Работа постамата' },
-            { value: 'LOCATION_POSTAMAT', label: 'Местоположение постамата' },
-            { value: 'VIEW_POSTAMAT', label: 'Внешний вид постамата' },
-        ]
-
-        const delivery = [
-            { value: 'DEADLINE', label: 'Сроки доставки' },
-            { value: 'COAST_DELIVERY', label: 'Стоимость доставки' },
-            { value: 'DELIVERY_GUY_REPORT', label: 'Жалоба на работу курьеров' },
-        ]
-
-        const notification = [
-            { value: 'CONFIRM_NOTIFICATION', label: 'Уведомление об оформленном заказе' },
-            { value: 'DELIVERY_NOTIFICATION', label: 'Уведомление о дате доставки' },
-            { value: 'READY_NOTIFICATION', label: 'Уведомление о готовности заказа к получению' },
-        ]
-
-        const other = [
-            { value: '', label: '' },
-        ]
         // console.log(reactMultiSelectValues)
         switch (reactMultiSelectValues ? reactMultiSelectValues : arrayValues){
             case 'PRODUCT_DESCRIPTION':
@@ -98,7 +100,6 @@ const CustomSelect = ({nameObject, selectIdx, multiselectIdx, objectFunc, arrayV
                 setReactMultiSelectValues(prepareOrder)
                 break
             default:
-                console.log(reactMultiSelectValues)
                 break
 
         }
@@ -130,10 +131,8 @@ const CustomSelect = ({nameObject, selectIdx, multiselectIdx, objectFunc, arrayV
 
         // console.log({[k]: ''})
         setReactSelectState(value)
-        console.log(value)
         setReactMultiSelectState(value)
-        setReactMultiSelectValues(value)
-        console.log(reactMultiSelectState , reactMultiSelectValues)
+        // console.log(reactMultiSelectValues)
         objectFunc(value, selectIdx)
     }
 
@@ -143,9 +142,7 @@ const CustomSelect = ({nameObject, selectIdx, multiselectIdx, objectFunc, arrayV
         //     ...prevState,
         //     value
         // }))
-        console.log(value)
     }
-
     return(
         <>
             {

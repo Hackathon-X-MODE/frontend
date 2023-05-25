@@ -158,7 +158,8 @@ export const postamatApi = createApi({
                 url: `tickets/${id}/confirm`,
                 method: "PUT",
                 body
-            })
+            }),
+            invalidatesTags: [{ type: "Tickets", id: "LIST" }]
         }),
         updateComments: build.mutation({
             query: ({ body, id }) => ({

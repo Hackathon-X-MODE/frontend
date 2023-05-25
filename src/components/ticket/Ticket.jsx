@@ -12,13 +12,16 @@ import {
     useLazyGetVendorsByPostamatIdQuery
 } from "../../redux/postamatApi";
 import CustomSelect from "../form/CustomSelect";
+import {default as ReactSelect} from "react-select";
+import Option from "../form/CustomInput";
+import Delivery from "./Delivery";
 
 const Ticket = (props) => {
     const {
         data: ticket = [],
         isLoading: ticketLoading,
         isSuccess: ticketSuccess
-    } = useGetTicketsByIdQuery(2);
+    } = useGetTicketsByIdQuery(1);
     const [
         getCommentsByOrderId,
         {
@@ -53,73 +56,71 @@ const Ticket = (props) => {
         { isLoading: confirmLoading, isSuccess: confirmSuccess }
     ] = useConfirmTicketByIdMutation();
 
+
     const [ticketData, setTicketData] = useState();
     const [isUpdateComment, setUpdateComment] = useState(false)
     //PUT PROBLEM OWNERS COMMENTID (NOT_PROCESSED!)
-    const [solveData, setSolveData] = useState({
-        solve: [
-            {
-                id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                problemOwners: ["MARKET_PLACE"]
-            },
-            {
-                id: "3fa85f64-5717-4562-b3fc-2c963f66afa613213",
-                problemOwners: ["MARKET_PLACE"]
-            },
-            {
-                id: "3fa85f64-5717-4562-b3fc-2c963f66afa2342346",
-                problemOwners: ["MARKET_PLACE"]
-            }
-        ]
-    });
+    const [solveData, setSolveData] = useState([]);
     const [commentaryMap, setCommentaryMap] = useState()
     const [arrValues, setArrValues] = useState()
 
-    useEffect(() => {
+
+    useEffect( () => {
         // if (isUpdateComment) {
         //     console.log('123')
         // }
-        if (ticketSuccess) {
-            getCommentsByOrderId(ticket[0].orderId);
-            getOrderById(ticket[0].orderId);
-            setTicketData(...ticket);
+            if (ticketSuccess) {
+                setTicketData(...ticket);
+                getCommentsByOrderId(ticket[0].orderId);
+                getOrderById(ticket[0].orderId);
 
-            if (commentsSuccess) {
-                setTicketData((prevState) => ({
-                    ...prevState,
-                    coms: comments
-                }));
-            }
+                if (orderSuccess) {
+                    console.log('123')
+                }
 
-            if (orderSuccess) {
-                setTicketData((prevState) => ({
-                    ...prevState,
-                    ord: order
-                }));
-                getVendorsByPostamatId(order[0].postamatId);
-                if (vendorsSuccess) {
+                if (commentsSuccess) {
                     setTicketData((prevState) => ({
                         ...prevState,
-                        vend: vendors
+                        coms: comments
                     }));
-                    if (order[0].id === vendors[0].id) {
-                        return;
-                    } else {
-                        getVendorsByListQuery([
-                            order[0].vendorId,
-                            vendors[0].vendorId
-                        ]);
+                }
 
-                        if (vendorsListSuccess) {
+                if (orderSuccess) {
+                    setTicketData((prevState) => ({
+                        ...prevState,
+                        ord: order
+                    }));
+
+
+                    if (order[0].postamatId) {
+                        getVendorsByPostamatId(order[0].postamatId);
+                        if (vendorsSuccess) {
+
                             setTicketData((prevState) => ({
                                 ...prevState,
-                                vendrList: vendorsList
+                                vend: vendors
                             }));
+                            if (order[0]?.id === vendors[0]?.id) {
+                                return;
+                            } else {
+
+                                getVendorsByListQuery([
+                                    order[0].vendorId,
+                                    vendors[0].vendorId
+                                ]);
+
+                                if (vendorsListSuccess) {
+
+                                    setTicketData((prevState) => ({
+                                        ...prevState,
+                                        vendrList: vendorsList
+                                    }));
+                                }
+                            }
                         }
                     }
                 }
             }
-        }
     }, [
         ticketSuccess,
         commentsSuccess,
@@ -128,6 +129,7 @@ const Ticket = (props) => {
         vendorsListSuccess,
         isUpdateComment,
     ]);
+
 
     const objectFunc = (name, idx, ...args) => {
         // const productDesc = [
@@ -278,13 +280,41 @@ const Ticket = (props) => {
     }
 
 
-
-    if (!vendorsListSuccess) return <Loader />;
-
-    if (vendorsListSuccess) {
-        // console.log(ticketData);
+    const handleSubmitRequest = async (e) => {
+        const sl = {
+            solve: solveData
+        }
+        await confirmTicketById({id: 1, body: sl })
     }
 
+    const slvdArray = {
+        solve: []
+    }
+
+    const handleObjectDelivery = (id, problemOwners) => {
+
+        let items = [...solveData]
+
+        let index = items.findIndex(i=> i.id === id);
+
+        if (index === -1){
+            items.push({
+                id: id,
+                problemOwners: problemOwners
+            })
+        }else{
+            console.log(index)
+            items[index].problemOwners = problemOwners
+        }
+        setSolveData(items);
+
+    }
+
+    if (ticketLoading) return <Loader />;
+    if (!ticketData?.ord || !ticketData?.coms) return <Loader />
+    if (vendorsListSuccess) {
+    }
+    console.log(solveData)
     return (
         <>
             {
@@ -319,30 +349,30 @@ const Ticket = (props) => {
                                     <div className={'flex  gap-[70px]'}>
                                         <div className={"flex flex-col w-[200px]"}>
                                             <span className={'text-[#6C7094]'}>Номер заказа</span>
-                                            <input disabled={true} className={"text-white bg-transparent "} defaultValue={ticketData.ord[0].externalId}/>
+                                            <input disabled={true} className={"text-white bg-transparent "} defaultValue={ticketData.ord[0]?.externalId}/>
 
                                         </div>
                                         <div className={'flex flex-col'}>
                                             <span className={'text-[#6C7094]'}>Сумма заказа</span>
-                                            <span className={'text-white break-words'}>{ticketData.ord[0].sum} ₽</span>
+                                            <span className={'text-white break-words'}>{ticketData.ord[0]?.sum} ₽</span>
                                         </div>
                                     </div>
                                     <div className={'flex  gap-[70px]'}>
                                         <div className={'flex flex-col w-[200px]'}>
                                             <span className={'text-[#6C7094]'}>Габариты</span>
                                             <span className={'text-white break-words'}>
-                                                {ticketData.ord[0].meta.width}х{ticketData.ord[0].meta.height}x{ticketData.ord[0].meta.depth}
+                                                {ticketData.ord[0]?.meta?.width}х{ticketData.ord[0]?.meta?.height}x{ticketData.ord[0]?.meta?.depth}
                                             </span>
                                         </div>
                                         <div className={'flex flex-col'}>
                                             <span className={'text-[#6C7094]'}>Вес</span>
-                                            <span className={'text-white break-words'}>{ticketData.ord[0].meta.weight}</span>
+                                            <span className={'text-white break-words'}>{ticketData.ord[0]?.meta?.weight}</span>
                                         </div>
                                     </div>
 
                                     <div className={'flex flex-col '}>
                                         <span className={'text-[#6C7094]'}>Описание</span>
-                                        <span className={'text-white break-words h-[46px]'}>{ticketData.ord[0].description}</span>
+                                        <span className={'text-white break-words h-[46px]'}>{ticketData.ord[0]?.description}</span>
                                     </div>
 
                                     <div className={'flex flex-col mt-[10px]'}>
@@ -365,24 +395,24 @@ const Ticket = (props) => {
 
                                     <div className={'flex flex-col'}>
                                         <span className={'text-[#6C7094]'}>ФИО</span>
-                                        <span className={'text-white break-words'}>{ticketData.ord[0].person?.fullName ? ticketData.ord[0].person?.fullName : '-'}</span>
+                                        <span className={'text-white break-words'}>{ticketData.ord[0]?.person?.fullName ? ticketData.ord[0].person?.fullName : '-'}</span>
                                     </div>
 
                                     <div className={'flex  gap-[70px]'}>
                                         <div className={'flex flex-col w-[150px]'}>
                                             <span className={'text-[#6C7094]'}>Дата рождения</span>
-                                            <span className={'text-white break-words'}>{ticketData.ord[0].person?.date ? new Date(ticketData.ord[0].person.date).toLocaleDateString() : '-'}</span>
+                                            <span className={'text-white break-words'}>{ticketData.ord[0]?.person?.date ? new Date(ticketData.ord[0]?.person?.date).toLocaleDateString() : '-'}</span>
                                         </div>
                                         <div className={'flex flex-col'}>
                                             <span className={'text-[#6C7094]'}>Пол</span>
-                                            <span className={'text-white break-words'}>{ticketData.ord[0].person?.sex ? 'М' : 'Ж'}</span>
+                                            <span className={'text-white break-words'}>{ticketData.ord[0]?.person?.sex ? 'М' : 'Ж'}</span>
                                         </div>
                                     </div>
 
                                     <div className={'flex flex-col'}>
                                         <span className={'text-[#6C7094]'}>Телефон</span>
                                         <div className={'flex items-center justify-between'}>
-                                            <span className={'text-white break-words'}>{ticketData.ord[0].person.phone ? ticketData.ord[0].person.phone : '-'}</span>
+                                            <span className={'text-white break-words'}>{ticketData.ord[0]?.person?.phone ? ticketData.ord[0]?.person?.phone : '-'}</span>
                                             <img src={edit}/>
                                         </div>
                                     </div>
@@ -390,7 +420,7 @@ const Ticket = (props) => {
                                     <div className={'flex flex-col'}>
                                         <span className={'text-[#6C7094]'}>E-mail</span>
                                         <div className={'flex items-center justify-between'}>
-                                            <span className={'text-white break-words'}>{ticketData.ord[0].person.email ? ticketData.ord[0].person.email : '-' }</span>
+                                            <span className={'text-white break-words'}>{ticketData.ord[0]?.person?.email ? ticketData.ord[0]?.person?.email : '-' }</span>
                                             <img src={edit}/>
                                         </div>
                                     </div>
@@ -402,9 +432,9 @@ const Ticket = (props) => {
                             <div className={'flex  items-center text-white rounded-tl-[15px] bg-[#5C5F7E]  h-[100px] rounded-tr-[15px] px-[30px] py-[10px]'}>
                                 <h2 className={'text-[32px]'}>История отзыва</h2>
                             </div>
-                            <div className={'flex w-full text-white text-[18px] gap-[27px] px-[30px]  bg-[#21243A] rounded-bl-[15px] rounded-br-[15px] pb-[10px]'}>
+                            <div className={'flex flex-col w-full text-white text-[18px] gap-[27px] px-[30px]  bg-[#21243A] rounded-bl-[15px] rounded-br-[15px] pb-[10px]'}>
                                 {
-                                    ticketData.coms.map(comment => {
+                                    ticketData?.coms.map(comment => {
                                         return(
                                             <div key={comment.id} className={'mt-[32px] flex w-full gap-[29px]'}>
                                                 <img className={'self-start'} src={profilePic}/>
@@ -427,7 +457,7 @@ const Ticket = (props) => {
                                                     </div>
                                                     {/*COMMENT*/}
                                                     <div className={'break-words bg-[#373A54] px-[20px] py-[18px] rounded-[15px] mt-[21px]'}>
-                                                        <span>{comment.comment}</span>
+                                                        <span>{comment?.comment}</span>
                                                     </div>
                                                     {
                                                         isUpdateComment
@@ -485,15 +515,22 @@ const Ticket = (props) => {
                                                             </>
                                                     }
 
-                                                    <button className={'self-start mt-[60px] px-[33px] py-[18px] border rounded-[15px]'} onClick={handleChangeButton}>
-                                                        {isUpdateComment ? 'Сохранить' : 'Редактировать'}
-                                                    </button>
+                                                    <Delivery comment={comment.id} handleObjectDelivery={handleObjectDelivery} />
+
+                                                    <div className={'mt-[60px] flex justify-between'}>
+                                                        <button className={' px-[33px] py-[18px] border rounded-[15px]'} onClick={handleChangeButton}>
+                                                            {isUpdateComment ? 'Сохранить' : 'Редактировать'}
+                                                        </button>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         )
                                     })
                                 }
-
+                                <button className={'w-[288px] relative right-0 bg-[#F62E46] h-[60px] px-[33px] py-[18px] border rounded-[15px]'} onClick={handleSubmitRequest}>
+                                    Отправить обращение
+                                </button>
                             </div>
                         </div>
                     </div>
