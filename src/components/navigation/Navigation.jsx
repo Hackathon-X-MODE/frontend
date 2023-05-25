@@ -34,7 +34,7 @@ const Navigation = () => {
     return (
         <nav
             className={
-                " w-[330px]  flex flex-col h-screen  bg-[#21243A]  pt-[41px] font-primary text-white text-[18px]"
+                "sticky top-[0px] w-[330px]  flex flex-col h-screen  bg-[#21243A]  pt-[41px] font-primary text-white text-[18px]"
             }
         >
             <img className={"px-[38px] w-fit h-fit"} src={logo} />

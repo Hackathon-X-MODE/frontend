@@ -16,12 +16,10 @@ function App() {
     return (
         <div
             className={
-                "relative max-w-[1920px] overflow-x-hidden mx-auto flex bg-[#373A54]"
+                "relative max-w-[1920px] h-screen overflow-x-hidden mx-auto flex bg-[#373A54]"
             }
         >
             <Navigation />
-            {/*<UserPanel />*/}
-            {/*<FilterNavigation />*/}
             <div className={"relative w-5/6"}>
                 <Switch>
                     {/*<Route path={"/"} component={ViewComponent} />*/}
