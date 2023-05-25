@@ -3,7 +3,7 @@ import {default as ReactSelect} from "react-select";
 import Option from "./CustomInput";
 
 
-const CustomSelect = ({nameObject, idx, objectFunc, arrayValues}) => {
+const CustomSelect = ({nameObject, selectIdx, multiselectIdx, objectFunc, arrayValues}) => {
 
     const [reactSelectState, setReactSelectState] = useState()
     const [reactMultiSelectState, setReactMultiSelectState] = useState()
@@ -67,8 +67,8 @@ const CustomSelect = ({nameObject, idx, objectFunc, arrayValues}) => {
         const other = [
             { value: '', label: '' },
         ]
-
-        switch (arrayValues){
+        // console.log(reactMultiSelectValues)
+        switch (reactMultiSelectValues ? reactMultiSelectValues : arrayValues){
             case 'PRODUCT_DESCRIPTION':
                 setReactMultiSelectValues(productDesc)
                 break
@@ -98,10 +98,12 @@ const CustomSelect = ({nameObject, idx, objectFunc, arrayValues}) => {
                 setReactMultiSelectValues(prepareOrder)
                 break
             default:
+                console.log(reactMultiSelectValues)
+                break
 
         }
 
-    },[arrayValues])
+    },[reactSelectState])
 
 
     const customStyles = {
@@ -128,7 +130,11 @@ const CustomSelect = ({nameObject, idx, objectFunc, arrayValues}) => {
 
         // console.log({[k]: ''})
         setReactSelectState(value)
-        objectFunc(value, idx)
+        console.log(value)
+        setReactMultiSelectState(value)
+        setReactMultiSelectValues(value)
+        console.log(reactMultiSelectState , reactMultiSelectValues)
+        objectFunc(value, selectIdx)
     }
 
     const handleMultiSelect = (value) => {
@@ -158,12 +164,17 @@ const CustomSelect = ({nameObject, idx, objectFunc, arrayValues}) => {
                                 Option
                             }}
                             styles={customStyles}
-                            onChange={(e) => handleMultiSelect(e.value)}
-                            value={reactMultiSelectState ?
-                                reactMultiSelectValues.filter((i) =>(i.value === reactMultiSelectState) ) :
-                                reactMultiSelectValues.filter((i) => {
-                                    return nameObject.map(chValue => i === chValue)
-                                })}
+                            // onChange={(e) => handleMultiSelect(e.value)}
+                            // value={reactMultiSelectValues
+                            //     ?
+                            //     reactMultiSelectValues.filter((i) => {
+                            //         return i
+                            //     } )
+                            //     :
+                            //     reactMultiSelectValues.filter((i) => {
+                            //         // console.log(i)
+                            //         return nameObject.map(chValue => i !== chValue)
+                            //     })}
                         />
                     </div>
                     :

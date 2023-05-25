@@ -130,50 +130,50 @@ const Ticket = (props) => {
     ]);
 
     const objectFunc = (name, idx, ...args) => {
-        const productDesc = [
-            { value: '', label: '' },
-        ]
-        const prepareOrder = [
-            { value: 'SELECT_POSTAMAT', label: 'Выбор способа доставки в постамат' },
-            { value: 'SEARCH_POSTAMAT_AT_HOUSE', label: 'Поиск постамата в конкретном подъезде дома' },
-        ]
-
-        const gettingOrder = [
-            { value: 'PAY_ORDER', label: 'Оплата заказа' },
-            { value: 'OPEN_POSTAMAT', label: 'Открытие ячейки' },
-        ]
-
-        const gotOrder = [
-            { value: 'PACKING', label: 'Упаковка' },
-            { value: 'COMPLETENESS', label: 'Комплектность' },
-        ]
-
-        const product = [
-            { value: 'QUALITY', label: 'Качество' },
-            { value: 'DESCRIPTION', label: 'Несоответствие описанию на сайте' },
-        ]
-
-        const postBox = [
-            { value: 'WORK_POSTAMAT', label: 'Работа постамата' },
-            { value: 'LOCATION_POSTAMAT', label: 'Местоположение постамата' },
-            { value: 'VIEW_POSTAMAT', label: 'Внешний вид постамата' },
-        ]
-
-        const delivery = [
-            { value: 'DEADLINE', label: 'Сроки доставки' },
-            { value: 'COAST_DELIVERY', label: 'Стоимость доставки' },
-            { value: 'DELIVERY_GUY_REPORT', label: 'Жалоба на работу курьеров' },
-        ]
-
-        const notification = [
-            { value: 'CONFIRM_NOTIFICATION', label: 'Уведомление об оформленном заказе' },
-            { value: 'DELIVERY_NOTIFICATION', label: 'Уведомление о дате доставки' },
-            { value: 'READY_NOTIFICATION', label: 'Уведомление о готовности заказа к получению' },
-        ]
-
-        const other = [
-            { value: '', label: '' },
-        ]
+        // const productDesc = [
+        //     { value: '', label: '' },
+        // ]
+        // const prepareOrder = [
+        //     { value: 'SELECT_POSTAMAT', label: 'Выбор способа доставки в постамат' },
+        //     { value: 'SEARCH_POSTAMAT_AT_HOUSE', label: 'Поиск постамата в конкретном подъезде дома' },
+        // ]
+        //
+        // const gettingOrder = [
+        //     { value: 'PAY_ORDER', label: 'Оплата заказа' },
+        //     { value: 'OPEN_POSTAMAT', label: 'Открытие ячейки' },
+        // ]
+        //
+        // const gotOrder = [
+        //     { value: 'PACKING', label: 'Упаковка' },
+        //     { value: 'COMPLETENESS', label: 'Комплектность' },
+        // ]
+        //
+        // const product = [
+        //     { value: 'QUALITY', label: 'Качество' },
+        //     { value: 'DESCRIPTION', label: 'Несоответствие описанию на сайте' },
+        // ]
+        //
+        // const postBox = [
+        //     { value: 'WORK_POSTAMAT', label: 'Работа постамата' },
+        //     { value: 'LOCATION_POSTAMAT', label: 'Местоположение постамата' },
+        //     { value: 'VIEW_POSTAMAT', label: 'Внешний вид постамата' },
+        // ]
+        //
+        // const delivery = [
+        //     { value: 'DEADLINE', label: 'Сроки доставки' },
+        //     { value: 'COAST_DELIVERY', label: 'Стоимость доставки' },
+        //     { value: 'DELIVERY_GUY_REPORT', label: 'Жалоба на работу курьеров' },
+        // ]
+        //
+        // const notification = [
+        //     { value: 'CONFIRM_NOTIFICATION', label: 'Уведомление об оформленном заказе' },
+        //     { value: 'DELIVERY_NOTIFICATION', label: 'Уведомление о дате доставки' },
+        //     { value: 'READY_NOTIFICATION', label: 'Уведомление о готовности заказа к получению' },
+        // ]
+        //
+        // const other = [
+        //     { value: '', label: '' },
+        // ]
 
         setCommentaryMap((prevState) => ({
             ...prevState,
@@ -181,24 +181,83 @@ const Ticket = (props) => {
                 [name]: ''
             }
         }))
-        if (commentaryMap) {
-            console.log(commentaryMap[`${idx}`])
 
-            if (commentaryMap) {
-                Object.keys(commentaryMap[`${idx}`]).map((item) => {
-                    setArrValues({
-                        arrVal: item,
-                        index: idx
-                    })
+        // console.log(commentaryMap[`${idx}`])
+        // if (commentaryMap) {
+        //     switch (commentaryMap[`${idx}`]){
+        //         case 'PRODUCT_DESCRIPTION':
+        //             setArrValues({
+        //                 ...ticketData,
+        //                 arrVal: productDesc,
+        //             })
+        //             break
+        //         case 'GETTING_ORDER':
+        //             setArrValues({
+        //                 ...ticketData,
+        //                 arrVal: gettingOrder,
+        //             })
+        //             break
+        //         case 'GOT_ORDER':
+        //             setArrValues({
+        //                 ...ticketData,
+        //                 arrVal: gotOrder,
+        //             })
+        //             break
+        //         case 'PRODUCT':
+        //             setArrValues({
+        //                 ...ticketData,
+        //                 arrVal: product,
+        //             })
+        //             break
+        //         case 'POST_BOX':
+        //             setArrValues({
+        //                 ...ticketData,
+        //                 arrVal: postBox,
+        //             })
+        //             break
+        //         case 'DELIVERY':
+        //             setArrValues({
+        //                 ...ticketData,
+        //                 arrVal: delivery,
+        //             })
+        //             break
+        //         case 'NOTIFICATION':
+        //             setArrValues({
+        //                 ...ticketData,
+        //                 arrVal: notification,
+        //             })
+        //             break
+        //         case 'OTHER':
+        //             setArrValues({
+        //                 ...ticketData,
+        //                 arrVal: other,
+        //             })
+        //             break
+        //         case 'PREPARE_ORDER':
+        //             setArrValues({
+        //                 ...ticketData,
+        //                 arrVal: prepareOrder,
+        //             })
+        //             break
+        //         default:
+        //             break
+        //     }
 
-                })
-
-            }
+            // if (commentaryMap) {
+            //     console.log(arrValues)
+            //     Object.keys(commentaryMap[`${idx}`]).map((item) => {
+            //         setArrValues((prevState) =>({
+            //             ...prevState,
+            //             index: idx
+            //         }))
+            //
+            //     })
+            //
+            // }
         // console.log(k,v)
 
         }
-        console.log(commentaryMap)
-    }
+        // console.log(commentaryMap)
 
     const handleChangeButton = (e) => {
         setUpdateComment(!isUpdateComment)
@@ -379,7 +438,7 @@ const Ticket = (props) => {
                                                                         {
                                                                             Object.entries(comment.commentTypes).map(([k,v], idx) => {
                                                                                 return(
-                                                                                    <CustomSelect key={`${k}_${idx}`} nameObject={k} idx={idx} objectFunc={objectFunc} />
+                                                                                    <CustomSelect key={`${k}_${idx}`} nameObject={k} selectIdx={idx} objectFunc={objectFunc} />
                                                                                 )
                                                                             })
                                                                         }
@@ -388,7 +447,7 @@ const Ticket = (props) => {
                                                                         {
                                                                             Object.entries(comment.commentTypes).map(([k,v],idx) => {
                                                                                 return(
-                                                                                    <CustomSelect key={`${v}_${idx}`} nameObject={v} idx={idx} objectFunc={objectFunc} arrayValues={arrValues?.index === idx ? arrValues?.arrVal : k} />
+                                                                                     <CustomSelect key={`${v}_${idx}`} nameObject={v} multiselectIdx={idx} objectFunc={objectFunc} arrayValues={k} />
                                                                                 )
                                                                             })
                                                                         }
