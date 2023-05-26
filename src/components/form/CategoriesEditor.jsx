@@ -40,6 +40,7 @@ const CategoriesEditor = ({comment, category, subCategory}) => {
 
     const commentTypes = comment.commentTypes
 
+    const existedCategories = commentTypes.map(v => v.name);
     return (
         <>
             {
@@ -48,7 +49,8 @@ const CategoriesEditor = ({comment, category, subCategory}) => {
                         {
                             commentTypes.map((commentType, idx) => {
                                 return (
-                                    <Selector  key={`${commentType}-${idx}`} all={Object.keys(map)}
+                                    <Selector key={`${commentType}-${idx}`}
+                                              existedCategories={existedCategories}
                                               selected={commentType.name} callable={category}/>
                                 )
                             })
@@ -56,14 +58,23 @@ const CategoriesEditor = ({comment, category, subCategory}) => {
                     </div>
                     <div className={'w-7/12 flex flex-col'}>
                         {
-                            commentTypes.map((commentType, idx) => {
-                                return (
-                                    <SelectorMulty key={`${commentType}-sup-${idx}`} all={map[commentType.name]}
-                                                   selected={commentType.value} callable={e => {
-                                        subCategory(commentType.name, e)
-                                    }}/>
-                                )
-                            })
+                            commentTypes
+                                .map((commentType, idx) => {
+
+                                    if (map[commentType.name].length > 0) {
+
+                                        return (
+                                            <SelectorMulty key={`${commentType}-sup-${idx}`} all={map[commentType.name]}
+                                                           selected={commentType.value} callable={e => {
+                                                subCategory(commentType.name, e)
+                                            }}/>
+                                        )
+                                    } else {
+                                        return (
+                                            <div>Отсутвует</div>
+                                        )
+                                    }
+                                })
                         }
                     </div>
                 </div>
