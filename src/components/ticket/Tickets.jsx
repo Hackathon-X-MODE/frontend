@@ -23,39 +23,22 @@ const Tickets = (props) => {
                 const vends = orderList.map(ven => ven.vendorId)
                 getVendorsList(vends)
             }
-
-
         }
 
-        // const onScroll = () => {
-        //     console.log('HHE')
-        //     const scrolledToBottom =
-        //         window.innerHeight + window.scrollY >= document.body.offsetHeight;
-        //     if (scrolledToBottom && !isFetching) {
-        //         console.log("Fetching more data...");
-        //         setPage(page + 1);
-        //     }
-        // };
-        // window.addEventListener("scroll", () =>onScroll);
-        //
-        // return function () {
-        //     console.log('LOL')
-        //     window.removeEventListener("scroll", onScroll);
-        // };
     },[allTicketsSuccess,orderListSuccess, vendorsListSuccess , isFetching])
     if (!vendorsListSuccess) return <Loader />
     console.log('TICKET', allTickets)
-    // console.log('ord',orderList)
-    // console.log('vedn',vendorsList)
+    console.log('ord',orderList)
+    console.log('vedn',vendorsList)
     console.log('123')
 
 
     return(
-        <>
+        <div className={'w-full flex'}>
             <button onClick={() => setPage(page + 1)}>asdasd</button>
             {
                 vendorsList &&
-                <div  className={'overflow-y-auto w-[1360px]   mx-[70px] mt-[50px] flex bg-[#21243A] rounded-[15px]'}>
+                <div  className={'overflow-y-auto w-[1360px] flex   ml-[70px] mt-[50px] flex bg-[#21243A] rounded-[15px] rounded-tr-[0px]'}>
                     <div className={'flex w-full flex-col gap-2 text-white text-[18px] px-[30px] py-[24px]'}>
                         <div className={'flex '}>
                             <div className={'w-full flex mb-[22px] '}>
@@ -70,15 +53,38 @@ const Tickets = (props) => {
                         {
                             allTickets.map(item => {
                                 return  item.content.map((i, idx) => {
-                                    const VENDOR_NAME = vendorsList[vendorsList.findIndex((itm) => itm.id === orderList[idx].vendorId)].name
-                                    return <TicketPost key={i.id} id={i.id} name={VENDOR_NAME} created={i.createDate} deadline={i.deadline} />
+
+                                    return <TicketPost key={i.id} id={i.id} name={i.order.vendor.name}  created={i.createDate} deadline={i.deadline} />
                                 })
                             })
                         }
                     </div>
+
                 </div>
             }
-        </>
+            <div>
+                <div className={'mt-[50px] w-[70px] h-[240px] text-white text-[18px] flex bg-[#21243A] rounded-[15px] rounded-tl-[0px] rounded-bl-[0px]'}>
+                    <div className={'flex  items-center justify-center '}>
+                        <button className={'rotate-[90deg]'}>Открытые</button>
+                    </div>
+                </div>
+                <div className={'mt-[7px] w-[70px] h-[240px] text-white text-[18px] flex bg-[#21243A] rounded-[15px] rounded-tl-[0px] rounded-bl-[0px]'}>
+                    <div className={'flex  items-center justify-center  '}>
+                        <button className={'rotate-[90deg]'}>Открытые</button>
+                    </div>
+                </div>
+                <div className={'mt-[7px] w-[70px] h-[240px] text-white text-[18px] flex bg-[#21243A] rounded-[15px] rounded-tl-[0px] rounded-bl-[0px]'}>
+                    <div className={'flex  items-center justify-center '}>
+                        <button className={'rotate-[90deg]'}>Открытые</button>
+                    </div>
+                </div>
+                <div className={'mt-[7px] w-[70px] h-[240px] text-white text-[18px] flex bg-[#21243A] rounded-[15px] rounded-tl-[0px] rounded-bl-[0px]'}>
+                    <div className={'flex  items-center justify-center '}>
+                        <button className={'rotate-[90deg]'}>Открытые</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     )
 }
