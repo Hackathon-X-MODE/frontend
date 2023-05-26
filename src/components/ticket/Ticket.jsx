@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import edit from "../../assets/ico/vendors/edit.svg";
 import profilePic from "../../assets/ico/ticket/profilePic.svg";
 import star from "../../assets/ico/ticket/star.svg";
+import whiteStar from "../../assets/ico/ticket/whiteStar.svg";
 import elipse from "../../assets/ico/ticket/elipse.svg";
+import _ from "lodash";
 
 import moment from 'moment'
 import Loader from "../loader/Loader";
 import {
     useConfirmTicketByIdMutation,
-    useGetTicketsByIdQuery,
+    useGetTicketsByIdQuery, useLazyGetVendorByIdQuery,
     useLazyGetCommentsByOrderIdQuery,
     useLazyGetOrderByIdQuery,
     useLazyGetVendorsByListQuery,
-    useLazyGetVendorsByPostamatIdQuery
+    useLazyGetVendorsByPostamatIdQuery, useLazyGetTicketsByIdQuery
 } from "../../redux/postamatApi";
 import CustomSelect from "../form/CustomSelect";
 import {default as ReactSelect} from "react-select";
@@ -20,13 +22,17 @@ import Option from "../form/CustomInput";
 import Delivery from "./Delivery";
 import CategoriesEditor from "../form/CategoriesEditor";
 import Moment from "react-moment";
+import {useParams} from "react-router-dom";
 
 const Ticket = (props) => {
-    const {
-        data: ticket = [],
-        isLoading: ticketLoading,
-        isSuccess: ticketSuccess
-    } = useGetTicketsByIdQuery(1);
+    const {ticketId} = useParams()
+    const
+        {
+            data: ticket = [],
+            isLoading: ticketLoading,
+            isSuccess: ticketSuccess
+        } = useGetTicketsByIdQuery(+ticketId);
+    const [getVendorById, {data: vendor, isSuccess: vendorSuccess}] = useLazyGetVendorByIdQuery()
     const [
         getCommentsByOrderId,
         {
@@ -68,21 +74,20 @@ const Ticket = (props) => {
     //PUT PROBLEM OWNERS COMMENTID (NOT_PROCESSED!)
     const [solveData, setSolveData] = useState([]);
     const [commentaryMap, setCommentaryMap] = useState()
-    const [arrValues, setArrValues] = useState()
+
+    const [singleVendor, setSingleVendor] = useState()
+    const [isOtherPostamatVendor, setOtherPostamat] = useState()
 
 
     useEffect( () => {
         // if (isUpdateComment) {
         //     console.log('123')
         // }
+        //     getTicketsById(+ticketId)
             if (ticketSuccess) {
                 setTicketData(...ticket);
                 getCommentsByOrderId(ticket[0].orderId);
                 getOrderById(ticket[0].orderId);
-
-                if (orderSuccess) {
-                    console.log('123')
-                }
 
                 if (commentsSuccess) {
 
@@ -109,14 +114,23 @@ const Ticket = (props) => {
                 if (orderSuccess) {
                     setTicketData((prevState) => ({
                         ...prevState,
-                        ord: order
+                        ord: order,
+                        vendrList: {}
                     }));
+
+                    getVendorById(order[0]?.vendorId)
+
+                    if (vendorSuccess) {
+                        console.log(vendorSuccess)
+
+                        setSingleVendor(vendor)
+                    }
 
 
                     if (order[0].postamatId) {
                         getVendorsByPostamatId(order[0].postamatId);
                         if (vendorsSuccess) {
-
+                            console.log(vendorsSuccess)
                             setTicketData((prevState) => ({
                                 ...prevState,
                                 vend: vendors
@@ -144,9 +158,11 @@ const Ticket = (props) => {
             }
     }, [
         ticketSuccess,
+        singleVendor?.id,
         commentsSuccess,
         orderSuccess,
         vendorsSuccess,
+        vendorSuccess,
         vendorsListSuccess,
         isUpdateComment,
     ]);
@@ -193,9 +209,6 @@ const Ticket = (props) => {
         await confirmTicketById({id: 1, body: sl })
     }
 
-    const slvdArray = {
-        solve: []
-    }
 
     const handleObjectDelivery = (id, problemOwners) => {
 
@@ -213,7 +226,6 @@ const Ticket = (props) => {
             items[index].problemOwners = problemOwners
         }
         setSolveData(items);
-
     }
 
 
@@ -244,9 +256,9 @@ const Ticket = (props) => {
     }
 
     if (ticketLoading) return <Loader />;
-    if (!ticketData?.ord || !ticketData?.coms) return <Loader />
-    if (vendorsListSuccess) {
-    }
+    if (!ticketData?.ord || !ticketData?.coms || !ticketData?.vendrList ) return <Loader />
+
+
     const deliveryStatus = {
         'Создан': ticketData.ord[0].dateHistory['create'],
         'Заказ обработан': ticketData.ord[0].dateHistory['assembling'],
@@ -254,7 +266,45 @@ const Ticket = (props) => {
         'Заказ доставлен': ticketData.ord[0].dateHistory['receive'],
         'Вручен': ticketData.ord[0].dateHistory['get'],
     }
+
+    const commentaryStatus = {
+        'NEGATIVE': 'Негативный',
+        'POSITIVE': 'Положительный',
+        'NEUTRAL': 'Нейтральный',
+    }
+
+    // OPEN,
+    //     CANCELED,
+    //
+    //     PENDING,
+    //
+    //     COMPLETED
+    // 'CANCELED': 'Отменен',
+    //     'PENDING': 'В обработке',
+    //     'COMPLETED': 'Выполнен',
+    const ticketStatusLabels = {
+        'OPEN': {
+            name: 'Открыт', bg: 'bg-blue-500'
+        },
+        'PENDING': {
+            name: 'В обработке', bg: 'bg-yellow-500'
+        },
+        'COMPLETED': {
+            name: 'Выполнен', bg: 'bg-green-500'
+        },
+        'CANCELED': {
+            name: 'Отменен', bg: 'bg-gray-500'
+        }
+        // {'OPEN': name: 'Открыт',}
+    }
+
+
+    // const rates = _.range(5 - Number(ticketData?.coms?.rate))
+
     console.log(ticketData)
+    console.log(singleVendor)
+    // console.log('TD',ticketData?.coms?.rate)
+    // console.log(rates)
     return (
         <>
             {
@@ -269,7 +319,16 @@ const Ticket = (props) => {
                                     <span className={'text-white text-[18px]'}>Номер обращения</span>
                                     <div className={'flex gap-[13px] items-center'}>
                                         <h2 className={'text-[32px] text-white translate-y-0.5'}>#{ticketData.id}</h2>
-                                        <span className={'bg-[#3FC955] text-white rounded-[15px] px-[18px] pb-[1px] pt-[2px]'}>{ticketData.ticketStatus}</span>
+                                            {
+                                                Object.entries(ticketStatusLabels).map(([k,v]) => {
+                                                    if (k === ticketData.ticketStatus ) {
+                                                        return(
+                                                            <span className={`${ticketStatusLabels[k].bg} text-white rounded-[15px] px-[18px] pb-[1px] pt-[2px]`}>{ticketStatusLabels[k].name}</span>
+                                                        )
+                                                    }
+                                                    return null
+                                                })
+                                            }
                                     </div>
                                 </div>
                                 <div className={'flex items-center gap-[72px]  pl-[50px]'}>
@@ -386,13 +445,39 @@ const Ticket = (props) => {
                                                         </div>
                                                         <div className={'flex gap-[32px]'}>
                                                             <div className={'flex gap-2'}>
-                                                                <img src={star}/>
-                                                                <img src={star}/>
-                                                                <img src={star}/>
-                                                                <img src={star}/>
-                                                                <img src={star}/>
+
+                                                                {
+                                                                    comment.rate === 5
+                                                                    ?
+                                                                    [...Array(5)].map(x => {
+                                                                        return <img src={star}/>
+                                                                    })
+                                                                    :
+                                                                        <>
+                                                                            {
+                                                                                [...Array(comment.rate)].map(x => {
+                                                                                    return <img src={star}/>
+                                                                                })
+                                                                            }
+                                                                            {
+                                                                                [...Array(5-comment.rate)].map(x => {
+                                                                                    return <img src={whiteStar}/>
+                                                                                })
+                                                                            }
+                                                                        </>
+                                                                }
                                                             </div>
-                                                            <span className={'border border-[#F62E46] rounded-[15px] h-[45px] px-[24px] pt-[8px]'}>{comment.mood}</span>
+                                                            <span className={'border border-[#F62E46] rounded-[15px] h-[45px] px-[24px] pt-[8px]'}>
+                                                                {
+                                                                    Object.entries(commentaryStatus).map(([k,v]) => {
+                                                                        if (k === comment.mood) {
+                                                                            return commentaryStatus[k]
+                                                                        } else {
+                                                                            return null
+                                                                        }
+                                                                    })
+                                                                }
+                                                            </span>
                                                         </div>
                                                     </div>
                                                     {/*COMMENT*/}
@@ -447,26 +532,35 @@ const Ticket = (props) => {
                                                             </>
                                                     }
 
-                                                    <Delivery comment={comment.id} handleObjectDelivery={handleObjectDelivery} />
-
-                                                    <div className={'mt-[60px] flex justify-between'}>
-                                                        <button className={' px-[33px] py-[18px] border rounded-[15px]'} onClick={handleChangeButton}>
-                                                            {isUpdateComment ? 'Сохранить' : 'Редактировать'}
-                                                        </button>
-
-                                                    </div>
+                                                    {
+                                                        ticketData.ticketStatus === 'OPEN'
+                                                        ?
+                                                            <>
+                                                                <Delivery comment={comment.id} handleObjectDelivery={handleObjectDelivery} />
+                                                                <div className={'mt-[60px] flex justify-between'}>
+                                                                    <button className={' px-[33px] py-[18px] border rounded-[15px]'} onClick={handleChangeButton}>
+                                                                        {isUpdateComment ? 'Сохранить' : 'Редактировать'}
+                                                                    </button>
+                                                                </div>
+                                                            </>
+                                                        : null
+                                                    }
                                                 </div>
                                             </div>
                                         )
                                     })
                                 }
-                                <button className={'w-[288px] relative right-0 bg-[#F62E46] h-[60px] px-[33px] py-[18px] border rounded-[15px]'} onClick={handleSubmitRequest}>
-                                    Отправить обращение
-                                </button>
+                                {
+                                   ticketData.ticketStatus === 'OPEN'
+                                    ? <button className={'w-[288px]  ml-[121px] bg-[#F62E46] h-[60px] px-[33px] py-[18px] border rounded-[15px]'} onClick={handleSubmitRequest}>
+                                           Отправить обращение
+                                       </button>
+                                   : null
+                                }
                             </div>
                         </div>
                     </div>
-                    <div className={'flex flex-col ml-[40px] '}>
+                    <div className={'flex flex-col ml-[40px] w-[450px] '}>
                         {/*STORY SECTION*/}
                         <div className={'h-[461px] bg-[#21243A] text-white px-[29px] py-[30px] rounded-[15px]'}>
                             <h1 className={'text-white text-[32px]'}>Статус доставки</h1>
@@ -498,20 +592,48 @@ const Ticket = (props) => {
                                 <span className={'text-[32px]'}>Вендор</span>
                                 <div className={'flex flex-col'}>
                                     <span className={'text-[#6C7094]'}>Наименование</span>
-                                    <span>Name</span>
+                                    {
+                                        singleVendor &&
+                                        <span>{singleVendor[0].name}</span>
+                                    }
                                 </div>
                             </div>
                         </div>
                         {/*MACHINE INFO*/}
-                        <div className={'text-white px-[30px] py-[30px] mt-[26px] bg-[#21243A] rounded-[15px]'}>
-                            <div className={'flex-col flex gap-[18px]'}>
-                                <span className={'text-[32px]'}>Постамат</span>
-                                <div className={'flex flex-col'}>
-                                    <span className={'text-[#6C7094]'}>Наименование</span>
-                                    <span>Name</span>
+                        {
+                            ticketData?.vend &&
+                            <div className={'text-white px-[30px] py-[30px] mt-[26px] bg-[#21243A] rounded-[15px]'}>
+
+                                <div className={'flex-col flex gap-[18px]'}>
+                                    <div className={'flex justify-between'}>
+                                        <div className={'flex flex-col text-white '}>
+                                            <span className={'text-[32px]'}>Постамат</span>
+                                            <span>#{ticketData.vend[0].externalId}</span>
+                                        </div>
+                                        <div className={''}>
+                                            <button className={'py-[11px] px-[25px] border border-white bg-[#21243A] rounded-[15px]'}>
+                                                {/*<img alt={'#'} />*/}
+                                                <span>На карте</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className={'flex flex-col'}>
+                                        <span className={'text-[#6C7094]'}>Вендор</span>
+                                        {
+                                            ticketData?.vendrList &&
+                                            ticketData.vendrList?.length === 2
+                                            ? <span>{ticketData.vendrList[1]?.name}</span>
+                                            : <span>{ticketData.vendrList[0]?.name}</span>
+                                        }
+                                    </div>
+                                    <div className={'flex flex-col'}>
+                                        <span className={'text-[#6C7094]'}>Адрес</span>
+                                        <span>{ticketData.vend[0].location.address}</span>
+                                    </div>
                                 </div>
+
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
             }

@@ -133,7 +133,11 @@ export const postamatApi = createApi({
                     : [{ type: "Tickets", id: "LIST" }]
         }),
         getTicketsById: build.query({
-            query: (id) => `tickets/${id}`,
+            query: (id) => (
+                {
+                    url: `tickets/${id}`
+                }
+            ),
             transformResponse: (res) => {
                 return [res];
             },
@@ -197,8 +201,10 @@ export const postamatApi = createApi({
 });
 
 export const {
+    useLazyGetTicketsByIdQuery,
     useAddVendorMutation,
     useLazyGetVendorsQuery,
+    useLazyGetVendorByIdQuery,
     useGetVendorsQuery,
     useGetVendorByIdQuery,
     useUpdateVendorMutation,
