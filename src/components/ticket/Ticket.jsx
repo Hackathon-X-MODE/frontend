@@ -4,7 +4,6 @@ import profilePic from "../../assets/ico/ticket/profilePic.svg";
 import star from "../../assets/ico/ticket/star.svg";
 import whiteStar from "../../assets/ico/ticket/whiteStar.svg";
 import elipse from "../../assets/ico/ticket/elipse.svg";
-import _ from "lodash";
 
 import moment from 'moment'
 import Loader from "../loader/Loader";
