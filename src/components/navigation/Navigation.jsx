@@ -23,6 +23,12 @@ const Navigation = () => {
             linkTo: "/view/postamates",
             source: postamat,
             title: "Постаматы"
+        },
+        {
+            id: 5,
+            linkTo: "/view/files",
+            source: postamat,
+            title: "Импорт/Экспорт"
         }
     ];
 

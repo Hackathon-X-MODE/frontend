@@ -223,7 +223,27 @@ export const postamatApi = createApi({
                 method: 'POST',
                 body
             })
-        })
+        }),
+        /**
+         * Files
+         */
+        getExports: build.query({
+            query: () => `comments/exports`,
+            providesTags: (result) =>
+                result
+                    ? [
+                        ...result.map(({ id }) => ({ type: "Exports", id })),
+                        { type: "Exports", id: "LIST" }
+                    ]
+                    : [{ type: "Exports", id: "LIST" }]
+        }),
+        requestExports: build.mutation({
+            query: () => ({
+                url: `comments/exports`,
+                method: "POST"
+            }),
+            invalidatesTags: [{ type: "Exports", id: "LIST" }]
+        }),
     })
 });
 
@@ -253,5 +273,7 @@ export const {
     useGetVendorsByListQuery,
     useLazyGetVendorsByListQuery,
     useLazyGetOrdersListQuery,
-    useConfirmTicketByIdMutation
+    useConfirmTicketByIdMutation,
+    useGetExportsQuery,
+    useRequestExportsMutation
 } = postamatApi;

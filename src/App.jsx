@@ -12,6 +12,7 @@ import Postamat from "./components/card/Postamat";
 import PostamatCreate from "./components/postamat/PostamatCreate";
 import Ticket from "./components/ticket/Ticket";
 import Tickets from "./components/ticket/Tickets";
+import Files from "./components/export/Files";
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                     <Route path={"/view/vendors/"} component={Vendors} />
                     <Route path={"/view/tickets/:ticketId"} component={Ticket} />
                     <Route path={"/view/tickets/"} component={Tickets} />
+                    <Route path={"/view/files/"} component={Files} />
                     {/*<Route path={"/view"} component={ViewTables} />*/}
                 </Switch>
             </div>
