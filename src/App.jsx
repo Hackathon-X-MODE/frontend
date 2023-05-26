@@ -11,6 +11,7 @@ import VendorUpdateDepricated from "./components/vendor/VendorUpdateDepricated";
 import Postamat from "./components/card/Postamat";
 import PostamatCreate from "./components/postamat/PostamatCreate";
 import Ticket from "./components/ticket/Ticket";
+import Tickets from "./components/ticket/Tickets";
 
 function App() {
     return (
@@ -29,7 +30,7 @@ function App() {
                     <Route path={"/view/postamates"} component={Postamat} />
                     <Route path={"/view/vendors/"} component={Vendors} />
                     <Route path={"/view/tickets/:ticketId"} component={Ticket} />
-                    {/*<Route path={"/view/tickets"} component={Ticket} />*/}
+                    <Route path={"/view/tickets/"} component={Tickets} />
                     {/*<Route path={"/view"} component={ViewTables} />*/}
                 </Switch>
             </div>

@@ -123,14 +123,32 @@ export const postamatApi = createApi({
                     : [{ type: "Postamates", id: "LIST" }]
         }),
         getTickets: build.query({
-            query: () => `tickets/`,
-            providesTags: (result) =>
+            query: (page = 0 ) => (
+                console.log(page),
+                {
+                    url: `tickets/?statuses=OPEN&page=${page}&size=20&sort=deadline,ASC`,
+                    method: 'GET'
+                }
+            ),
+            serializeQueryArgs: ({ endpointName }) => {
+                return endpointName
+            },
+            merge: (currentCache, newItems) => {
+                currentCache.push(...newItems)
+            },
+            forceRefetch({ currentArg, previousArg }) {
+                return currentArg !== previousArg
+            },
+            transformResponse: (res) => [res],
+            providesTags: (result, error, page) =>
                 result
                     ? [
-                          ...result.map(({ id }) => ({ type: "Tickets", id })),
-                          { type: "Tickets", id: "LIST" }
-                      ]
-                    : [{ type: "Tickets", id: "LIST" }]
+                        // Provides a tag for each post in the current page,
+                        // as well as the 'PARTIAL-LIST' tag.
+                        ...result.map(({ number }) => (console.log(number),{ type: 'Tickets', number })),
+                        { type: 'Tickets', id: 'PARTIAL-LIST' },
+                    ]
+                    : [{ type: 'Tickets', id: 'PARTIAL-LIST' }],
         }),
         getTicketsById: build.query({
             query: (id) => (
@@ -196,6 +214,15 @@ export const postamatApi = createApi({
                           { type: "Orders", id: "LIST" }
                       ]
                     : [{ type: "Orders", id: "LIST" }]
+        }),
+        getOrdersList: build.query({
+            query: (body) => (
+                console.log(body),
+                {
+                url: 'orders/list',
+                method: 'POST',
+                body
+            })
         })
     })
 });
@@ -222,7 +249,9 @@ export const {
     useGetVendorsByPostamatIdQuery,
     useLazyGetVendorsByPostamatIdQuery,
     useLazyGetOrderByIdQuery,
+    useGetOrderByIdQuery,
     useGetVendorsByListQuery,
     useLazyGetVendorsByListQuery,
+    useLazyGetOrdersListQuery,
     useConfirmTicketByIdMutation
 } = postamatApi;

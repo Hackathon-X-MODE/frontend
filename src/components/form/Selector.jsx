@@ -12,7 +12,7 @@ const reactSelectValues = [
     {value: 'OTHER', label: 'Иное'},
     {value: 'PREPARE_ORDER', label: 'Оформление заказа'},
 ]
-const Selector = ({selected, callable}) => {
+const Selector = ({selected, existedCategories, callable}) => {
     const customStyles = {
         option: (defaultStyles, state) => ({
             ...defaultStyles,
@@ -31,14 +31,14 @@ const Selector = ({selected, callable}) => {
             border: "1px solid #5C5F7E",
             boxShadow: "none",
         }),
-        singleValue: (defaultStyles) => ({ ...defaultStyles, color: "#fff" }),
+        singleValue: (defaultStyles) => ({...defaultStyles, color: "#fff"}),
     };
 
     const prev = selected;
 
+    const selectValues = reactSelectValues.filter(v => existedCategories.indexOf(v.value) === -1 || v.value === selected)
     const handleReactSelect = (value) => {
-        console.log(prev, value)
-        callable(prev,value)
+        callable(prev, value)
     }
 
     return (
@@ -48,14 +48,16 @@ const Selector = ({selected, callable}) => {
                     <span className={'text-white'}>Категории</span>
                     <ReactSelect
                         name={selected}
-                        options={reactSelectValues}
+                        options={selectValues}
                         //  options={reactSelectValues}
                         components={{
                             Option
                         }}
                         styles={customStyles}
                         onChange={(e) => handleReactSelect(e.value)}
-                        value={selected}
+                        value={
+                            reactSelectValues.filter(refCurrent => selected.includes(refCurrent.value))[0]
+                        }
                     />
                 </div>
             }
