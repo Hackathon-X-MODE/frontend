@@ -16,21 +16,20 @@ function App() {
     return (
         <div
             className={
-                "relative max-w-[1920px] overflow-x-hidden mx-auto flex bg-[#373A54]"
+                "relative max-w-[1920px] h-screen overflow-x-hidden mx-auto flex bg-[#373A54]"
             }
         >
             <Navigation />
-            {/*<UserPanel />*/}
-            {/*<FilterNavigation />*/}
             <div className={"relative w-5/6"}>
                 <Switch>
                     {/*<Route path={"/"} component={ViewComponent} />*/}
                     {/*<Route path={"/registration"} component={Registration} />*/}
                     {/*<Route path={"/view/vendors/update/:id"} component={VendorUpdateDepricated} />*/}
                     {/*<Route path={"/view/vendors/:id/create"} component={PostamatCreate} />*/}
-                    <Route path={"/view/vendors/:id"} component={Postamat} />
+                    <Route path={"/view/postamates"} component={Postamat} />
                     <Route path={"/view/vendors/"} component={Vendors} />
-                    <Route path={"/view/tickets"} component={Ticket} />
+                    <Route path={"/view/tickets/:ticketId"} component={Ticket} />
+                    {/*<Route path={"/view/tickets"} component={Ticket} />*/}
                     {/*<Route path={"/view"} component={ViewTables} />*/}
                 </Switch>
             </div>

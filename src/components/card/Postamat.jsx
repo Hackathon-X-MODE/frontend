@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import {
-    useAddPostamatesMutation,
-    useGetPostamatesQuery,
+    useAddPostamatesMutation, useGetAllPostamatesQuery,
+    useGetPostamatesQuery, useLazyGetAllPostamatesQuery,
     useUpdatePostamatesMutation
 } from "../../redux/postamatApi";
 import Input from "../form/Input";
 import { Map, Placemark } from "@pbe/react-yandex-maps";
+import {get} from "axios";
 
 const Postamat = (props) => {
-    const { id } = useParams();
+    // const { id } = useParams();
     //YMAPSDATA
     const [mapInfoDataId, setMapInfoDataId] = useState();
     const [ymapData, setYmapData] = useState({
@@ -45,10 +46,22 @@ const Postamat = (props) => {
         postamatInit: ""
     });
 
-    const { data = [], isLoading } = useGetPostamatesQuery(id);
+    const [getAllPostamates, {data: allPostamates,isSuccess: allPostamatesSuccess}] = useLazyGetAllPostamatesQuery()
+    const { data = [], isLoading, isSuccess: vendorPostamates } = useGetPostamatesQuery();
     const [addPostamate, { isError }] = useAddPostamatesMutation();
-    const [updatePostamates, { isError: isErrorUpdate }] =
-        useUpdatePostamatesMutation();
+    const [updatePostamates, { isError: isErrorUpdate }] = useUpdatePostamatesMutation();
+
+    useEffect(() => {
+        // GET ALL POSTAMATES
+        if (props.id) {
+
+        } else {
+            getAllPostamates()
+            if (allPostamatesSuccess) {
+                console.log(allPostamates)
+            }
+        }
+    }, [allPostamatesSuccess, props.id])
 
     const updateInput = (e) => {
         const { name, value } = e.target;
@@ -80,23 +93,23 @@ const Postamat = (props) => {
             postamatData.lastDateActivity
         ).toISOString();
         try {
-            await addPostamate({ body: { ...postamatData }, id: id });
-            setIsVisible(!isVisible);
-            setPostamatData({
-                externalId: "",
-                location: {
-                    district: "",
-                    administrativeDistrict: "",
-                    entrance: "",
-                    address: "",
-                    latitude: "",
-                    longitude: ""
-                },
-                size: 0,
-                lastDateActivity: "",
-                videoLink: null,
-                postamatInit: ""
-            });
+            // await addPostamate({ body: { ...postamatData }, id: id });
+            // setIsVisible(!isVisible);
+            // setPostamatData({
+            //     externalId: "",
+            //     location: {
+            //         district: "",
+            //         administrativeDistrict: "",
+            //         entrance: "",
+            //         address: "",
+            //         latitude: "",
+            //         longitude: ""
+            //     },
+            //     size: 0,
+            //     lastDateActivity: "",
+            //     videoLink: null,
+            //     postamatInit: ""
+            // });
         } catch (e) {
             console.log(e);
         }
@@ -134,11 +147,11 @@ const Postamat = (props) => {
             ymapData.lastDateActivity
         ).toISOString();
         try {
-            await updatePostamates({
-                body: { ...ymapData },
-                vendorId: id,
-                postamatId: ymapData.id
-            });
+            // await updatePostamates({
+            //     body: { ...ymapData },
+            //     vendorId: id,
+            //     postamatId: ymapData.id
+            // });
             // setIsVisible(!isVisible)
         } catch (e) {
             console.log(e);

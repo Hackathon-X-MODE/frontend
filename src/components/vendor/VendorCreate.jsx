@@ -10,7 +10,7 @@ const VendorCreate = ({
         <>
             {/*Заглушка*/}
             <div
-                onClick={(e) => handleForm(e,'default')}
+                onClick={(e) => handleForm(e, "default")}
                 className={`absolute h-screen w-full bg-[#0A0C1D] top-0  -z-10 ${
                     isRegistrationVendor ? " opacity-60 z-20" : "opacity-0"
                 } transition duration-500 ease-in-out`}
@@ -29,7 +29,9 @@ const VendorCreate = ({
                         "absolute w-[450px] h-[602px] flex flex-col  px-[40px] top-[240px] font-primary text-[18px]"
                     }
                 >
-                    <span className={" text-[32px] ml-[18px]"}>Регистрация Вендора</span>
+                    <span className={" text-[32px] ml-[18px]"}>
+                        Регистрация Вендора
+                    </span>
                     <div className={"flex flex-col mt-[33px]"}>
                         <label className={"ml-[18px]"}>Буквенный код</label>
                         <input
