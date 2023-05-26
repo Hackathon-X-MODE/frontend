@@ -625,6 +625,7 @@ const Ticket = (props) => {
                                             ? <span>{ticketData.vendrList[1]?.name}</span>
                                             : <span>{ticketData.vendrList[0]?.name}</span>
                                         }
+
                                     </div>
                                     <div className={'flex flex-col'}>
                                         <span className={'text-[#6C7094]'}>Адрес</span>
