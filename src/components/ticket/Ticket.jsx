@@ -51,6 +51,11 @@ const reference = {
     READY_NOTIFICATION: 'Уведомление о готовности заказа к получению'
 }
 
+const placeRef = {
+    'POSTAMAT': `Технический отдел "Московский постомат"`,
+    'MARKET_PLACE': `Направить в Маркетплэйс`
+}
+
 
 const Ticket = (props) => {
     const {ticketId} = useParams()
@@ -120,8 +125,13 @@ const Ticket = (props) => {
 
             if (commentsSuccess) {
 
+                const ticketComment = ticket[0].comments;
+                console.log("C", ticket[0])
                 setComments(
                     comments.map((com) => {
+
+                        const commentFromTicket = ticketComment.find(v => v.id === com.id);
+
                         return {
                             ...com,
                             // problemOwners: ticketData[0]?.comments[idx].problemOwners,
@@ -129,6 +139,13 @@ const Ticket = (props) => {
                                 return {
                                     name: k,
                                     value: v
+                                }
+                            }),
+                            statusInTicket: commentFromTicket?.status,
+                            problemOwners: commentFromTicket?.problemOwners?.map(v => {
+                                return {
+                                    value: v,
+                                    label: placeRef[v]
                                 }
                             })
                         }
@@ -229,29 +246,23 @@ const Ticket = (props) => {
 
 
     const handleSubmitRequest = async (e) => {
+        const solveData = ticketData.comments
+            .filter(comment=>{
+                return comment.status === 'NOT_PROCESSED'
+            })
+            .map(comment => {
+
+            return {
+                id: comment.id,
+                problemOwners: comments_.find(cum => cum.id === comment.id).problemOwners.map(v=> v.value)
+            }
+        })
+
         const sl = {
             solve: solveData
         }
+        //TODO OLEG REFRESH TICKET AFTER THAT CALL.
         await confirmTicketById({id: ticketData.id, body: sl})
-    }
-
-
-    const handleObjectDelivery = (id, problemOwners) => {
-
-        let items = [...solveData]
-
-        let index = items.findIndex(i => i.id === id);
-
-        if (index === -1) {
-            items.push({
-                id: id,
-                problemOwners: problemOwners
-            })
-        } else {
-            console.log(index)
-            items[index].problemOwners = problemOwners
-        }
-        setSolveData(items);
     }
 
 
@@ -269,9 +280,17 @@ const Ticket = (props) => {
     }
 
 
-    function handleSubCategory(id, mainCategory, value) {
-        console.log(id, mainCategory, value)
+    function updateCommentProblem(id, e) {
+        let items = [...comments_];
+        let index = items.findIndex(item => item.id === id);
+        let item = {...items[index]};
+        item.problemOwners = e
+        items[index] = item;
+        setComments(items);
+    }
 
+
+    function handleSubCategory(id, mainCategory, value) {
         let items = [...comments_];
         let index = items.findIndex(item => item.id === id);
         let item = {...items[index]};
@@ -477,7 +496,7 @@ const Ticket = (props) => {
                             <div
                                 className={'flex flex-col w-full text-white text-[18px] gap-[27px] px-[30px]  bg-[#21243A] rounded-bl-[15px] rounded-br-[15px] pb-[10px]'}>
                                 {
-                                    comments_.map((comment,idx) => {
+                                    comments_.map((comment, idx) => {
                                         return (
                                             <div key={comment.id} className={'mt-[32px] flex w-full gap-[29px]'}>
                                                 <img className={'self-start'} src={profilePic}/>
@@ -581,11 +600,14 @@ const Ticket = (props) => {
                                                     }
 
                                                     {
-                                                        ticketData.ticketStatus === 'OPEN'
+                                                        comment.statusInTicket === 'NOT_PROCESSED'
                                                             ?
                                                             <>
-                                                                <Delivery  cm={ticketData.comments[idx].problemOwners} comment={comment.id}
-                                                                          handleObjectDelivery={handleObjectDelivery}/>
+                                                                <Delivery problemOwners={comment.problemOwners}
+                                                                          update={e => {
+                                                                              updateCommentProblem(comment.id, e)
+                                                                          }}
+                                                                          comment={comment.id}/>
                                                                 <div className={'mt-[60px] flex justify-between'}>
                                                                     <button
                                                                         className={' px-[33px] py-[18px] border rounded-[15px]'}
