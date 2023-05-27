@@ -182,6 +182,13 @@ export const postamatApi = createApi({
             }),
             invalidatesTags: [{ type: "Comments", id: "LIST" }]
         }),
+        createComment: build.mutation({
+            query: (body) => ({
+                url: `comments/`,
+                method: 'POST',
+                body
+            })
+        }),
         //REFETCH TICKETS || COMMENTS
         getCommentsByOrderId: build.query({
             query: (id) => `comments/?orderId=${id}`,
@@ -215,6 +222,7 @@ export const postamatApi = createApi({
                 body
             })
         }),
+
         /**
          * Files
          */
@@ -265,8 +273,16 @@ export const {
     useLazyGetVendorsByListQuery,
     useLazyGetOrdersListQuery,
     useConfirmTicketByIdMutation,
+
+
+    useCreateCommentMutation,
+
     useGetOrdersListQuery,
     useLazyGetTicketsQuery,
+
+    useGetOrdersListQuery,
+    useLazyGetTicketsQuery,
+
     useGetExportsQuery,
     useRequestExportsMutation
   

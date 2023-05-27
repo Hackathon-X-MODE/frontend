@@ -13,17 +13,19 @@ import PostamatCreate from "./components/postamat/PostamatCreate";
 import Ticket from "./components/ticket/Ticket";
 import Tickets from "./components/ticket/Tickets";
 import Files from "./components/export/Files";
+import Feedback from "./components/Mobile/Feedback";
 import Dashboard from "./components/dashboard/Dashboard";
+
 
 function App() {
     return (
         <div
             className={
-                "relative max-w-[1920px] h-screen overflow-x-hidden mx-auto flex bg-[#373A54]"
+                "relative lg:max-w-[1920px] h-screen overflow-x-hidden mx-auto lg:flex bg-[#373A54]"
             }
         >
             <Navigation />
-            <div className={"relative w-5/6"}>
+            <div className={"lg:relative w-5/6 w-full"}>
                 <Switch>
                     <Route path={"/view/dashboard"} component={Dashboard} />
                     {/*<Route path={"/"} component={ViewComponent} />*/}
@@ -35,6 +37,7 @@ function App() {
                     <Route path={"/view/tickets/:ticketId"} component={Ticket} />
                     <Route path={"/view/tickets/"} component={Tickets} />
                     <Route path={"/view/files/"} component={Files} />
+                    <Route path={"/mobile/:code"} component={Feedback} />
                     {/*<Route path={"/view"} component={ViewTables} />*/}
                 </Switch>
             </div>
