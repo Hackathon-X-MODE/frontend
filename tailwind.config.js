@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
     content: ["./src/**/*.{js,jsx,ts,tsx}"],
     theme: {
@@ -16,6 +18,12 @@ module.exports = {
             },
             animation: {
                 load: "loading 2s linear infinite"
+            },
+            backgroundImage: {
+                'gradient-open': 'linear-gradient(270deg, #2496FF 0%, rgba(92, 95, 126, 0) 100%)',
+                'gradient-pending': 'linear-gradient(270deg, #FF9900 0%, rgba(92, 95, 126, 0) 100%)',
+                'gradient-closed': 'rgba(108, 112, 148, 0.8);',
+                'gradient-completed': 'linear-gradient(270deg, #3FC955 0%, rgba(92, 95, 126, 0) 100%)',
             },
             keyframes: {
                 loading: {
@@ -269,5 +277,20 @@ module.exports = {
     variants: {
         backgroundColor: ["responsive", "hover", "focus", "active"]
     },
-    plugins: []
+    plugins: [
+        plugin(function({ addUtilities, addComponents, e, prefix, config }) {
+            const newUtilities = {
+                '.horizontal-tb': {
+                    writingMode: 'horizontal-tb',
+                },
+                '.vertical-rl': {
+                    writingMode: 'vertical-rl'
+                },
+                '.vertical-lr': {
+                    writingMode: 'vertical-lr'
+                }
+            }
+            addUtilities(newUtilities)
+        })
+    ]
 };
