@@ -20,7 +20,7 @@ module.exports = {
                 load: "loading 2s linear infinite"
             },
             backgroundImage: {
-                'gradient-open': 'linear-gradient(270deg, #2496FF 0%, rgba(92, 95, 126, 0) 100%)',
+                'gradient-open': 'linear-gradient(90deg, #2496FF -60%, rgba(92, 95, 126, 0) 100%);',
                 'gradient-pending': 'linear-gradient(270deg, #FF9900 0%, rgba(92, 95, 126, 0) 100%)',
                 'gradient-closed': 'rgba(108, 112, 148, 0.8);',
                 'gradient-completed': 'linear-gradient(270deg, #3FC955 0%, rgba(92, 95, 126, 0) 100%)',

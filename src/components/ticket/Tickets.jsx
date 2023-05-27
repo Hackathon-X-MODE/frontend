@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState} from 'react';
 import {
+    useGetFilteredTicketsMutation,
     useGetTicketsQuery,
 } from "../../redux/postamatApi";
 import Loader from "../loader/Loader";
@@ -10,8 +11,10 @@ const Tickets = (props) => {
     const [initialData, setInitialData] = useState()
     const [page, setPage] = useState(0)
     const [status, setStatus] = useState('OPEN')
+    const [flag, setFlag] = useState(false)
 
-    const {data: allTickets = [],isLoading, isSuccess: allTicketsSuccess , isFetching, isFulfilled: ticketFulfilled, refetch} = useGetTicketsQuery(page, status)
+    const {data: allTickets = [],isLoading, isSuccess: allTicketsSuccess , isFetching, isFulfilled: ticketFulfilled } = useGetTicketsQuery(page, status)
+    const [getFilteredTickets, {data:dt = [], isSuccess: filtered}] = useGetFilteredTicketsMutation()
 
 
     const observer = useRef();
@@ -28,27 +31,35 @@ const Tickets = (props) => {
     },[isLoading])
 
     useEffect(() => {
-        if (allTicketsSuccess) {
-            setInitialData(allTickets)
+
+            if (filtered) {
+                console.log('DATA',dt)
+                setInitialData(dt)
+        } else {
+            if (allTicketsSuccess) {
+                setInitialData(allTickets)
+            }
         }
+
         console.log('render')
-    },[allTickets])
+    },[allTickets, filtered])
 
     if (!allTicketsSuccess) return <Loader />
-    console.log(allTickets)
 
     const handleFilter = (e) => {
+        // if (page !== 0) setPage(0)
         setStatus(e.target.name)
-        const status = e.target.name
-        // FETCHING FILTER
-        // refetch({page: 0, status: status})
+        // setFlag(true)
+        const status1 = e.target.name
+        getFilteredTickets({page: 0, status: status1})
+        alert('В разработке')
     }
 
 
     return(
         <div className={'w-full flex'}>
             {
-                allTickets &&
+                initialData &&
                     <div  className={'overflow-y-scroll w-[1360px] h-[1080px] flex ml-[70px] mt-[50px] flex bg-[#21243A] rounded-[15px] rounded-tr-[0px]'}>
                         <div className={'flex w-full flex-col gap-2  text-white text-[18px] px-[30px] py-[24px]'}>
                             <div className={'flex '}>
@@ -62,7 +73,7 @@ const Tickets = (props) => {
                                 </div>
                             </div>
                             {
-                                allTickets.map(item => {
+                                initialData.map(item => {
                                     return  item.content.map((i, index) => {
                                         if (index + 1 === item.content.length) {
                                             return(
@@ -88,17 +99,17 @@ const Tickets = (props) => {
                 </div>
                 <div className={'relative mt-[7px] w-[70px] h-[240px] text-white text-[18px] flex flex-wrap bg-[#21243A] rounded-[15px] rounded-tl-[0px] rounded-bl-[0px]'}>
                     <div className={'flex items-center justify-center'}>
-                        <button name={'PENDING'} onClick={handleFilter} className={'rotate-[90deg]'}>обработка</button>
+                        <button name={'PENDING'} onClick={handleFilter} className={'rotate-[90deg]'}>Обработка</button>
                     </div>
                 </div>
                 <div className={'mt-[7px] w-[70px] h-[240px] text-white text-[18px] flex bg-[#21243A] rounded-[15px] rounded-tl-[0px] rounded-bl-[0px]'}>
                     <div className={'flex  items-center justify-center '}>
-                        <button name={'COMPLETED'} onClick={handleFilter} className={'rotate-[90deg]'}>выполнены</button>
+                        <button name={'COMPLETED'} onClick={handleFilter} className={'rotate-[90deg]'}>Выполнены</button>
                     </div>
                 </div>
                 <div className={'mt-[7px] w-[70px] h-[240px] text-white text-[18px] flex bg-[#21243A] rounded-[15px] rounded-tl-[0px] rounded-bl-[0px]'}>
                     <div className={'flex  items-center justify-center '}>
-                        <button name={'CLOSED'} onClick={handleFilter} className={'rotate-[90deg]'}>отменныне</button>
+                        <button name={'CANCELED'} onClick={handleFilter} className={'rotate-[90deg]'}>Отменены</button>
                     </div>
                 </div>
             </div>
