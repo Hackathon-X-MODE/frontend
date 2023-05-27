@@ -6,10 +6,12 @@ import vendors from "../../assets/ico/vendors.svg";
 import postamat from "../../assets/ico/postamat.svg";
 import tickets from "../../assets/ico/tickets.svg";
 import comments from "../../assets/ico/comments.svg";
+import loop from "../../assets/ico/loop.svg";
 
 const Navigation = () => {
     const [selected, setSelected] = useState();
     const links = [
+        { id: 0, linkTo: "/", source: loop, title: "Аналитика" },
         { id: 1, linkTo: "/view/vendors", source: vendors, title: "Вендоры" },
         { id: 2, linkTo: "/view/tickets", source: tickets, title: "Обращения" },
         {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Navigate } from "react-router-dom";
 
 import Navigation from "./components/navigation/Navigation";
 

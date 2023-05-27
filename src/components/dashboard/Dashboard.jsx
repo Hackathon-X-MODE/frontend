@@ -71,9 +71,15 @@ export const options = {
 };
 const Dashboard = (props) => {
 
-    const {data: ticketStatus, isSuccess: ticketSuccess} = useGetTicketsStatusQuery()
-    const {data: perDay,isSuccess: perDaySuccess} = useGetTicketsStatusPerDayQuery()
-    const {data: commentsStatus, isSuccess: commentsSuccess} = useGetCommentsStatusQuery()
+    const {data: ticketStatus, isSuccess: ticketSuccess} = useGetTicketsStatusQuery('0',{
+        pollingInterval: 5000
+    })
+    const {data: perDay,isSuccess: perDaySuccess} = useGetTicketsStatusPerDayQuery('0',{
+        pollingInterval: 5000
+    })
+    const {data: commentsStatus, isSuccess: commentsSuccess} = useGetCommentsStatusQuery('0',{
+        pollingInterval: 5000
+    })
 
     const dataPerDay = {
         labels: [],
