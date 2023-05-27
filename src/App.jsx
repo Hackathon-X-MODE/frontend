@@ -14,6 +14,8 @@ import Ticket from "./components/ticket/Ticket";
 import Tickets from "./components/ticket/Tickets";
 import Files from "./components/export/Files";
 import Feedback from "./components/Mobile/Feedback";
+import Dashboard from "./components/dashboard/Dashboard";
+
 
 function App() {
     return (
@@ -25,6 +27,7 @@ function App() {
             <Navigation />
             <div className={"lg:relative w-5/6 w-full"}>
                 <Switch>
+                    <Route path={"/view/dashboard"} component={Dashboard} />
                     {/*<Route path={"/"} component={ViewComponent} />*/}
                     {/*<Route path={"/registration"} component={Registration} />*/}
                     {/*<Route path={"/view/vendors/update/:id"} component={VendorUpdateDepricated} />*/}

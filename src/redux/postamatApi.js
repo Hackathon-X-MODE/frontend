@@ -274,7 +274,11 @@ export const {
     useLazyGetOrdersListQuery,
     useConfirmTicketByIdMutation,
 
+
     useCreateCommentMutation,
+
+    useGetOrdersListQuery,
+    useLazyGetTicketsQuery,
 
     useGetOrdersListQuery,
     useLazyGetTicketsQuery,
