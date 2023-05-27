@@ -3,12 +3,10 @@ import {
     useAddVendorMutation,
     useGetVendorsQuery
 } from "../../redux/postamatApi";
-import { Link } from "react-router-dom";
 
 import reg from "../../assets/ico/vendors/reg.svg";
 import search from "../../assets/ico/vendors/search.svg";
 import VendorUpdate from "../vendor/VendorUpdate";
-import Input from "../form/Input";
 import VendorCreate from "../vendor/VendorCreate";
 import Loader from "../loader/Loader";
 
