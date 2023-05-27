@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {default as ReactSelect} from "react-select";
 import Option from "../form/CustomInput";
 import {useState} from "react";
@@ -6,6 +6,7 @@ import {useState} from "react";
 
 
 const Delivery = (props) => {
+    const {cm} = props
     const customStyles = {
         option: (defaultStyles, state) => ({
             ...defaultStyles,
@@ -28,11 +29,23 @@ const Delivery = (props) => {
     };
 
     const moveToPlace = [
-        { value: 'MARKET_PLACE', label: 'Направить в Маркетплэйс' },
         { value: 'POSTAMAT', label: `Технический отдел "Московский постомат"` },
+        { value: 'MARKET_PLACE', label: 'Направить в Маркетплэйс' },
     ]
 
+
+    console.log(cm)
+    // const crop = Object.entries(moveToPlace).map(([k,v]) => {
+    //     if (moveToPlace[k].value === cm[v] ) {
+    //         return {
+    //
+    //         }
+    //     }
+    // })
+
     const [selectState, setSelectState] = useState()
+
+
 
 
     const handleReactSelectChange = (e, id) => {
@@ -42,6 +55,11 @@ const Delivery = (props) => {
     }
     // console.log(selectState)
 
+    const crop = Object.entries(moveToPlace).filter(([k,v], idx)=> {
+        if (moveToPlace[k].value === cm[idx]) return k
+    })
+
+    console.log(crop)
     return(
         <div className={'flex flex-col mt-[25px] gap-2'}>
             <span>Место отправки</span>

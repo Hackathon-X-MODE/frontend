@@ -121,9 +121,10 @@ const Ticket = (props) => {
             if (commentsSuccess) {
 
                 setComments(
-                    comments.map(com => {
+                    comments.map((com) => {
                         return {
                             ...com,
+                            // problemOwners: ticketData[0]?.comments[idx].problemOwners,
                             commentTypes: Object.entries(com.commentTypes).map(([k, v]) => {
                                 return {
                                     name: k,
@@ -476,7 +477,7 @@ const Ticket = (props) => {
                             <div
                                 className={'flex flex-col w-full text-white text-[18px] gap-[27px] px-[30px]  bg-[#21243A] rounded-bl-[15px] rounded-br-[15px] pb-[10px]'}>
                                 {
-                                    comments_.map(comment => {
+                                    comments_.map((comment,idx) => {
                                         return (
                                             <div key={comment.id} className={'mt-[32px] flex w-full gap-[29px]'}>
                                                 <img className={'self-start'} src={profilePic}/>
@@ -583,7 +584,7 @@ const Ticket = (props) => {
                                                         ticketData.ticketStatus === 'OPEN'
                                                             ?
                                                             <>
-                                                                <Delivery comment={comment.id}
+                                                                <Delivery  cm={ticketData.comments[idx].problemOwners} comment={comment.id}
                                                                           handleObjectDelivery={handleObjectDelivery}/>
                                                                 <div className={'mt-[60px] flex justify-between'}>
                                                                     <button
