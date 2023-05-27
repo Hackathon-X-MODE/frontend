@@ -1,11 +1,9 @@
 import React from 'react';
 import {default as ReactSelect} from "react-select";
 import Option from "../form/CustomInput";
-import {useState} from "react";
 
 
-
-const Delivery = (props) => {
+const Delivery = ({problemOwners, update}) => {
     const customStyles = {
         option: (defaultStyles, state) => ({
             ...defaultStyles,
@@ -24,38 +22,28 @@ const Delivery = (props) => {
             border: "1px solid #5C5F7E",
             boxShadow: "none",
         }),
-        singleValue: (defaultStyles) => ({ ...defaultStyles, color: "#fff" }),
+        singleValue: (defaultStyles) => ({...defaultStyles, color: "#fff"}),
     };
-
-    const moveToPlace = [
-        { value: 'MARKET_PLACE', label: 'Направить в Маркетплэйс' },
-        { value: 'POSTAMAT', label: `Технический отдел "Московский постомат"` },
-    ]
-
-    const [selectState, setSelectState] = useState()
-
-
-    const handleReactSelectChange = (e, id) => {
-        console.log(e)
-        setSelectState(e)
-        props.handleObjectDelivery(id, e.map(item => item.value))
-    }
-    // console.log(selectState)
-
-    return(
+    console.log("AAA", problemOwners)
+    return (
         <div className={'flex flex-col mt-[25px] gap-2'}>
             <span>Место отправки</span>
             <ReactSelect
                 name={''}
                 isMulti
                 placeholder={'Выберете место отправки'}
-                options={moveToPlace}
+                options={
+                    [
+                        {value: 'POSTAMAT', label: `Технический отдел "Московский постомат"`},
+                        {value: 'MARKET_PLACE', label: 'Направить в Маркетплэйс'},
+                    ]
+                }
                 components={{
                     Option
                 }}
                 styles={customStyles}
-                onChange={(e)=>handleReactSelectChange(e, props.comment)}
-                value={selectState}
+                onChange={(e) => update(e)}
+                value={problemOwners}
             />
         </div>
     )
