@@ -63,7 +63,8 @@ const Ticket = (props) => {
         {
             data: ticket = [],
             isLoading: ticketLoading,
-            isSuccess: ticketSuccess
+            isSuccess: ticketSuccess,
+            isFetching: ticketFetching
         } = useGetTicketsByIdQuery(+ticketId);
     const [getVendorById, {data: vendor, isSuccess: vendorSuccess}] = useLazyGetVendorByIdQuery()
     const [
@@ -114,10 +115,7 @@ const Ticket = (props) => {
 
 
     useEffect(() => {
-        // if (isUpdateComment) {
-        //     console.log('123')
-        // }
-        //     getTicketsById(+ticketId)
+
         if (ticketSuccess) {
             setTicketData(...ticket);
             getCommentsByOrderId(ticket[0].orderId);
@@ -126,7 +124,7 @@ const Ticket = (props) => {
             if (commentsSuccess) {
 
                 const ticketComment = ticket[0].comments;
-                console.log("C", ticket[0])
+                // console.log("C", ticket[0])
                 setComments(
                     comments.map((com) => {
 
@@ -168,7 +166,7 @@ const Ticket = (props) => {
                 getVendorById(order[0]?.vendorId)
 
                 if (vendorSuccess) {
-                    console.log(vendorSuccess)
+                    // console.log(vendorSuccess)
 
                     setSingleVendor(vendor)
                 }
@@ -177,7 +175,7 @@ const Ticket = (props) => {
                 if (order[0].postamatId) {
                     getVendorsByPostamatId(order[0].postamatId);
                     if (vendorsSuccess) {
-                        console.log(vendorsSuccess)
+                        // console.log(vendorsSuccess)
                         setTicketData((prevState) => ({
                             ...prevState,
                             vend: vendors
@@ -204,6 +202,7 @@ const Ticket = (props) => {
             }
         }
     }, [
+        ticketFetching,
         ticketSuccess,
         singleVendor?.id,
         commentsSuccess,
@@ -318,15 +317,6 @@ const Ticket = (props) => {
         'NEUTRAL': 'Нейтральный',
     }
 
-    // OPEN,
-    //     CANCELED,
-    //
-    //     PENDING,
-    //
-    //     COMPLETED
-    // 'CANCELED': 'Отменен',
-    //     'PENDING': 'В обработке',
-    //     'COMPLETED': 'Выполнен',
     const ticketStatusLabels = {
         'OPEN': {
             name: 'Открыт', bg: 'bg-blue-500'
@@ -343,13 +333,6 @@ const Ticket = (props) => {
         // {'OPEN': name: 'Открыт',}
     }
 
-
-    // const rates = _.range(5 - Number(ticketData?.coms?.rate))
-
-    console.log(ticketData)
-    console.log(singleVendor)
-    // console.log('TD',ticketData?.coms?.rate)
-    // console.log(rates)
     return (
         <>
             {
