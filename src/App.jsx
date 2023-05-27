@@ -13,6 +13,7 @@ import PostamatCreate from "./components/postamat/PostamatCreate";
 import Ticket from "./components/ticket/Ticket";
 import Tickets from "./components/ticket/Tickets";
 import Files from "./components/export/Files";
+import Dashboard from "./components/dashboard/Dashboard";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
             <Navigation />
             <div className={"relative w-5/6"}>
                 <Switch>
+                    <Route path={"/view/dashboard"} component={Dashboard} />
                     {/*<Route path={"/"} component={ViewComponent} />*/}
                     {/*<Route path={"/registration"} component={Registration} />*/}
                     {/*<Route path={"/view/vendors/update/:id"} component={VendorUpdateDepricated} />*/}

@@ -10,6 +10,7 @@ import comments from "../../assets/ico/comments.svg";
 const Navigation = () => {
     const [selected, setSelected] = useState();
     const links = [
+        { id: 0, linkTo: "/view/dashboard", source: vendors, title: "Главная" },
         { id: 1, linkTo: "/view/vendors", source: vendors, title: "Вендоры" },
         { id: 2, linkTo: "/view/tickets", source: tickets, title: "Обращения" },
         {
