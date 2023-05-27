@@ -265,12 +265,8 @@ export const {
     useLazyGetVendorsByListQuery,
     useLazyGetOrdersListQuery,
     useConfirmTicketByIdMutation,
-
-
-
     useGetOrdersListQuery,
-    useLazyGetTicketsQuery
-
+    useLazyGetTicketsQuery,
     useGetExportsQuery,
     useRequestExportsMutation
   
