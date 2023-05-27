@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
     ArcElement,
     CategoryScale,
@@ -16,6 +16,7 @@ import {
     useGetTicketsStatusPerDayQuery,
     useGetTicketsStatusQuery
 } from "../../redux/postamatApi";
+import Loader from "../loader/Loader";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title);
 const data = {
@@ -74,15 +75,16 @@ export const options = {
     },
 };
 const Dashboard = (props) => {
+
     //RTK
     const {data: ticketStatus, isSuccess: ticketSuccess} = useGetTicketsStatusQuery()
     const {data: perDay,isSuccess: perDaySuccess} = useGetTicketsStatusPerDayQuery()
     const {data: commentsStatus, isSuccess: commentsSuccess} = useGetCommentsStatusQuery()
-    //ticket status
 
-    if (ticketSuccess) data.datasets[0].data = Object.entries(ticketStatus).map(([, v]) => v)
+    // useEffect(() => {
+    //
+    // },[ticketSuccess, perDaySuccess, commentsSuccess])
 
-    //perDay
 
     const dataPerDay = {
         labels: [],
@@ -95,6 +97,13 @@ const Dashboard = (props) => {
             },
         ],
     };
+
+    if (!ticketSuccess || !perDaySuccess || !commentsSuccess) return <Loader />
+
+    if (ticketSuccess) data.datasets[0].data = Object.entries(ticketStatus).map(([, v]) => v)
+
+    //perDay
+
     if (perDaySuccess) {
         dataPerDay.labels = perDay.map(v => v.localDate)
         dataPerDay.datasets[0].data = perDay.map(v => v.count)
