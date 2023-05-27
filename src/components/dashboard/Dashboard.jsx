@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {
     ArcElement,
     CategoryScale,
@@ -10,15 +10,19 @@ import {
     Title,
     Tooltip
 } from 'chart.js';
-import {Doughnut, Line} from 'react-chartjs-2';
 import {
     useGetCommentsStatusQuery,
     useGetTicketsStatusPerDayQuery,
     useGetTicketsStatusQuery
 } from "../../redux/postamatApi";
 import Loader from "../loader/Loader";
+import ExportComponent from "./ExportComponent";
+import ImportComponent from "./ImportComponent";
+import LineComponent from "./LineComponent";
+import Statistics from "./Statistics";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title);
+
 const data = {
     labels: ['Открыто', 'Ожидает', 'Просрочено'],
     datasets: [
@@ -26,16 +30,11 @@ const data = {
             label: 'Количество тикетов',
             data: [],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)'
+                '#F62E46',
+                '#D9D9D9',
+                '#646675'
             ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)'
-            ],
-            borderWidth: 1,
+            borderColor: 'transparent'
         },
     ],
 };
@@ -48,16 +47,12 @@ const dataComments = {
             label: 'Количество комментариев',
             data: [],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)'
+                '#F62E46',
+                '#D9D9D9',
+                '#646675'
             ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)'
-            ],
-            borderWidth: 1,
+            // borderWidth: 1,
+            borderColor: 'transparent'
         },
     ],
 };
@@ -76,15 +71,9 @@ export const options = {
 };
 const Dashboard = (props) => {
 
-    //RTK
     const {data: ticketStatus, isSuccess: ticketSuccess} = useGetTicketsStatusQuery()
     const {data: perDay,isSuccess: perDaySuccess} = useGetTicketsStatusPerDayQuery()
     const {data: commentsStatus, isSuccess: commentsSuccess} = useGetCommentsStatusQuery()
-
-    // useEffect(() => {
-    //
-    // },[ticketSuccess, perDaySuccess, commentsSuccess])
-
 
     const dataPerDay = {
         labels: [],
@@ -92,8 +81,9 @@ const Dashboard = (props) => {
             {
                 label: 'Тикет',
                 data: [],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: 'rgba(246, 46, 70, 0.5)',
+                backgroundColor: 'rgba(246, 46, 70, 1)',
+                border: 'none'
             },
         ],
     };
@@ -116,54 +106,21 @@ const Dashboard = (props) => {
     }
     return (
         <>
-            <div className={'w-full columns-2'}>
-                <div>
-                    <Doughnut options={
-                        {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top'
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Тикеты по статусам',
-                                },
-                            },
-                        }
-                    } data={data}/>
+            <div className={'flex gap-[20px] ml-[77px] text-white text-[18px] mt-[48px] font-primary '}>
+                <div className={'flex flex-col items-center  '}>
+                    {/*//ИМПОРТ*/}
+                    <ImportComponent />
+                    {/*//Экспорт*/}
+                    <ExportComponent />
                 </div>
-                <div>
-                    <Line options={
-                        {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top'
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Тикеты по дням',
-                                },
-                            },
-                        }
-                    } data={dataPerDay}/>
-                </div>
-                <div>
-                    <Doughnut options={
-                        {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top'
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Комментария по настрою',
-                                },
-                            },
-                        }
-                    } data={dataComments}/>
+                {/*//Статистика*/}
+                <div className={'flex flex-col w-[1095px]'}>
+                    {/*//По статусу*/}
+                    <Statistics data={data} dataComments={dataComments} />
+                    <div className={'h-[535px] w-full rounded-[15px] px-[30px] py-[30px] bg-[#21243A] mt-[30px]'}>
+                        <button className={'  py-[10px] px-[20px] text-[18px] border rounded-[15px] border-[#F62E46]'}>Датасет</button>
+                        <LineComponent perdDay={dataPerDay}/>
+                    </div>
                 </div>
             </div>
         </>
