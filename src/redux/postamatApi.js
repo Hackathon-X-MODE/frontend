@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 export const postamatApi = createApi({
     reducerPath: "postamatApi",
-    tagTypes: ["Vendors", "Postamates", "Tickets", "TicketsMutation", "Comments", "Orders"],
-    baseQuery: fetchBaseQuery({ baseUrl: "https://back-hack.bigtows.org/" }),
+    tagTypes: ["Vendors", "Postamates", "Exports", "Tickets", "TicketsMutation", "Comments", "Orders"],
+    baseQuery: fetchBaseQuery({ baseUrl: "https://back-hack.bigtows.org/"}),
     endpoints: (build) => ({
         getVendors: build.query({
             query: () => `vendors`,
@@ -292,6 +292,7 @@ export const postamatApi = createApi({
         getCommentsStatus: build.query({
             query: () => `comments/stats/status `
         })
+
     })
 });
 
@@ -336,6 +337,7 @@ export const {
     useGetCommentsStatusQuery,
 
     useGetExportsQuery,
-    useRequestExportsMutation
+    useRequestExportsMutation,
+
   
 } = postamatApi;
