@@ -18,8 +18,9 @@ const TicketPost = forwardRef((props, ref) => {
            return null
        }
     })
+    const crop = color.filter((i) => i !== null)
     return(
-        <Link to={`/view/tickets/${props.id}`} className={`${color[0]}   w-full py-[20px]  flex items-center text-[32px] rounded-[15px]`} ref={ref}>
+        <Link to={`/view/tickets/${props.id}`} className={`${crop}   w-full py-[20px]  flex items-center text-[32px] rounded-[15px]`} ref={ref}>
             <div className={'flex'}>
                 <div className={'w-[166px] ml-[45px]'}>#{props.id}</div>
                 <div className={'w-[236px] ml-[115px]'}>{props.name}</div>
