@@ -3,8 +3,8 @@ import download from "../../assets/ico/dashboard/download.svg";
 import {useGetExportsQuery, useRequestExportsMutation} from "../../redux/postamatApi";
 
 const ExportComponent = (props) => {
-    const {data = [], isLoading} = useGetExportsQuery({
-        pollingInterval: 2000
+    const {data = [], isLoading} = useGetExportsQuery('0',{
+        pollingInterval: 5000
     })
     const [updateExports, isFetching, isSuccess] = useRequestExportsMutation()
     const [load, setLoad] = useState(false)
@@ -32,7 +32,7 @@ const ExportComponent = (props) => {
                     data.map((files) => {
                         return(
                             <div key={files.id} className={'flex justify-between items-center text-[18px] mt-[15px]'}>
-                                <div className={'w-[215px] h-[60px] bg-[#373A54] rounded-[15px] flex justify-center items-center'}>{new Date(files.createDate).toLocaleDateString()}</div>
+                                <div className={'w-[215px] h-[60px] bg-[#373A54] rounded-[15px] flex justify-center items-center'}>{new Date(files.createDate).toLocaleString()}</div>
                                 {
                                     files.path === null
                                         ? <div className={'bg-[#F62E46]  rounded-[10px] w-[40px] h-[40px]' }>
