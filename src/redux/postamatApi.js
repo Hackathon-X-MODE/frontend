@@ -243,6 +243,19 @@ export const postamatApi = createApi({
             }),
             invalidatesTags: [{ type: "Exports", id: "LIST" }]
         }),
+
+        /**
+         * dashboard
+         */
+        getTicketsStatus: build.query({
+            query: () => `tickets/stats/status`,
+        }),
+        getTicketsStatusPerDay: build.query({
+            query: () => `tickets/stats/perDay?from=2020-12-12`
+        }),
+        getCommentsStatus: build.query({
+            query: () => `comments/stats/status `
+        })
     })
 });
 
@@ -280,8 +293,9 @@ export const {
     useGetOrdersListQuery,
     useLazyGetTicketsQuery,
 
-    useGetOrdersListQuery,
-    useLazyGetTicketsQuery,
+    useGetTicketsStatusQuery,
+    useGetTicketsStatusPerDayQuery,
+    useGetCommentsStatusQuery,
 
     useGetExportsQuery,
     useRequestExportsMutation

@@ -11,6 +11,11 @@ import {
     Tooltip
 } from 'chart.js';
 import {Doughnut, Line} from 'react-chartjs-2';
+import {
+    useGetCommentsStatusQuery,
+    useGetTicketsStatusPerDayQuery,
+    useGetTicketsStatusQuery
+} from "../../redux/postamatApi";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title);
 const data = {
@@ -69,60 +74,37 @@ export const options = {
     },
 };
 const Dashboard = (props) => {
+    //RTK
+    const {data: ticketStatus, isSuccess: ticketSuccess} = useGetTicketsStatusQuery()
+    const {data: perDay,isSuccess: perDaySuccess} = useGetTicketsStatusPerDayQuery()
+    const {data: commentsStatus, isSuccess: commentsSuccess} = useGetCommentsStatusQuery()
     //ticket status
-    const mockTicketStats = {
-        "open": 205912,
-        "pending": 4,
-        "deadline": 0
-    }
-    data.datasets[0].data = Object.entries(mockTicketStats).map(([, v]) => v)
+
+    if (ticketSuccess) data.datasets[0].data = Object.entries(ticketStatus).map(([, v]) => v)
 
     //perDay
-    const mockTicketPerDay = [
-        {
-            "count": 189,
-            "localDate": "2023-05-21"
-        },
-        {
-            "count": 4582,
-            "localDate": "2023-05-22"
-        },
-        {
-            "count": 309,
-            "localDate": "2023-05-23"
-        },
-        {
-            "count": 6888,
-            "localDate": "2023-05-25"
-        },
-        {
-            "count": 154090,
-            "localDate": "2023-05-26"
-        },
-        {
-            "count": 39860,
-            "localDate": "2023-05-24"
-        }
-    ]
+
     const dataPerDay = {
-        labels: mockTicketPerDay.map(v => v.localDate),
+        labels: [],
         datasets: [
             {
                 label: 'Тикет',
-                data: mockTicketPerDay.map(v => v.count),
+                data: [],
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
         ],
     };
+    if (perDaySuccess) {
+        dataPerDay.labels = perDay.map(v => v.localDate)
+        dataPerDay.datasets[0].data = perDay.map(v => v.count)
+    }
 
     //comment status
-    const mockCommentStats = {
-        "negative": 192509,
-        "positive": 217255,
-        "neutral": 2671
+
+    if (commentsSuccess) {
+        dataComments.datasets[0].data = Object.entries(commentsStatus).map(([, v]) => v)
     }
-    dataComments.datasets[0].data = Object.entries(mockCommentStats).map(([, v]) => v)
     return (
         <>
             <div className={'w-full columns-2'}>
