@@ -40,7 +40,7 @@ const Navigation = () => {
     return (
         <nav
             className={
-                "sticky top-[0px] w-[330px]  flex flex-col h-screen  bg-[#21243A]  pt-[41px] font-primary text-white text-[18px]"
+                "sticky lg:top-[0px] lg:w-[330px]  flex flex-col h-screen  bg-[#21243A]  lg:pt-[41px] font-primary text-white text-[18px] hidden lg:block "
             }
         >
             <img className={"px-[38px] w-fit h-fit"} src={logo} />
