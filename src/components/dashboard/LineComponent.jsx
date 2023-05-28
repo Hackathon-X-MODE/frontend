@@ -3,7 +3,7 @@ import {Line} from "react-chartjs-2";
 
 const LineComponent = ({perdDay}) => {
     return(
-        <div className={' w-full h-[400px] translate-x-5 translate-y-5'}>
+        <div className={' w-[800px] h-full translate-x-5 translate-y-5'}>
             <Line options={
                 {
                     scales: {

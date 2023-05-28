@@ -34,7 +34,7 @@ const Feedback = (props) => {
     }
     if (isSuccess) return <Loader />
     return(
-        <div className={'w-full flex flex-col text-[18px] text-white'}>
+        <div className={'w-full flex flex-col text-[18px] text-white font-primary'}>
             <div className={'mt-[59px] mb-[29px] px-[30px]'}>
                 <div className={'flex items-center justify-center'}>
                     <img src={mobileLogo} />
@@ -53,7 +53,7 @@ const Feedback = (props) => {
 
                 <div className={'flex flex-col mt-[30px]'}>
                     <span className={'text-[32px]'}>Мы ценим <br />ваше мнение!</span>
-                    <div className={'mt-[33px] rounded py-[20px] px-[45px] bg-[#21243A] flex gap-[10px] items-center justify-center'}>
+                    <div className={'mt-[33px] rounded-[15px] py-[20px] px-[45px] bg-[#21243A] flex gap-[10px] items-center justify-center'}>
 
                         {
                             rate
@@ -110,7 +110,7 @@ const Feedback = (props) => {
 
                     <div className={'flex flex-col gap-[20px] mt-[20px]'}>
                         <div className={'w-[60px] h-[80px] bg-[#21243A] flex justify-center rounded-[10px]'}>
-                            <img className={'translate-x-0.5'} src={photo}/>
+                            <img  className={'translate-y-6 translate-x-0.5 w-[30px] h-[30px]'} src={photo}/>
                         </div>
                         <span className={'text-[#5C5F7E] text-[13px]'}>Максимум 3 фото</span>
                     </div>

@@ -112,7 +112,7 @@ const Dashboard = (props) => {
     }
     return (
         <>
-            <div className={'flex gap-[20px] ml-[77px] text-white text-[18px] mt-[48px] font-primary '}>
+            <div className={'flex gap-[20px] ml-[77px] text-white text-[18px] mt-[48px] font-primary'}>
                 <div className={'flex flex-col items-center  '}>
                     {/*//ИМПОРТ*/}
                     <ImportComponent />
@@ -123,8 +123,8 @@ const Dashboard = (props) => {
                 <div className={'flex flex-col w-[1095px]'}>
                     {/*//По статусу*/}
                     <Statistics data={data} dataComments={dataComments} />
-                    <div className={'h-[535px] w-full rounded-[15px] px-[30px] py-[30px] bg-[#21243A] mt-[30px]'}>
-                        <button className={'  py-[10px] px-[20px] text-[18px] border rounded-[15px] border-[#F62E46]'}>Открытые обращения</button>
+                    <div className={'h-[535px]  rounded-[15px] px-[30px] py-[30px] bg-[#21243A] mt-[30px]'}>
+                        <button className={'  py-[10px] px-[20px] text-[18px] border-2 rounded-[15px] border-[#F62E46]'}>Открытые обращения</button>
                         <LineComponent perdDay={dataPerDay}/>
                     </div>
                 </div>

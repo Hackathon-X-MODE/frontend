@@ -29,7 +29,7 @@ const VendorUpdate = ({ vendor, handleUpdateVendor }) => {
     };
 
     const handleBtn = async (e) => {
-        if (e.target.innerHTML === "Редактивровать") {
+        if (e.target.innerHTML === "Редактировать") {
             setActive(!isActive);
         } else {
             if (vendorData) {
@@ -79,7 +79,7 @@ const VendorUpdate = ({ vendor, handleUpdateVendor }) => {
                         </div>
                         <img src={edit} className={"self-start"} />
                     </div>
-                    <div className={"px-[20px] mt-[30px]"}>
+                    <div className={"px-[20px] mt-[25px]"}>
                         <div className={"flex flex-col "}>
                             <div className={"flex flex-col gap-[5px] "}>
                                 <label
@@ -166,7 +166,7 @@ const VendorUpdate = ({ vendor, handleUpdateVendor }) => {
                                     "py-[18px] px-[25px] w-[196px] h-[60px] text-white text-[18px] bg-[#F62E46] rounded-[15px] hover:shadow-primary transition duration-500 ease-in-out"
                                 }
                             >
-                                {isActive ? "Редактивровать" : "Обновить"}
+                                {isActive ? "Редактировать" : "Обновить"}
                             </button>
                             <Link
                                 to={`/view/vendors/${vendor.id}`}

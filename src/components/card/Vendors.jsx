@@ -67,41 +67,43 @@ const Vendors = (props) => {
         <>
             <div
                 className={
-                    "w-full relative flex flex-col gap-5 px-[40px] py-[48px] font-primary max-h-screen overflow-y-scroll z-0"
+                    "relative flex flex-col gap-5  py-[48px] ml-[77px] mr-[130px] font-primary max-h-screen  z-0"
                 }
             >
-                <div className={"flex justify-between"}>
+                <div className={"flex justify-between "}>
                     <button
                         onClick={() =>
                             setRegistrationVendorForm(!isRegistrationVendor)
                         }
                         className={
-                            "w-max-[290px] h-[60px] flex gap-[25px] text-white px-[22px] pr-[36px] pl-[18px] border rounded-[15px] text-[18px] items-center hover:opacity-70 transition duration-500 ease-in-out"
+                            "w-[290px] h-[60px]  flex gap-[20px] text-white px-[22px] pr-[36px] pl-[18px] border rounded-[15px] text-[18px] items-center  hover:opacity-70 transition duration-500 ease-in-out"
                         }
                     >
-                        <img src={reg} />
-                        <span className={"text-[18px] translate-y-0.5 "}>
+                        <div className={'flex w-full items-center justify-between'}>
+                            <img className={'-translate-y-0.5 translate-x-2'} src={reg} />
+                            <span className={"text-[18px] translate "}>
                             Регистрация вендора
                         </span>
+                        </div>
                     </button>
                     <div
                         className={
                             " border w-[450px] h-[60px] rounded-[15px] flex gap-5 items-center px-[20px] py-[20px] border-[#6C7094] text-white"
                         }
                     >
-                        <img src={search} />
+                        <img className={' '} src={search} />
                         <input
                             className={
-                                "outline-0 bg-transparent translate-y-0.5 text-[18px]"
+                                "outline-0 bg-transparent text-[18px]"
                             }
-                            placeholder={"Поиск по вендорма..."}
+                            placeholder={"Поиск по вендорам..."}
                         />
                     </div>
                 </div>
                 {data && (
                     <ul
                         className={
-                            "w-full flex gap-[20px] justify-between flex-wrap "
+                            "w-full flex gap-[40px] justify-between flex-wrap "
                         }
                     >
                         {data.map((vendor) => {
