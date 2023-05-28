@@ -76,25 +76,27 @@ const Vendors = (props) => {
                             setRegistrationVendorForm(!isRegistrationVendor)
                         }
                         className={
-                            "w-max-[290px] h-[60px] flex gap-[25px] text-white px-[22px] pr-[36px] pl-[18px] border rounded-[15px] text-[18px] items-center hover:opacity-70 transition duration-500 ease-in-out"
+                            "w-[290px] h-[60px]  flex gap-[20px] text-white px-[22px] pr-[36px] pl-[18px] border rounded-[15px] text-[18px] items-center  hover:opacity-70 transition duration-500 ease-in-out"
                         }
                     >
-                        <img src={reg} />
-                        <span className={"text-[18px] translate-y-0.5 "}>
+                        <div className={'flex w-full items-center justify-between'}>
+                            <img className={'-translate-y-0.5 translate-x-2'} src={reg} />
+                            <span className={"text-[18px] translate "}>
                             Регистрация вендора
                         </span>
+                        </div>
                     </button>
                     <div
                         className={
                             " border w-[450px] h-[60px] rounded-[15px] flex gap-5 items-center px-[20px] py-[20px] border-[#6C7094] text-white"
                         }
                     >
-                        <img src={search} />
+                        <img className={' '} src={search} />
                         <input
                             className={
-                                "outline-0 bg-transparent translate-y-0.5 text-[18px]"
+                                "outline-0 bg-transparent text-[18px]"
                             }
-                            placeholder={"Поиск по вендорма..."}
+                            placeholder={"Поиск по вендора..."}
                         />
                     </div>
                 </div>

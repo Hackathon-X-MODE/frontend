@@ -20,7 +20,7 @@ function App() {
             }
         >
             <Navigation />
-            <div className={"lg:relative w-5/6 w-full overflow-y-hidden"}>
+            <div className={"lg:relative w-5/6 w-full overflow-y-scroll"}>
                 <Switch>
                     <Route exact path={"/"} component={Dashboard} />
                     <Route path={"/view/postamates"} component={Postamat} />
