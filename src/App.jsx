@@ -10,6 +10,7 @@ import Tickets from "./components/ticket/Tickets";
 import Files from "./components/export/Files";
 import Feedback from "./components/Mobile/Feedback";
 import Dashboard from "./components/dashboard/Dashboard";
+import Comments from "./components/card/Comments";
 
 
 function App() {
@@ -23,11 +24,12 @@ function App() {
             <div className={"lg:relative w-5/6 w-full overflow-y-scroll"}>
                 <Switch>
                     <Route exact path={"/"} component={Dashboard} />
-                    <Route path={"/view/postamates"} component={Postamat} />
+                    <Route path={"/view/postamates/:postamatId?"} component={Postamat} />
                     <Route path={"/view/vendors/"} component={Vendors} />
                     <Route path={"/view/tickets/:ticketId"} component={Ticket} />
                     <Route path={"/view/tickets/"} component={Tickets} />
                     <Route path={"/view/files/"} component={Files} />
+                    <Route path={"/view/comments"} component={Comments} />
                     <Route path={"/mobile/:code"} component={Feedback} />
                 </Switch>
             </div>
