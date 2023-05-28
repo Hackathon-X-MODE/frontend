@@ -71,9 +71,15 @@ export const options = {
 };
 const Dashboard = (props) => {
 
-    const {data: ticketStatus, isSuccess: ticketSuccess} = useGetTicketsStatusQuery()
-    const {data: perDay,isSuccess: perDaySuccess} = useGetTicketsStatusPerDayQuery()
-    const {data: commentsStatus, isSuccess: commentsSuccess} = useGetCommentsStatusQuery()
+    const {data: ticketStatus, isSuccess: ticketSuccess} = useGetTicketsStatusQuery('0',{
+        pollingInterval: 5000
+    })
+    const {data: perDay,isSuccess: perDaySuccess} = useGetTicketsStatusPerDayQuery('0',{
+        pollingInterval: 5000
+    })
+    const {data: commentsStatus, isSuccess: commentsSuccess} = useGetCommentsStatusQuery('0',{
+        pollingInterval: 5000
+    })
 
     const dataPerDay = {
         labels: [],
@@ -118,7 +124,7 @@ const Dashboard = (props) => {
                     {/*//По статусу*/}
                     <Statistics data={data} dataComments={dataComments} />
                     <div className={'h-[535px] w-full rounded-[15px] px-[30px] py-[30px] bg-[#21243A] mt-[30px]'}>
-                        <button className={'  py-[10px] px-[20px] text-[18px] border rounded-[15px] border-[#F62E46]'}>Датасет</button>
+                        <button className={'  py-[10px] px-[20px] text-[18px] border rounded-[15px] border-[#F62E46]'}>Открытые обращения</button>
                         <LineComponent perdDay={dataPerDay}/>
                     </div>
                 </div>

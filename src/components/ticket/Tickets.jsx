@@ -62,7 +62,7 @@ const Tickets = (props) => {
                 initialData &&
                     <div  className={'overflow-y-scroll w-[1360px] h-[1080px] flex ml-[70px] mt-[50px] flex bg-[#21243A] rounded-[15px] rounded-tr-[0px]'}>
                         <div className={'flex w-full flex-col gap-2  text-white text-[18px] px-[30px] py-[24px]'}>
-                            <div className={'flex '}>
+                            <div className={'flex sticky top-[0px] bg-[#21243A]'}>
                                 <div className={'w-full flex mb-[22px] '}>
                                     <div className={'w-[58px] ml-[45px]'}>Номер</div>
                                     <div className={'w-[66px] ml-[223px]'}>Вендор</div>

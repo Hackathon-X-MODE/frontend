@@ -3,7 +3,7 @@ import {useGetImportMutation} from "../../redux/fileApi";
 
 const ImportComponent = (props) => {
 
-    const [getImport, {isSuccess, isError: fileError, isFetching}] = useGetImportMutation()
+    const [getImport] = useGetImportMutation()
 
     const ref = useRef()
 
@@ -16,14 +16,11 @@ const ImportComponent = (props) => {
         }
     };
 
-    useEffect(() => {
-        if (fileError)  alert('Ошибка при загрузке')
-    },[fileError])
+
 
     const handleBtn = () => {
         ref.current.click()
     }
-
 
     return(
         <div className={'flex flex-col bg-[#21243A] rounded-[15px] w-[315px] px-[20px]'}>
