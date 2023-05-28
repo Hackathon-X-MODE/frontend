@@ -6,8 +6,8 @@ import {
 
 import reg from "../../assets/ico/vendors/reg.svg";
 import search from "../../assets/ico/vendors/search.svg";
-import VendorUpdate from "../vendor/VendorUpdate";
-import VendorCreate from "../vendor/VendorCreate";
+import VendorUpdate from "./VendorUpdate";
+import VendorCreate from "./VendorCreate";
 import Loader from "../loader/Loader";
 
 const Vendors = (props) => {
