@@ -332,6 +332,10 @@ const Ticket = (props) => {
         }
         // {'OPEN': name: 'Открыт',}
     }
+    let postamatVendor;
+    if (ticketData.vend && vendorsList){
+        postamatVendor = vendorsList.find(vendor=> vendor.id === ticketData.vend[0].vendorId)
+    }
 
     return (
         <>
@@ -682,10 +686,7 @@ const Ticket = (props) => {
                                     <div className={'flex flex-col'}>
                                         <span className={'text-[#6C7094]'}>Вендор</span>
                                         {
-                                            ticketData?.vendrList &&
-                                            ticketData.vendrList?.length === 2
-                                                ? <span>{ticketData.vendrList[1]?.name}</span>
-                                                : <span>{ticketData.vendrList[0]?.name}</span>
+                                            <span>{postamatVendor?.name}</span>
                                         }
 
                                     </div>
