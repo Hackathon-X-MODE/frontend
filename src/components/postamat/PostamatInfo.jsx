@@ -35,7 +35,8 @@ const PostamatInfo = ({isActive,postamatData}) => {
                     </div>
                     <a href={`${postamatData.videoLink}`} className={'bg-[#F62E46] py-[18px] rounded-[15px] mt-[60px] text-center'}>Трансляция с камеры</a>
                 </>
-                    : <Loader />
+                    :
+                    <Loader />
             }
 
         </div>
