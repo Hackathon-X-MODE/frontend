@@ -477,11 +477,11 @@ const Ticket = (props) => {
                                 <h2 className={'text-[32px]'}>История отзыва</h2>
                             </div>
                             <div
-                                className={'flex flex-col w-full text-white text-[18px] gap-[27px] px-[30px]  bg-[#21243A] rounded-bl-[15px] rounded-br-[15px] pb-[10px]'}>
+                                className={' flex flex-col w-full text-white text-[18px] gap-[27px] px-[30px]  bg-[#21243A] rounded-bl-[15px] rounded-br-[15px] pb-[10px]'}>
                                 {
                                     comments_.map((comment, idx) => {
                                         return (
-                                            <div key={comment.id} className={'mt-[32px] flex w-full gap-[29px]'}>
+                                            <div key={comment.id} className={'mt-[32px] flex w-full gap-[29px] py-[40px] border-opacity-30 border-b border-b-[#6C7094]'}>
                                                 <img className={'self-start'} src={profilePic}/>
                                                 <div className={'flex w-full flex-col'}>
                                                     <div className={'flex items-center justify-between'}>
@@ -566,10 +566,9 @@ const Ticket = (props) => {
                                                                                 return (
                                                                                     <div
                                                                                         key={`${commentType.name}_${idx}`}
-                                                                                        className={'flex gap-1 flex-col border-b border-b-[#6C7094] py-[10px]'}>
-                                                                                        <span
-                                                                                            className={'text-[#6C7094]'}>Категория</span>
-                                                                                        <span>{reference[commentType.name]}</span>
+                                                                                        className={'last:border-b-[#21243A] flex flex-col h-[100px] relative   gap-1 flex-col border-b border-b-[#6C7094] pt-[10px] pb-[10px]'}>
+                                                                                        <span className={'text-[#6C7094]'}>Категория</span>
+                                                                                        <span className={'flex items-center'}>{reference[commentType.name]}</span>
                                                                                     </div>
                                                                                 )
                                                                             })
@@ -581,7 +580,7 @@ const Ticket = (props) => {
                                                                                 return (
                                                                                     <div
                                                                                         key={`${commentType.value}_${idx}`}
-                                                                                        className={'flex gap-1 flex-col border-b border-b-[#6C7094] py-[10px]'}>
+                                                                                        className={'flex gap-1 h-[100px] flex-col border-b border-b-[#6C7094] pt-[10px] last:border-b-[#21243A]'}>
                                                                                         <span
                                                                                             className={'text-[#6C7094]'}>Подкатегория</span>
                                                                                         <span>{commentType.value.length === 0 ? '-' : commentType.value.map(v => reference[v]).join(', ')}</span>

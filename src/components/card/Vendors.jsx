@@ -96,7 +96,7 @@ const Vendors = (props) => {
                             className={
                                 "outline-0 bg-transparent text-[18px]"
                             }
-                            placeholder={"Поиск по вендора..."}
+                            placeholder={"Поиск по вендорам..."}
                         />
                     </div>
                 </div>

@@ -14,16 +14,20 @@ module.exports = {
                 third: "#E2E7EE"
             },
             boxShadow: {
-                primary: "0px 0px 30px rgba(246, 46, 70, 0.8)"
+                primary: "0px 0px 30px rgba(246, 46, 70, 0.8)",
+                blue: "0px 0px 20px rgba(36, 150, 255, 0.8)",
+                yel: "0px 0px 20px rgba(255, 153, 0, 0.8)",
+                green: "0px 0px 20px rgba(63, 201, 85, 0.8)",
+                gry: "0px 0px 20px #5D6182"
             },
             animation: {
                 load: "loading 2s linear infinite"
             },
             backgroundImage: {
                 'gradient-open': 'linear-gradient(90deg, #2496FF -60%, rgba(92, 95, 126, 0) 100%);',
-                'gradient-pending': 'linear-gradient(270deg, #FF9900 0%, rgba(92, 95, 126, 0) 100%)',
-                'gradient-closed': 'rgba(108, 112, 148, 0.8);',
-                'gradient-completed': 'linear-gradient(270deg, #3FC955 0%, rgba(92, 95, 126, 0) 100%)',
+                'gradient-pending': 'linear-gradient(90deg, #FF9900 -60%, rgba(92, 95, 126, 0) 100%)',
+                'gradient-closed': '#373A54',
+                'gradient-completed': 'linear-gradient(90deg, #3FC955 -60%, rgba(92, 95, 126, 0) 100%)',
             },
             keyframes: {
                 loading: {
