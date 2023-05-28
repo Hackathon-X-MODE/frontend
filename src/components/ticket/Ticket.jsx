@@ -349,10 +349,10 @@ const Ticket = (props) => {
                                     <div className={'flex gap-[13px] items-center'}>
                                         <h2 className={'text-[32px] text-white translate-y-0.5'}>#{ticketData.id}</h2>
                                         {
-                                            Object.entries(ticketStatusLabels).map(([k, v]) => {
+                                            Object.entries(ticketStatusLabels).map(([k, v],idx) => {
                                                 if (k === ticketData.ticketStatus) {
                                                     return (
-                                                        <span
+                                                        <span key={`asd_${idx}`}
                                                             className={`${ticketStatusLabels[k].bg} text-white rounded-[15px] px-[18px] pb-[1px] pt-[2px]`}>{ticketStatusLabels[k].name}</span>
                                                     )
                                                 }
@@ -413,18 +413,18 @@ const Ticket = (props) => {
                                             <span className={'text-white'}><b
                                                 className={'text-[#6C7094]'}>Срок</b></span>
                                             <span
-                                                className={'text-white'}>{new Date(ticketData?.ord[0].dateHistory?.assembling).toLocaleDateString()}</span>
+                                                className={'text-white'}>{ticketData?.ord[0].dateHistory?.assembling ? new Date(ticketData?.ord[0].dateHistory?.assembling).toLocaleDateString() : '-'}</span>
                                         </div>
                                         <div className={'flex gap-2'}>
                                             <span className={'text-white'}><b
                                                 className={'text-[#6C7094]'}>Поступление</b></span>
                                             <span
-                                                className={'text-white'}>{new Date(ticketData?.ord[0].dateHistory?.create).toLocaleDateString()}</span>
+                                                className={'text-white'}>{ ticketData?.ord[0].dateHistory?.create ? new Date(ticketData?.ord[0].dateHistory?.create).toLocaleDateString() : '-'}</span>
                                         </div>
                                         <div className={'flex gap-2'}>
                                             <span className={'text-white'}><b className={'text-[#6C7094]'}>Продление</b></span>
                                             <span
-                                                className={'text-white'}>{new Date(ticketData?.ord[0].dateHistory?.storage[0]).toLocaleDateString()}</span>
+                                                className={'text-white'}>{ticketData?.ord[0].dateHistory?.storage[0] ? new Date(ticketData?.ord[0].dateHistory?.storage[0]).toLocaleDateString() : '-'}</span>
                                         </div>
                                     </div>
 
@@ -497,7 +497,7 @@ const Ticket = (props) => {
                                                                         ?
                                                                         [...Array(5)].map(x => {
                                                                             return(
-                                                                                <div className={'w-[27px] h-[27px]'}>
+                                                                                <div  className={'w-[27px] h-[27px]'}>
                                                                                     <img src={star}/>
                                                                                 </div>
                                                                             )
@@ -507,7 +507,7 @@ const Ticket = (props) => {
                                                                             {
                                                                                 [...Array(comment.rate)].map(x => {
                                                                                     return(
-                                                                                        <div className={'w-[27px] h-[27px]'}>
+                                                                                        <div  className={'w-[27px] h-[27px]'}>
                                                                                             <img src={star}/>
                                                                                         </div>
                                                                                     )
@@ -640,7 +640,7 @@ const Ticket = (props) => {
                                     Object.entries(deliveryStatus).map(([k, v], idx) => {
                                         moment.locale('ru-RU')
                                         return (
-                                            <>
+                                            <div key={idx}>
                                                 {
                                                     deliveryStatus[k] &&
                                                     <div className={'flex gap-[16px] items-start h-[40px]'}>
@@ -652,7 +652,7 @@ const Ticket = (props) => {
                                                         </div>
                                                     </div>
                                                 }
-                                            </>
+                                            </div>
                                         )
                                     })
                                 }

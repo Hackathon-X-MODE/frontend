@@ -6,3 +6,12 @@
     font-family: Firs;
     src: url("fonts/TTFirsNeue-Regular.woff2") format("woff2");
 }
+
+
+[class*="copyrights-pane"] {
+    display: none !important;
+}
+
+[class*="ground-pane"] {
+    filter:  grayscale(1) invert(1);
+}

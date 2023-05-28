@@ -3,8 +3,8 @@ import { Route, Switch, Navigate } from "react-router-dom";
 
 import Navigation from "./components/navigation/Navigation";
 
-import Vendors from "./components/card/Vendors";
-import Postamat from "./components/card/Postamat";
+import Vendors from "./components/vendor/Vendors";
+import Postamat from "./components/postamat/Postamat";
 import Ticket from "./components/ticket/Ticket";
 import Tickets from "./components/ticket/Tickets";
 import Files from "./components/export/Files";

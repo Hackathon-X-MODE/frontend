@@ -25,11 +25,8 @@ const ImportComponent = (props) => {
     return(
         <div className={'flex flex-col bg-[#21243A] rounded-[15px] w-[315px] px-[20px]'}>
             <span className={'text-[32px] text-center mt-[29px]'}>Импорт</span>
-            <lable>
                 <button onClick={handleBtn} className={'h-[60px] w-full mt-[28px] mb-[22px] bg-[#F62E46] rounded-[15px]'}>Загрузить</button>
                 <input ref={ref} type="file" onChange={handleFileChange} className={'hidden'} />
-
-            </lable>
         </div>
     )
 }
