@@ -19,7 +19,7 @@ import {
 } from "../../redux/postamatApi";
 import Delivery from "./Delivery";
 import CategoriesEditor from "../form/CategoriesEditor";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 
 const reference = {
@@ -336,6 +336,7 @@ const Ticket = (props) => {
     if (ticketData.vend && vendorsList){
         postamatVendor = vendorsList.find(vendor=> vendor.id === ticketData.vend[0].vendorId)
     }
+
 
     return (
         <>
@@ -681,17 +682,18 @@ const Ticket = (props) => {
                             <div className={'text-white px-[30px] py-[30px] mt-[26px] bg-[#21243A] rounded-[15px]'}>
 
                                 <div className={'flex-col flex gap-[18px]'}>
-                                    <div className={'flex justify-between'}>
+                                    <div className={'flex items-center justify-between'}>
                                         <div className={'flex flex-col text-white '}>
                                             <span className={'text-[32px]'}>Постамат</span>
                                             <span>#{ticketData.vend[0].externalId}</span>
                                         </div>
-                                        <div className={''}>
-                                            <button
+                                        <div className={' '}>
+                                            <Link
+                                                to={`/view/postamates/${ticketData.vend[0].id}`}
                                                 className={'py-[11px] px-[25px] border border-white bg-[#21243A] rounded-[15px]'}>
                                                 {/*<img alt={'#'} />*/}
-                                                <span>На карте</span>
-                                            </button>
+                                                <span  >На карте</span>
+                                            </Link>
                                         </div>
                                     </div>
                                     <div className={'flex flex-col'}>
