@@ -490,24 +490,36 @@ const Ticket = (props) => {
                                                             <span>{ticketData.ord[0].person?.fullName ? ticketData.ord[0].person?.fullName : '-'}</span>
                                                         </div>
                                                         <div className={'flex gap-[32px]'}>
-                                                            <div className={'flex gap-2'}>
+                                                            <div className={'flex items-center gap-2'}>
 
                                                                 {
                                                                     comment.rate === 5
                                                                         ?
                                                                         [...Array(5)].map(x => {
-                                                                            return <img src={star}/>
+                                                                            return(
+                                                                                <div className={'w-[27px] h-[27px]'}>
+                                                                                    <img src={star}/>
+                                                                                </div>
+                                                                            )
                                                                         })
                                                                         :
                                                                         <>
                                                                             {
                                                                                 [...Array(comment.rate)].map(x => {
-                                                                                    return <img src={star}/>
+                                                                                    return(
+                                                                                        <div className={'w-[27px] h-[27px]'}>
+                                                                                            <img src={star}/>
+                                                                                        </div>
+                                                                                    )
                                                                                 })
                                                                             }
                                                                             {
                                                                                 [...Array(5 - comment.rate)].map(x => {
-                                                                                    return <img src={whiteStar}/>
+                                                                                    return(
+                                                                                        <div className={'w-[27px] h-[27px]'}>
+                                                                                            <img src={whiteStar}/>
+                                                                                        </div>
+                                                                                    )
                                                                                 })
                                                                             }
                                                                         </>

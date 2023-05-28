@@ -67,10 +67,10 @@ const Vendors = (props) => {
         <>
             <div
                 className={
-                    "w-full relative flex flex-col gap-5 px-[40px] py-[48px] font-primary max-h-screen overflow-y-scroll z-0"
+                    "relative flex flex-col gap-5  py-[48px] ml-[77px] mr-[130px] font-primary max-h-screen  z-0"
                 }
             >
-                <div className={"flex justify-between"}>
+                <div className={"flex justify-between "}>
                     <button
                         onClick={() =>
                             setRegistrationVendorForm(!isRegistrationVendor)
@@ -101,7 +101,7 @@ const Vendors = (props) => {
                 {data && (
                     <ul
                         className={
-                            "w-full flex gap-[20px] justify-between flex-wrap "
+                            "w-full flex gap-[40px] justify-between flex-wrap "
                         }
                     >
                         {data.map((vendor) => {
