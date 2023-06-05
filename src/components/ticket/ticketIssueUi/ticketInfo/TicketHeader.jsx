@@ -2,7 +2,7 @@ import React from 'react';
 
 const TicketHeader = (props) => {
     return(
-        <div className={'flex items-center justify-between text-white font-primary mr-[77px]'}>
+        <div className={'px-[30px] py-[20px] flex items-center justify-between text-white font-primary mr-[77px]'}>
             <div className={'flex flex-col gap-1'}>
                 <div className={''}>Номер обращения</div>
                 <div className={'flex items-center gap-[13px]'}>
