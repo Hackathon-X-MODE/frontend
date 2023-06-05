@@ -124,23 +124,13 @@ export const postamatApi = createApi({
         }),
 
         getTickets: build.query({
-            query: (page=0, status='OPEN') => (
-                console.log('API PAGe',page, status),
-                {
-                    url: `tickets/?statuses=${status}&page=${page}&size=20&sort=deadline,ASC`,
+            query: (arg) => {
+                const { page, status } = arg;
+                console.log('arg: ', arg);
+                return {
+                    url: `tickets/?statuses=${status ? status : 'OPEN'}&page=${page ? page : 0}&size=20&sort=deadline,ASC`,
                     method: 'GET'
                 }
-            ),
-            serializeQueryArgs: ({ endpointName }) => {
-                return endpointName
-            },
-            // Always merge incoming data to the cache entry
-            merge: (currentCache, newItems) => {
-                currentCache.push(...newItems)
-            },
-            // Refetch when the page arg changes
-            forceRefetch({ currentArg, previousArg }) {
-                return currentArg !== previousArg
             },
             transformResponse: (res) => [res],
             providesTags: (result, error, page) =>
@@ -149,33 +139,11 @@ export const postamatApi = createApi({
                         // Provides a tag for each post in the current page,
                         // as well as the 'PARTIAL-LIST' tag.
                         ...result.map(({ number }) => ({ type: 'Tickets', number })),
-                        { type: 'Tickets', id: 'PARTIAL-LIST' },
+                        { type: 'Tickets', id: 'LIST' },
                     ]
-                    : [{ type: 'Tickets', id: 'PARTIAL-LIST' }],
+                    : [{ type: 'Tickets', id: 'LIST' }],
         }),
 
-        getFilteredTickets: build.mutation({
-            query: ({page, status}) => (
-                console.log('PAGE_', page, 'STATUS_', status),
-                {
-                url: `tickets/?statuses=${status}&page=${page}&size=20&sort=deadline,ASC`,
-                method: 'GET'
-                }
-            ),
-            serializeQueryArgs: ({ endpointName }) => {
-                return endpointName
-            },
-            // Always merge incoming data to the cache entry
-            merge: (currentCache, newItems) => {
-                currentCache.push(...newItems)
-            },
-            // Refetch when the page arg changes
-            forceRefetch({ currentArg, previousArg }) {
-                return currentArg !== previousArg
-            },
-            transformResponse: (res) => [res],
-            invalidatesTags: [{type: 'TicketsMutation', id: 'PARTIAL_LIST'}],
-        }),
 
         getTicketsById: build.query({
             query: (id) => (
@@ -324,7 +292,6 @@ export const {
     useLazyGetOrdersListQuery,
     useConfirmTicketByIdMutation,
 
-    useGetFilteredTicketsMutation,
 
 
     useCreateCommentMutation,

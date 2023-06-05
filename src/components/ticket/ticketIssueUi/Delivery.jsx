@@ -1,6 +1,6 @@
 import React from 'react';
 import {default as ReactSelect} from "react-select";
-import Option from "../form/CustomInput";
+import Option from "../../form/CustomInput";
 
 
 const Delivery = ({problemOwners, update}) => {

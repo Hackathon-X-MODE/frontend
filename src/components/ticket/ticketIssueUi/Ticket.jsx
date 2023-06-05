@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import edit from "../../assets/ico/vendors/edit.svg";
-import profilePic from "../../assets/ico/ticket/profilePic.svg";
-import star from "../../assets/ico/ticket/star.svg";
-import whiteStar from "../../assets/ico/ticket/whiteStar.svg";
-import elipse from "../../assets/ico/ticket/elipse.svg";
+import edit from "../../../assets/ico/vendors/edit.svg";
+import profilePic from "../../../assets/ico/ticket/profilePic.svg";
+import star from "../../../assets/ico/ticket/star.svg";
+import whiteStar from "../../../assets/ico/ticket/whiteStar.svg";
+import elipse from "../../../assets/ico/ticket/elipse.svg";
 
 import moment from 'moment'
-import Loader from "../loader/Loader";
+import Loader from "../../loader/Loader";
 import {
     useConfirmTicketByIdMutation,
     useGetTicketsByIdQuery,
@@ -16,9 +16,9 @@ import {
     useLazyGetVendorsByListQuery,
     useLazyGetVendorsByPostamatIdQuery,
     useUpdateCommentsMutation
-} from "../../redux/postamatApi";
+} from "../../../redux/postamatApi";
 import Delivery from "./Delivery";
-import CategoriesEditor from "../form/CategoriesEditor";
+import CategoriesEditor from "../../form/CategoriesEditor";
 import {Link, useParams} from "react-router-dom";
 
 
