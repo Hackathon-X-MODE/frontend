@@ -2,7 +2,7 @@ import React from 'react';
 
 const TicketContent = ({order}) => {
     return(
-        <div className={'w-full relative flex justify-between  px-[30px] py-[21px] bg-[#21243A] text-white text-[18px] font-primary'}>
+        <div className={'w-full relative flex justify-between  px-[30px] py-[21px] bg-[#21243A] text-white text-[18px] font-primary rounded-br-[15px] rounded-bl-[15px]'}>
             {
                 order && <>
                     <div className={'w-1/2 flex flex-col gap-[20px]'}>
