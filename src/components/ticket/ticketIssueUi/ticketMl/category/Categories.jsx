@@ -34,35 +34,68 @@ const Categories = ({comment, order}) => {
     console.log(comment)
     return(
         <div className={'flex flex-col'}>
-            <div className={'w-full  flex p-2 text-white font-primary pl-[120px]'}>
-                <div className={'w-4/12'}>
-                    {
-                        comment.commentTypes.map((category) => {
-                            return(
-                                <div  className={'flex flex-col mt-[10px] border-b border-b-gray-500'}>
-                                    <span className={'text-[#6C7094]'}>Категория</span>
-                                    <span>{reference[category.name]}</span>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-                <div className={'w-8/12'}>
-                    {
-                        comment.commentTypes.map((category) => {
-                            return(
-                                <div  className={'w-full flex flex-col mt-[10px] border-b border-b-gray-500'}>
-                                    <span className={'text-[#6C7094]'}>Подкатегория</span>
-                                    <span>{category.value.length === 0 ? '-' : category.value.map(v => reference[v]).join(', ')}</span>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-            </div>
-            <div className={'pl-[120px] mt-[20px]'}>Место отправки</div>
+            {
+                active ?
+                    <>
+                        <div className={'w-full  flex p-2 text-white font-primary pl-[120px]'}>
+                            <div className={'w-4/12'}>
+                                {
+                                    comment.commentTypes.map((category) => {
+                                        return(
+                                            <div  className={'flex flex-col mt-[10px] border-b border-b-gray-500'}>
+                                                <span className={'text-[#6C7094]'}>Категория</span>
+                                                <span>{reference[category.name]}</span>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <div className={'w-8/12'}>
+                                {
+                                    comment.commentTypes.map((category) => {
+                                        return(
+                                            <div  className={'w-full flex flex-col mt-[10px] border-b border-b-gray-500'}>
+                                                <span className={'text-[#6C7094]'}>Подкатегория</span>
+                                                <span>{category.value.length === 0 ? '-' : category.value.map(v => reference[v]).join(', ')}</span>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </div>
+                    </>
+                    : <>
+                        <div className={'w-full  flex p-2 text-white font-primary pl-[120px]'}>
+                            <div className={'w-4/12'}>
+                                {
+                                    comment.commentTypes.map((category) => {
+                                        return(
+                                            <div  className={'flex flex-col mt-[10px] border-b border-b-gray-500'}>
+                                                <span className={'text-[#6C7094]'}>Категория</span>
+                                                <span>{reference[category.name]}</span>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <div className={'w-8/12'}>
+                                {
+                                    comment.commentTypes.map((category) => {
+                                        return(
+                                            <div  className={'w-full flex flex-col mt-[10px] border-b border-b-gray-500'}>
+                                                <span className={'text-[#6C7094]'}>Подкатегория</span>
+                                                <span>{category.value.length === 0 ? '-' : category.value.map(v => reference[v]).join(', ')}</span>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </div>
+                        <div className={'pl-[120px] mt-[20px]'}>Место отправки</div>
+                    </>
+            }
             <div className={'pl-[120px] mt-[20px]'}>
-                <button className={'px-[33px] py-[18px] border rounded-[15px]'}>Редактировать</button>
+                <button onClick={() => setActive(!active)} className={'px-[33px] py-[18px] border rounded-[15px]'}>{active ? 'Сохранить' : 'Редактировать'}</button>
             </div>
         </div>
     )
