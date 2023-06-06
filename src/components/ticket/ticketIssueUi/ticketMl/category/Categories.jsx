@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Editor from "./Editor";
 
 const reference = {
     PRODUCT_DESCRIPTION: 'Описание товара на сайте интернет-магазина',
@@ -31,46 +32,21 @@ const reference = {
 
 const Categories = ({comment, order}) => {
     const [active, setActive] = useState(false)
-    console.log(comment)
+    // console.log(comment)
     return(
         <div className={'flex flex-col'}>
             {
                 active ?
                     <>
-                        <div className={'w-full  flex p-2 text-white font-primary pl-[120px]'}>
-                            <div className={'w-4/12'}>
-                                {
-                                    comment.commentTypes.map((category) => {
-                                        return(
-                                            <div  className={'flex flex-col mt-[10px] border-b border-b-gray-500'}>
-                                                <span className={'text-[#6C7094]'}>Категория</span>
-                                                <span>{reference[category.name]}</span>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                            <div className={'w-8/12'}>
-                                {
-                                    comment.commentTypes.map((category) => {
-                                        return(
-                                            <div  className={'w-full flex flex-col mt-[10px] border-b border-b-gray-500'}>
-                                                <span className={'text-[#6C7094]'}>Подкатегория</span>
-                                                <span>{category.value.length === 0 ? '-' : category.value.map(v => reference[v]).join(', ')}</span>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
+                        <Editor comment={comment} />
                     </>
                     : <>
                         <div className={'w-full  flex p-2 text-white font-primary pl-[120px]'}>
                             <div className={'w-4/12'}>
                                 {
-                                    comment.commentTypes.map((category) => {
+                                    comment.commentTypes.map((category, idx) => {
                                         return(
-                                            <div  className={'flex flex-col mt-[10px] border-b border-b-gray-500'}>
+                                            <div key={`${idx}_${category.name}`}   className={'flex flex-col mt-[10px] border-b border-b-gray-500'}>
                                                 <span className={'text-[#6C7094]'}>Категория</span>
                                                 <span>{reference[category.name]}</span>
                                             </div>
@@ -80,9 +56,9 @@ const Categories = ({comment, order}) => {
                             </div>
                             <div className={'w-8/12'}>
                                 {
-                                    comment.commentTypes.map((category) => {
+                                    comment.commentTypes.map((category, idx) => {
                                         return(
-                                            <div  className={'w-full flex flex-col mt-[10px] border-b border-b-gray-500'}>
+                                            <div key={`${idx}_${new Date()}`}  className={'w-full flex flex-col mt-[10px] border-b border-b-gray-500'}>
                                                 <span className={'text-[#6C7094]'}>Подкатегория</span>
                                                 <span>{category.value.length === 0 ? '-' : category.value.map(v => reference[v]).join(', ')}</span>
                                             </div>
