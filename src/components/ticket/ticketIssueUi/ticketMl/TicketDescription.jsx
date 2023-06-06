@@ -10,9 +10,9 @@ const TicketDescription = ({ticket, order, comments}) => {
             </div>
             {
                 ticket &&
-                <div className={'w-full px-[30px] py-[20px] bg-[#21243A] flex items-center justify-between text-white font-primary mr-[77px]'}>
+                <div className={'w-full px-[30px] py-[40px] bg-[#21243A] flex items-center justify-between text-white font-primary mr-[77px] rounded-bl-[15px] rounded-br-[15px]'}>
                     {
-                        comments?.map(comment => <TicketComment ticket={ticket} order={order} comment={comment} />)
+                        comments?.map(comment => <TicketComment key={comment.id} ticket={ticket} order={order} comment={comment} />)
                     }
                 </div>
             }
