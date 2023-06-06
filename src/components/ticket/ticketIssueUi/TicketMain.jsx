@@ -50,7 +50,7 @@ const TicketMain = (props) => {
 
     if (!ticketSuccess) return  <Loader />
     // console.log('TICKET ', ticket, 'ORDER', order)
-    // console.log(comments)
+    // console.log(commentsData)
     return(
         <div className={'w-full flex mx-[80px] mt-[45px] mb-[20px] font-primary text-[18px]'}>
             <div className={'w-[65%] flex flex-col gap-[25px]'}>
