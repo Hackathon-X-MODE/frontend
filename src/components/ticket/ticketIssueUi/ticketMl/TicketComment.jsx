@@ -4,7 +4,7 @@ import TicketCommentContent from "./TicketCommentContent";
 import Categories from "./category/Categories";
 
 const TicketComment = ({ticket, order, comment}) => {
-    console.log(comment)
+    // console.log(comment)
     return(
         <div className={'w-full'}>
             <TicketDescriptionHeader
