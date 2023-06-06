@@ -50,12 +50,12 @@ const TicketMain = (props) => {
 
     if (!ticketSuccess) return  <Loader />
     // console.log('TICKET ', ticket, 'ORDER', order)
-    console.log(comments)
+    // console.log(comments)
     return(
         <div className={'w-full flex mx-[80px] mt-[45px] font-primary text-[18px]'}>
             <div className={'w-[65%] flex flex-col gap-[25px]'}>
                 <TicketInformation ticket={ticket} order={order} />
-                <TicketDescription ticket={ticket} order={order} />
+                <TicketDescription ticket={ticket} order={order} comments={comments} />
             </div>
         </div>
     )
