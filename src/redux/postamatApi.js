@@ -151,13 +151,14 @@ export const postamatApi = createApi({
                     url: `tickets/${id}`
                 }
             ),
-            transformResponse: (res) => {
-                return [res];
-            },
+            // transformResponse: (res) => {
+            //     return [res];
+            // },
             providesTags: (result) =>
                 result
                     ? [
-                          ...result.map(({ id }) =>  (console.log(id),{ type: "TicketSubscribe", id })),
+                        // Object.entries(result).map(([k,v]) => console.log(result['id']))
+                          [result].map(({ id }) =>  (console.log(id),{ type: "TicketSubscribe", id })),
                           { type: "TicketSubscribe", id: "LIST" }
                       ]
                     : [{ type: "TicketSubscribe", id: "LIST" }]
@@ -206,13 +207,13 @@ export const postamatApi = createApi({
         }),
         getOrderById: build.query({
             query: (id) => `orders/${id}`,
-            transformResponse: (res) => {
-                return [res];
-            },
+            // transformResponse: (res) => {
+            //     return [res];
+            // },
             providesTags: (result) =>
                 result
                     ? [
-                          ...result.map(({ id }) => ({ type: "Orders", id })),
+                          [result].map(({ id }) => ({ type: "Orders", id })),
                           { type: "Orders", id: "LIST" }
                       ]
                     : [{ type: "Orders", id: "LIST" }]
