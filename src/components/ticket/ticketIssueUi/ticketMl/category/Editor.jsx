@@ -103,6 +103,10 @@ const Editor = ({comment, selectHandler, references}) => {
         }),
         singleValue: (defaultStyles) => ({...defaultStyles, color: "#fff"}),
     };
+    const reactSelectSingleFilteredOptions = comment.commentTypes.map((typeName) => {
+        return typeName.name
+    })
+    console.log(reactSelectSingleFilteredOptions)
     const reactSelectSingleDefaultOption = comment.commentTypes.map((commentTypeName) => {
         return reactSelectValues.find((category) => commentTypeName.name === category.value)
     })
@@ -127,7 +131,7 @@ const Editor = ({comment, selectHandler, references}) => {
     console.log(comment)
     return(
         <div className={'w-full  flex flex-col p-2 text-white font-primary pl-[120px]'}>
-            <div className={'flex'}>
+            <div className={'flex gap-[20px]'}>
                 <div className={'w-4/12 flex flex-col'}>
                     {
                         reactSelectSingleDefaultOption.map((item,idx) => {
@@ -140,6 +144,7 @@ const Editor = ({comment, selectHandler, references}) => {
                                         components={{
                                             Option
                                         }}
+                                        placeholder={'Категория'}
                                         defaultValue={item}
                                         styles={customStyles}
                                         onChange={(e) => selectHandler(e, comment.id, item, 'single')}
@@ -163,6 +168,7 @@ const Editor = ({comment, selectHandler, references}) => {
                                             Option
                                         }}
                                         value={item}
+                                        placeholder={'Подкатегории'}
                                         styles={customStyles}
                                         onChange={(e) => selectHandler(e, comment.id, item, 'multy')}
                                     />

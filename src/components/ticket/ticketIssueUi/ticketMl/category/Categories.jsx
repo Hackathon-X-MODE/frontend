@@ -58,7 +58,7 @@ const Categories = ({comment, order, selectHandler, activeBtn}) => {
                                         return(
                                             <div key={`${idx}_${category.name}`}   className={'flex flex-col mt-[10px] border-b border-b-gray-500'}>
                                                 <span className={'text-[#6C7094]'}>Категория</span>
-                                                <span>{reference[category.name]}</span>
+                                                <span className={'overflow-x-scroll h-[50px]'}>{reference[category.name]}</span>
                                             </div>
                                         )
                                     })
@@ -70,7 +70,7 @@ const Categories = ({comment, order, selectHandler, activeBtn}) => {
                                         return(
                                             <div key={`${idx}_${new Date()}`}  className={'w-full flex flex-col mt-[10px] border-b border-b-gray-500'}>
                                                 <span className={'text-[#6C7094]'}>Подкатегория</span>
-                                                <span>{category.value.length === 0 ? '-' : category.value.map(v => reference[v]).join(', ')}</span>
+                                                <span className={'h-[50px]'}>{category.value.length === 0 ? '-' : category.value.map(v => reference[v]).join(', ')}</span>
                                             </div>
                                         )
                                     })

@@ -1,6 +1,21 @@
 import React from 'react';
 
 const TicketHeader = ({ticket}) => {
+    const ticketStatusLabels = {
+        'OPEN': {
+            name: 'Открыт', bg: 'bg-blue-500'
+        },
+        'PENDING': {
+            name: 'В обработке', bg: 'bg-yellow-500'
+        },
+        'COMPLETED': {
+            name: 'Выполнен', bg: 'bg-green-500'
+        },
+        'CANCELED': {
+            name: 'Отменен', bg: 'bg-gray-500'
+        }
+        // {'OPEN': name: 'Открыт',}
+    }
     return(
         <div className={'px-[30px] py-[20px] flex items-center justify-between text-white font-primary mr-[77px]'}>
             {
@@ -10,7 +25,17 @@ const TicketHeader = ({ticket}) => {
                         <div className={''}>Номер обращения</div>
                         <div className={'flex items-center gap-[13px]'}>
                             <span className={'text-[32px]'}>#{ticket.id}</span>
-                            <span className={'bg-[#3FC955] px-[18px] py-[2px] rounded-[15px]'}>{ticket.ticketStatus}</span>
+                            {
+                                Object.entries(ticketStatusLabels).map(([k, v],idx) => {
+                                    if (k === ticket.ticketStatus) {
+                                        return (
+                                            <span key={`asd_${idx}`}
+                                                  className={`${ticketStatusLabels[k].bg} px-[18px] py-[2px] rounded-[15px]`}>{ticketStatusLabels[k].name}</span>
+                                        )
+                                    }
+                                    return null
+                                })
+                            }
                         </div>
                     </div>
                     <div className={'flex gap-[50px]'}>
