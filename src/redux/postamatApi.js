@@ -185,7 +185,7 @@ export const postamatApi = createApi({
                 method: "PATCH",
                 body
             }),
-            invalidatesTags: [{ type: "TicketSubscribe", id: "LIST" }]
+            invalidatesTags: [{ type: "Comments", id: "LIST" }]
         }),
         createComment: build.mutation({
             query: (body) => ({

@@ -1,7 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import TicketInformation from "./ticketInfo/TicketInformation";
-import {useGetCommentsByOrderIdQuery, useGetOrderByIdQuery, useGetTicketsByIdQuery} from "../../../redux/postamatApi";
+import {
+    useConfirmTicketByIdMutation,
+    useGetCommentsByOrderIdQuery,
+    useGetOrderByIdQuery,
+    useGetTicketsByIdQuery,
+    useUpdateCommentsMutation
+} from "../../../redux/postamatApi";
 import Loader from "../../loader/Loader";
 import TicketDescription from "./ticketMl/TicketDescription";
 
@@ -56,6 +62,8 @@ const TicketMain = (props) => {
     const {data: ticketData, isSuccess: ticketSuccess, isFetching: ticketFetching} = useGetTicketsByIdQuery(+ticketId)
     const {data: orderData, isSuccess: orderSuccess, isFetching: orderFetching} = useGetOrderByIdQuery(ticketData?.orderId)
     const {data: commentsData, isFetching: commentsFetching} = useGetCommentsByOrderIdQuery(orderData?.id)
+    const [updateComments, {isSuccess: updateCommentsSuccess}] = useUpdateCommentsMutation()
+    const [confirmTicketById, {isLoading: confirmLoading, isSuccess: confirmSuccess}] = useConfirmTicketByIdMutation();
 
     useEffect(() => {
         setTicket(ticketData)
@@ -84,23 +92,38 @@ const TicketMain = (props) => {
         )
     },[ticketFetching, orderFetching, commentsFetching])
 
-    const handleSelect = (item, id, prevValue, type) => {
+    const handleSelect = (item, id, prevValue, type ) => {
         if (type === 'single') {
+
             const allComments = [...comments]
             const idx = allComments.findIndex(comment => comment.id === id)
             const com = {...allComments[idx]}
-            const prevType = com.commentTypes.findIndex(i => i.name === prevValue.value)
-            com.commentTypes[prevType] = {
-                name: item.value,
-                value: []
+            const isValid = com.commentTypes.find((itm) => itm.name === item.value)
+
+            if (isValid) {
+                const prevType = com.commentTypes.findIndex(i => i.name === prevValue.value)
+                const defaultName = com.commentTypes[prevType].name
+                com.commentTypes[prevType] = {
+                    name: defaultName,
+                    value: []
+                }
+                setComments(allComments)
+            } else {
+                const prevType = com.commentTypes.findIndex(i => i.name === prevValue.value)
+                com.commentTypes[prevType] = {
+                    name: item.value,
+                    value: []
+                }
+                setComments(allComments)
             }
-            setComments(allComments)
-        } else {
+
+        } else if (type === 'multy') {
+
+            const mapValue = item.length <= 0 ? prevValue : item
             const allComments = [...comments]
             const idx = allComments.findIndex(comment => comment.id === id)
             const com = {...allComments[idx]}
-            console.log(com)
-            const category = item.map(val => {
+            const category = mapValue.map(val => {
                 for(const prop in map) {
                     if (map[prop].includes(val.value)) {
                         return prop
@@ -110,19 +133,64 @@ const TicketMain = (props) => {
             })[0]
 
             const currentCategory = com.commentTypes.findIndex(i => i.name === category)
+            if (currentCategory === -1) return
+            const values = item.map(i => i.value)
+            // console.log(values)
             com.commentTypes[currentCategory] = {
                 name: category,
-                value: item
+                value: values
             }
+            setComments(allComments)
+        } else if(type === 'delivery') {
+            const allComments = [...comments]
+            const idx = allComments.findIndex(comment => comment.id === id)
+            allComments[idx].problemOwners = item
+            setComments(allComments)
         }
     }
+
+    const handleActiveBtn = async (e, id) => {
+
+        if (e.target.innerText === 'Сохранить') {
+            console.log(id)
+            const forUpdate = comments.filter(comment => comment.id === id)[0];
+            await updateComments({
+                body: {
+                    commentTypesSet: forUpdate.commentTypes.flatMap((item) => [item.name, ...item.value])
+                },
+                id: forUpdate.id
+            })
+        }
+
+    }
+
+    const confirm = async() => {
+        const solveData = ticketData.comments
+            .filter(comment=>{
+                return comment.status === 'NOT_PROCESSED'
+            })
+            .map(comment => {
+
+                return {
+                    id: comment.id,
+                    problemOwners: comments.find(cum => cum.id === comment.id).problemOwners.map(v=> v.value)
+                }
+            })
+
+        const sl = {
+            solve: solveData
+        }
+        //TODO OLEG REFRESH TICKET AFTER THAT CALL.
+        await confirmTicketById({id: ticketData.id, body: sl})
+    }
+
 
     if (!ticketSuccess) return  <Loader />
     return(
         <div className={'w-full flex mx-[80px] mt-[45px] mb-[20px] font-primary text-[18px]'}>
             <div className={'w-[65%] flex flex-col gap-[25px]'}>
                 <TicketInformation ticket={ticket} order={order} />
-                <TicketDescription ticket={ticket} order={order} comments={comments} selectHandler={handleSelect} />
+                <TicketDescription ticket={ticket} order={order} comments={comments} confirm={confirm} selectHandler={handleSelect} activeBtn={handleActiveBtn}  />
             </div>
         </div>
     )

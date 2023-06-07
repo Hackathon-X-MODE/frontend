@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import Editor from "./Editor";
 
+
+
+
 const reference = {
     PRODUCT_DESCRIPTION: 'Описание товара на сайте интернет-магазина',
     GETTING_ORDER: 'Получение заказа',
@@ -30,8 +33,15 @@ const reference = {
     READY_NOTIFICATION: 'Уведомление о готовности заказа к получению'
 }
 
-const Categories = ({comment, order, selectHandler}) => {
+const Categories = ({comment, order, selectHandler, activeBtn}) => {
     const [active, setActive] = useState(false)
+
+
+    const handleActiveBtn = (e, id) => {
+        setActive(!active)
+        activeBtn(e, id)
+    }
+
     // console.log(comment)
     return(
         <div className={'flex flex-col'}>
@@ -67,11 +77,10 @@ const Categories = ({comment, order, selectHandler}) => {
                                 }
                             </div>
                         </div>
-                        <div className={'pl-[120px] mt-[20px]'}>Место отправки</div>
                     </>
             }
             <div className={'pl-[120px] mt-[20px]'}>
-                <button onClick={() => setActive(!active)} className={'px-[33px] py-[18px] border rounded-[15px]'}>{active ? 'Сохранить' : 'Редактировать'}</button>
+                <button onClick={(e) => handleActiveBtn(e, comment.id)} className={'px-[33px] py-[18px] border rounded-[15px]'}>{active ? 'Сохранить' : 'Редактировать'}</button>
             </div>
         </div>
     )
