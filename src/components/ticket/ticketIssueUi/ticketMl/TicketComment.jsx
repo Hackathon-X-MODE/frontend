@@ -32,7 +32,7 @@ const TicketComment = ({ticket, order, comment, selectHandler,activeBtn }) => {
     };
     // console.log('comment', comment)
     return(
-        <div className={'w-full'}>
+        <div className={'w-full border-b border-b-gray-700 pb-[20px] last:border-b-0'}>
             <TicketDescriptionHeader
                 fullName={order.person?.fullName}
                 createdDate={comment.createDate}
@@ -49,6 +49,7 @@ const TicketComment = ({ticket, order, comment, selectHandler,activeBtn }) => {
                     components={{
                         Option
                     }}
+                    placeholder={'Место отправки'}
                     value={comment.problemOwners}
                     styles={customStyles}
                     onChange={(e) => selectHandler(e, comment.id,'item','delivery')}

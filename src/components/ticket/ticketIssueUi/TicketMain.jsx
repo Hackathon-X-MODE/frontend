@@ -101,12 +101,6 @@ const TicketMain = (props) => {
             const isValid = com.commentTypes.find((itm) => itm.name === item.value)
 
             if (isValid) {
-                const prevType = com.commentTypes.findIndex(i => i.name === prevValue.value)
-                const defaultName = com.commentTypes[prevType].name
-                com.commentTypes[prevType] = {
-                    name: defaultName,
-                    value: []
-                }
                 setComments(allComments)
             } else {
                 const prevType = com.commentTypes.findIndex(i => i.name === prevValue.value)
@@ -135,7 +129,6 @@ const TicketMain = (props) => {
             const currentCategory = com.commentTypes.findIndex(i => i.name === category)
             if (currentCategory === -1) return
             const values = item.map(i => i.value)
-            // console.log(values)
             com.commentTypes[currentCategory] = {
                 name: category,
                 value: values
@@ -180,7 +173,7 @@ const TicketMain = (props) => {
         const sl = {
             solve: solveData
         }
-        //TODO OLEG REFRESH TICKET AFTER THAT CALL.
+
         await confirmTicketById({id: ticketData.id, body: sl})
     }
 
