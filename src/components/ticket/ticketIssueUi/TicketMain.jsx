@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import TicketInformation from "./ticketInfo/TicketInformation";
 import {
+    useConfirmTicketByIdMutation,
     useGetCommentsByOrderIdQuery,
     useGetOrderByIdQuery,
     useGetTicketsByIdQuery,
@@ -62,6 +63,7 @@ const TicketMain = (props) => {
     const {data: orderData, isSuccess: orderSuccess, isFetching: orderFetching} = useGetOrderByIdQuery(ticketData?.orderId)
     const {data: commentsData, isFetching: commentsFetching} = useGetCommentsByOrderIdQuery(orderData?.id)
     const [updateComments, {isSuccess: updateCommentsSuccess}] = useUpdateCommentsMutation()
+    const [confirmTicketById, {isLoading: confirmLoading, isSuccess: confirmSuccess}] = useConfirmTicketByIdMutation();
 
     useEffect(() => {
         setTicket(ticketData)
@@ -115,7 +117,7 @@ const TicketMain = (props) => {
                 setComments(allComments)
             }
 
-        } else {
+        } else if (type === 'multy') {
 
             const mapValue = item.length <= 0 ? prevValue : item
             const allComments = [...comments]
@@ -139,45 +141,56 @@ const TicketMain = (props) => {
                 value: values
             }
             setComments(allComments)
+        } else if(type === 'delivery') {
+            const allComments = [...comments]
+            const idx = allComments.findIndex(comment => comment.id === id)
+            allComments[idx].problemOwners = item
+            setComments(allComments)
         }
     }
 
-    const handleActiveBtn = (e, id) => {
+    const handleActiveBtn = async (e, id) => {
 
         if (e.target.innerText === 'Сохранить') {
             console.log(id)
             const forUpdate = comments.filter(comment => comment.id === id)[0];
-            updateComments({
+            await updateComments({
                 body: {
                     commentTypesSet: forUpdate.commentTypes.flatMap((item) => [item.name, ...item.value])
                 },
                 id: forUpdate.id
             })
         }
+
     }
 
-    // const handleChangeButton = (id, e) => {
-    //
-    //     if (e.target.innerText === 'Редактировать') {
-    //     } else {
-    //         const forUpdate = comments_.filter(comment => comment.id === id)[0];
-    //         updateComments({
-    //             body: {
-    //                 commentTypesSet: forUpdate.commentTypes.flatMap((item) => [item.name, ...item.value])
-    //             },
-    //             id: forUpdate.id
-    //         })
-    //
-    //     }
-    //     setUpdateComment(!isUpdateComment)
-    // }
+    const confirm = async() => {
+        const solveData = ticketData.comments
+            .filter(comment=>{
+                return comment.status === 'NOT_PROCESSED'
+            })
+            .map(comment => {
+
+                return {
+                    id: comment.id,
+                    problemOwners: comments.find(cum => cum.id === comment.id).problemOwners.map(v=> v.value)
+                }
+            })
+
+        const sl = {
+            solve: solveData
+        }
+        //TODO OLEG REFRESH TICKET AFTER THAT CALL.
+        await confirmTicketById({id: ticketData.id, body: sl})
+    }
+
 
     if (!ticketSuccess) return  <Loader />
     return(
         <div className={'w-full flex mx-[80px] mt-[45px] mb-[20px] font-primary text-[18px]'}>
             <div className={'w-[65%] flex flex-col gap-[25px]'}>
                 <TicketInformation ticket={ticket} order={order} />
-                <TicketDescription ticket={ticket} order={order} comments={comments} selectHandler={handleSelect} activeBtn={handleActiveBtn}  />
+                <TicketDescription ticket={ticket} order={order} comments={comments} confirm={confirm} selectHandler={handleSelect} activeBtn={handleActiveBtn}  />
             </div>
         </div>
     )

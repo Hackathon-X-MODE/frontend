@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {default as ReactSelect} from "react-select";
 import Option from "../../../../form/CustomInput";
 
@@ -12,6 +12,11 @@ const reactSelectValues = [
     {value: 'NOTIFICATION', label: 'Уведомления'},
     {value: 'OTHER', label: 'Иное'},
     {value: 'PREPARE_ORDER', label: 'Оформление заказа'},
+]
+
+const placeRef = [
+    {value: 'POSTAMAT', label: "Технический отдел Московский постомат"},
+    {value: 'MARKET_PLACE', label: "Направить в Маркетплэйс"},
 ]
 
 const map = {
@@ -119,51 +124,53 @@ const Editor = ({comment, selectHandler, references}) => {
                 label: reference[name]
             }
         })})
-
+    console.log(comment)
     return(
-        <div className={'w-full  flex p-2 text-white font-primary pl-[120px]'}>
-            <div className={'w-4/12 flex flex-col'}>
-                {
-                    reactSelectSingleDefaultOption.map((item,idx) => {
-                        return(
-                            <div  key={`${item.value}_${idx}`}   className={'flex flex-col mt-[10px] '}>
-                                <span className={'text-[#6C7094]'}>Категория</span>
-                                <ReactSelect
-                                    name={'category'}
-                                    options={reactSelectValues}
-                                    components={{
-                                        Option
-                                    }}
-                                    defaultValue={item}
-                                    styles={customStyles}
-                                    onChange={(e) => selectHandler(e, comment.id, item, 'single')}
-                                />
-                            </div>
-                        )
-                    })
-                }
-            </div>
-            <div className={'w-8/12'}>
-                {
-                    reactMultyDefaultOption.map((item,idx) => {
-                        // console.log('EDIROT',item)
-                        return(
-                            <div key={`${item.label}_${idx}`}   className={'flex flex-col mt-[10px] '}>
-                                <span className={'text-[#6C7094]'}>Подкатегория</span>
-                                <ReactSelect
-                                    isMulti={true}
-                                    options={defTypes[idx]}
-                                    components={{
-                                        Option
-                                    }}
-                                    value={item}
-                                    styles={customStyles}
-                                    onChange={(e) => selectHandler(e, comment.id, item)}
-                                />
-                            </div>
-                        )
-                    })
-                }
+        <div className={'w-full  flex flex-col p-2 text-white font-primary pl-[120px]'}>
+            <div className={'flex'}>
+                <div className={'w-4/12 flex flex-col'}>
+                    {
+                        reactSelectSingleDefaultOption.map((item,idx) => {
+                            return(
+                                <div  key={`${item.value}_${idx}`}   className={'flex flex-col mt-[10px] '}>
+                                    <span className={'text-[#6C7094]'}>Категория</span>
+                                    <ReactSelect
+                                        name={'category'}
+                                        options={reactSelectValues}
+                                        components={{
+                                            Option
+                                        }}
+                                        defaultValue={item}
+                                        styles={customStyles}
+                                        onChange={(e) => selectHandler(e, comment.id, item, 'single')}
+                                    />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                <div className={'w-8/12'}>
+                    {
+                        reactMultyDefaultOption.map((item,idx) => {
+                            // console.log('EDIROT',item)
+                            return(
+                                <div key={`${item.label}_${idx}`}   className={'flex flex-col mt-[10px] '}>
+                                    <span className={'text-[#6C7094]'}>Подкатегория</span>
+                                    <ReactSelect
+                                        isMulti={true}
+                                        options={defTypes[idx]}
+                                        components={{
+                                            Option
+                                        }}
+                                        value={item}
+                                        styles={customStyles}
+                                        onChange={(e) => selectHandler(e, comment.id, item, 'multy')}
+                                    />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
         </div>
     )

@@ -185,7 +185,7 @@ export const postamatApi = createApi({
                 method: "PATCH",
                 body
             }),
-            invalidatesTags: [{ type: "TicketSubscribe", id: "LIST" }]
+            invalidatesTags: [{ type: "Comments", id: "LIST" }]
         }),
         createComment: build.mutation({
             query: (body) => ({
@@ -200,10 +200,10 @@ export const postamatApi = createApi({
             providesTags: (result) =>
                 result
                     ? [
-                          ...result.map(({ id }) => ({ type: "TicketSubscribe", id })),
-                          { type: "TicketSubscribe", id: "LIST" }
+                          ...result.map(({ id }) => ({ type: "Comments", id })),
+                          { type: "Comments", id: "LIST" }
                       ]
-                    : [{ type: "TicketSubscribe", id: "LIST" }]
+                    : [{ type: "Comments", id: "LIST" }]
         }),
         getOrderById: build.query({
             query: (id) => `orders/${id}`,

@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
 import Editor from "./Editor";
+import {default as ReactSelect} from "react-select";
+import Option from "../../../../form/CustomInput";
+
+const placeRef = [
+    {value: 'POSTAMAT', label: "Технический отдел Московский постомат"},
+    {value: 'MARKET_PLACE', label: "Направить в Маркетплэйс"},
+]
 
 const reference = {
     PRODUCT_DESCRIPTION: 'Описание товара на сайте интернет-магазина',
@@ -33,11 +40,32 @@ const reference = {
 const Categories = ({comment, order, selectHandler, activeBtn}) => {
     const [active, setActive] = useState(false)
 
+    const customStyles = {
+        option: (defaultStyles, state) => ({
+            ...defaultStyles,
+            color: '#fff',
+            backgroundColor: "#21243A",
+        }),
+
+        control: (defaultStyles) => ({
+            ...defaultStyles,
+
+            backgroundColor: "#5C5F7E",
+            height: '50px',
+            borderRadius: "15px",
+            overflowY: 'scroll',
+            border: "1px solid #5C5F7E",
+            boxShadow: "none",
+        }),
+        singleValue: (defaultStyles) => ({...defaultStyles, color: "#fff"}),
+    };
+
     const handleActiveBtn = (e, id) => {
         setActive(!active)
         activeBtn(e, id)
     }
 
+    // console.log(comment)
     return(
         <div className={'flex flex-col'}>
             {
@@ -72,7 +100,19 @@ const Categories = ({comment, order, selectHandler, activeBtn}) => {
                                 }
                             </div>
                         </div>
-                        <div className={'pl-[120px] mt-[20px]'}>Место отправки</div>
+                        <div className={'flex flex-col mt-[10px] ml-[120px] '}>
+                            <span className={'text-[#6C7094]'}>Место отправки</span>
+                            <ReactSelect
+                                isMulti={true}
+                                options={placeRef}
+                                components={{
+                                    Option
+                                }}
+                                value={comment.problemOwners}
+                                styles={customStyles}
+                                onChange={(e) => selectHandler(e, comment.id,'item','delivery')}
+                            />
+                        </div>
                     </>
             }
             <div className={'pl-[120px] mt-[20px]'}>
