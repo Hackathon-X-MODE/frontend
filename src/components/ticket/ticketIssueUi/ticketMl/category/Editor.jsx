@@ -103,10 +103,7 @@ const Editor = ({comment, selectHandler, references}) => {
         }),
         singleValue: (defaultStyles) => ({...defaultStyles, color: "#fff"}),
     };
-    const reactSelectSingleFilteredOptions = comment.commentTypes.map((typeName) => {
-        return typeName.name
-    })
-    console.log(reactSelectSingleFilteredOptions)
+
     const reactSelectSingleDefaultOption = comment.commentTypes.map((commentTypeName) => {
         return reactSelectValues.find((category) => commentTypeName.name === category.value)
     })
@@ -145,7 +142,7 @@ const Editor = ({comment, selectHandler, references}) => {
                                             Option
                                         }}
                                         placeholder={'Категория'}
-                                        defaultValue={item}
+                                        value={item}
                                         styles={customStyles}
                                         onChange={(e) => selectHandler(e, comment.id, item, 'single')}
                                     />
@@ -157,7 +154,6 @@ const Editor = ({comment, selectHandler, references}) => {
                 <div className={'w-8/12'}>
                     {
                         reactMultyDefaultOption.map((item,idx) => {
-                            // console.log('EDIROT',item)
                             return(
                                 <div key={`${item.label}_${idx}`}   className={'flex flex-col mt-[10px] '}>
                                     <span className={'text-[#6C7094]'}>Подкатегория</span>
