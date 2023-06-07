@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {default as ReactSelect} from "react-select";
 import Option from "../../../../form/CustomInput";
 
@@ -102,7 +102,8 @@ const Editor = ({comment, selectHandler, references}) => {
         return reactSelectValues.find((category) => commentTypeName.name === category.value)
     })
     const reactMultyDefaultOption = comment.commentTypes.map((commentTypeName) => {
-        return commentTypeName.value.map(name => {
+        return commentTypeName.value.flatMap(name => {
+            // console.log(name)
             return{
                 value: name,
                 label: reference[name]
@@ -125,7 +126,7 @@ const Editor = ({comment, selectHandler, references}) => {
                 {
                     reactSelectSingleDefaultOption.map((item,idx) => {
                         return(
-                            <div key={`${item.value}_${idx}`}   className={'flex flex-col mt-[10px] '}>
+                            <div  key={`${item.value}_${idx}`}   className={'flex flex-col mt-[10px] '}>
                                 <span className={'text-[#6C7094]'}>Категория</span>
                                 <ReactSelect
                                     name={'category'}
@@ -145,8 +146,9 @@ const Editor = ({comment, selectHandler, references}) => {
             <div className={'w-8/12'}>
                 {
                     reactMultyDefaultOption.map((item,idx) => {
+                        // console.log('EDIROT',item)
                         return(
-                            <div key={`${item.value}_${idx}`}   className={'flex flex-col mt-[10px] '}>
+                            <div key={`${item.label}_${idx}`}   className={'flex flex-col mt-[10px] '}>
                                 <span className={'text-[#6C7094]'}>Подкатегория</span>
                                 <ReactSelect
                                     isMulti={true}
@@ -154,7 +156,7 @@ const Editor = ({comment, selectHandler, references}) => {
                                     components={{
                                         Option
                                     }}
-                                    defaultValue={item}
+                                    value={item}
                                     styles={customStyles}
                                     onChange={(e) => selectHandler(e, comment.id, item)}
                                 />

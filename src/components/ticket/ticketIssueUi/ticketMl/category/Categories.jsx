@@ -30,9 +30,14 @@ const reference = {
     READY_NOTIFICATION: 'Уведомление о готовности заказа к получению'
 }
 
-const Categories = ({comment, order, selectHandler}) => {
+const Categories = ({comment, order, selectHandler, activeBtn}) => {
     const [active, setActive] = useState(false)
-    // console.log(comment)
+
+    const handleActiveBtn = (e, id) => {
+        setActive(!active)
+        activeBtn(e, id)
+    }
+
     return(
         <div className={'flex flex-col'}>
             {
@@ -71,7 +76,7 @@ const Categories = ({comment, order, selectHandler}) => {
                     </>
             }
             <div className={'pl-[120px] mt-[20px]'}>
-                <button onClick={() => setActive(!active)} className={'px-[33px] py-[18px] border rounded-[15px]'}>{active ? 'Сохранить' : 'Редактировать'}</button>
+                <button onClick={(e) => handleActiveBtn(e, comment.id)} className={'px-[33px] py-[18px] border rounded-[15px]'}>{active ? 'Сохранить' : 'Редактировать'}</button>
             </div>
         </div>
     )
