@@ -30,7 +30,7 @@ const reference = {
     READY_NOTIFICATION: 'Уведомление о готовности заказа к получению'
 }
 
-const Categories = ({comment, order}) => {
+const Categories = ({comment, order, selectHandler}) => {
     const [active, setActive] = useState(false)
     // console.log(comment)
     return(
@@ -38,7 +38,7 @@ const Categories = ({comment, order}) => {
             {
                 active ?
                     <>
-                        <Editor comment={comment} />
+                        <Editor comment={comment} selectHandler={selectHandler} reference={reference} />
                     </>
                     : <>
                         <div className={'w-full  flex p-2 text-white font-primary pl-[120px]'}>

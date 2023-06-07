@@ -10,6 +10,42 @@ const placeRef = {
     'MARKET_PLACE': `Направить в Маркетплэйс`
 }
 
+const map = {
+    "PRODUCT_DESCRIPTION": [],
+    "PREPARE_ORDER": [
+        "SELECT_POSTAMAT",
+        "SEARCH_POSTAMAT_AT_HOUSE"
+    ],
+    "GETTING_ORDER": [
+        "PAY_ORDER",
+        "OPEN_POSTAMAT"
+    ],
+    "GOT_ORDER": [
+        "PACKING",
+        "COMPLETENESS"
+    ],
+    "PRODUCT": [
+        "QUALITY",
+        "DESCRIPTION"
+    ],
+    "POST_BOX": [
+        "WORK_POSTAMAT",
+        "LOCATION_POSTAMAT",
+        "VIEW_POSTAMAT"
+    ],
+    "DELIVERY": [
+        "DEADLINE",
+        "COAST_DELIVERY",
+        "DELIVERY_GUY_REPORT"
+    ],
+    "NOTIFICATION": [
+        "CONFIRM_NOTIFICATION",
+        "DELIVERY_NOTIFICATION",
+        "READY_NOTIFICATION"
+    ],
+    "OTHER": []
+}
+
 const TicketMain = (props) => {
 
     const {ticketId} = useParams()
@@ -48,14 +84,45 @@ const TicketMain = (props) => {
         )
     },[ticketFetching, orderFetching, commentsFetching])
 
+    const handleSelect = (item, id, prevValue, type) => {
+        if (type === 'single') {
+            const allComments = [...comments]
+            const idx = allComments.findIndex(comment => comment.id === id)
+            const com = {...allComments[idx]}
+            const prevType = com.commentTypes.findIndex(i => i.name === prevValue.value)
+            com.commentTypes[prevType] = {
+                name: item.value,
+                value: []
+            }
+            setComments(allComments)
+        } else {
+            const allComments = [...comments]
+            const idx = allComments.findIndex(comment => comment.id === id)
+            const com = {...allComments[idx]}
+            console.log(com)
+            const category = item.map(val => {
+                for(const prop in map) {
+                    if (map[prop].includes(val.value)) {
+                        return prop
+                        break
+                    }
+                }
+            })[0]
+
+            const currentCategory = com.commentTypes.findIndex(i => i.name === category)
+            com.commentTypes[currentCategory] = {
+                name: category,
+                value: item
+            }
+        }
+    }
+
     if (!ticketSuccess) return  <Loader />
-    // console.log('TICKET ', ticket, 'ORDER', order)
-    // console.log(commentsData)
     return(
         <div className={'w-full flex mx-[80px] mt-[45px] mb-[20px] font-primary text-[18px]'}>
             <div className={'w-[65%] flex flex-col gap-[25px]'}>
                 <TicketInformation ticket={ticket} order={order} />
-                <TicketDescription ticket={ticket} order={order} comments={comments} />
+                <TicketDescription ticket={ticket} order={order} comments={comments} selectHandler={handleSelect} />
             </div>
         </div>
     )

@@ -3,8 +3,8 @@ import TicketDescriptionHeader from "./TicketDescriptionHeader";
 import TicketCommentContent from "./TicketCommentContent";
 import Categories from "./category/Categories";
 
-const TicketComment = ({ticket, order, comment}) => {
-    // console.log(comment)
+const TicketComment = ({ticket, order, comment, selectHandler}) => {
+    // console.log('comment', comment)
     return(
         <div className={'w-full'}>
             <TicketDescriptionHeader
@@ -14,7 +14,7 @@ const TicketComment = ({ticket, order, comment}) => {
                 rate={comment.rate}
             />
             <TicketCommentContent comment={comment.comment} />
-            <Categories comment={comment} order={order} />
+            <Categories comment={comment} order={order} selectHandler={selectHandler} />
         </div>
     )
 }
