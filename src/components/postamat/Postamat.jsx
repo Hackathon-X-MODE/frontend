@@ -29,6 +29,7 @@ const Postamat = (props) => {
             getPostamateByVendorId(postamatId)
             if (sc) {
                 setAllPostamates(postamateById)
+                // console.log(postamateById)
             }
         } else {
             if (postamatesSuccess) {
@@ -38,7 +39,7 @@ const Postamat = (props) => {
         if (currentPostamateSuccess) {
             setPostamatData({
                 ...postamatData,
-                ...currentPostamate
+                currentPostamate
             })
         }
     },[postamatesFetching, currentPostamateFetching, sc ])
@@ -47,20 +48,36 @@ const Postamat = (props) => {
 
     if (!postamatesSuccess) return  <Loader />
 
-    const res = allPostamates.map((postamate, idx) => {
+    const res = Array.isArray(allPostamates) ?  allPostamates.map((postamate, idx) => {
+            return {
+                type: 'Feature',
+                id: idx,
+                externalId: postamate?.externalId,
+                postamatId: postamate?.id,
+                vendorId: postamate?.vendorId,
+                size: postamate?.size,
+                postamatInit: postamate?.postamatInit,
+                lastDateActivity: postamate?.lastDateActivity,
+                videoLink: postamate?.videoLink,
+                geometry: {
+                    type: 'Point',
+                    coordinates: [postamate?.location?.latitude, postamate?.location?.longitude ]
+                }
+            }
+        },) : [allPostamates].map((postamate, idx) => {
         return {
             type: 'Feature',
             id: idx,
-            externalId: postamate.externalId,
-            postamatId: postamate.id,
-            vendorId: postamate.vendorId,
-            size: postamate.size,
-            postamatInit: postamate.postamatInit,
-            lastDateActivity: postamate.lastDateActivity,
-            videoLink: postamate.videoLink,
+            externalId: postamate?.externalId,
+            postamatId: postamate?.id,
+            vendorId: postamate?.vendorId,
+            size: postamate?.size,
+            postamatInit: postamate?.postamatInit,
+            lastDateActivity: postamate?.lastDateActivity,
+            videoLink: postamate?.videoLink,
             geometry: {
                 type: 'Point',
-                coordinates: [postamate.location.latitude, postamate.location.longitude ]
+                coordinates: [postamate?.location?.latitude, postamate?.location?.longitude ]
             }
         }
     },)
