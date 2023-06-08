@@ -44,6 +44,7 @@ const Postamat = (props) => {
     },[postamatesFetching, currentPostamateFetching, sc ])
 
 
+
     if (!postamatesSuccess) return  <Loader />
 
     const res = allPostamates.map((postamate, idx) => {

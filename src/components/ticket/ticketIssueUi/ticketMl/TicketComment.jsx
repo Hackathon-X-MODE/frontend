@@ -30,7 +30,6 @@ const TicketComment = ({ticket, order, comment, selectHandler,activeBtn }) => {
         }),
         singleValue: (defaultStyles) => ({...defaultStyles, color: "#fff"}),
     };
-    console.log('comment', comment)
     return(
         <div className={'w-full border-b border-b-gray-700 pb-[20px] last:border-b-0'}>
             <TicketDescriptionHeader

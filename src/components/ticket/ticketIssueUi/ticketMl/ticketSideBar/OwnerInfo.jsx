@@ -1,7 +1,6 @@
 import React from 'react';
 
 const OwnerInfo = ({vendor}) => {
-    console.log(vendor)
     return(
         <div className={'text-white px-[30px] py-[30px] mt-[26px] bg-[#21243A] rounded-[15px]'}>
             <div className={'flex-col flex gap-[18px]'}>
