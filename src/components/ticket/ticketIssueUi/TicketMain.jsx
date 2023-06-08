@@ -6,10 +6,14 @@ import {
     useGetCommentsByOrderIdQuery,
     useGetOrderByIdQuery,
     useGetTicketsByIdQuery,
+    useGetVendorByIdQuery,
+    useGetVendorsByListQuery,
+    useGetVendorsByPostamatIdQuery,
     useUpdateCommentsMutation
 } from "../../../redux/postamatApi";
 import Loader from "../../loader/Loader";
 import TicketDescription from "./ticketMl/TicketDescription";
+import TicketSideBar from "./ticketMl/ticketSideBar/TicketSideBar";
 
 const placeRef = {
     'POSTAMAT': `Технический отдел "Московский постомат"`,
@@ -62,6 +66,9 @@ const TicketMain = (props) => {
     const {data: ticketData, isSuccess: ticketSuccess, isFetching: ticketFetching} = useGetTicketsByIdQuery(+ticketId)
     const {data: orderData, isSuccess: orderSuccess, isFetching: orderFetching} = useGetOrderByIdQuery(ticketData?.orderId)
     const {data: commentsData, isFetching: commentsFetching} = useGetCommentsByOrderIdQuery(orderData?.id)
+    const {data: vendorData, isSuccess: vendorSuccess, isFetching: vendorFetching} = useGetVendorByIdQuery(orderData?.vendorId)
+    const {data: vendorsData = [], isFetching: vendorsFetching} = useGetVendorsByPostamatIdQuery(orderData?.postamatId);
+    const {data: vendorsList = [], isFetching: vendorsListFetching} = useGetVendorsByListQuery([orderData?.vendorId, vendorsData?.vendorId]);
     const [updateComments, {isSuccess: updateCommentsSuccess}] = useUpdateCommentsMutation()
     const [confirmTicketById, {isLoading: confirmLoading, isSuccess: confirmSuccess}] = useConfirmTicketByIdMutation();
 
@@ -90,7 +97,7 @@ const TicketMain = (props) => {
                 }
             })
         )
-    },[ticketFetching, orderFetching, commentsFetching])
+    },[ticketFetching, orderFetching, commentsFetching, vendorFetching, vendorsFetching, vendorsListFetching])
 
     const handleSelect = (item, id, prevValue, type ) => {
         if (type === 'single') {
@@ -145,7 +152,6 @@ const TicketMain = (props) => {
     const handleActiveBtn = async (e, id) => {
 
         if (e.target.innerText === 'Сохранить') {
-            console.log(id)
             const forUpdate = comments.filter(comment => comment.id === id)[0];
             await updateComments({
                 body: {
@@ -180,10 +186,13 @@ const TicketMain = (props) => {
 
     if (!ticketSuccess) return  <Loader />
     return(
-        <div className={'w-full flex mx-[80px] mt-[45px] mb-[20px] font-primary text-[18px]'}>
+        <div className={'w-full flex gap-[40px] mx-[80px] mt-[45px] mb-[20px] font-primary text-[18px]'}>
             <div className={'w-[65%] flex flex-col gap-[25px]'}>
                 <TicketInformation ticket={ticket} order={order} />
                 <TicketDescription ticket={ticket} order={order} comments={comments} confirm={confirm} selectHandler={handleSelect} activeBtn={handleActiveBtn}  />
+            </div>
+            <div className={'w-[25%]  flex flex-col'}>
+                <TicketSideBar vendors={vendorsData} vendorsList={vendorsList} vendor={vendorData} order={order} />
             </div>
         </div>
     )

@@ -17,13 +17,11 @@ export const postamatApi = createApi({
         }),
         getVendorById: build.query({
             query: (id) => `vendors/${id}`,
-            transformResponse: (res) => {
-                return [res];
-            },
+
             providesTags: (result) =>
                 result
                     ? [
-                          ...result.map(({ id }) => ({ type: "Vendors", id })),
+                          [result].map(({ id }) => ({ type: "Vendors", id })),
                           { type: "Vendors", id: "LIST" }
                       ]
                     : [{ type: "Vendors", id: "LIST" }]
@@ -108,13 +106,10 @@ export const postamatApi = createApi({
         }),
         getVendorsByPostamatId: build.query({
             query: (id) => `vendors/postamates/${id}`,
-            transformResponse: (res) => {
-                return [res];
-            },
             providesTags: (result) =>
                 result
                     ? [
-                          ...result.map(({ id }) => ({
+                          [result].map(({ id }) => ({
                               type: "Postamates",
                               id
                           })),

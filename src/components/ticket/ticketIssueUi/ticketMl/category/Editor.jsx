@@ -125,7 +125,6 @@ const Editor = ({comment, selectHandler, references}) => {
                 label: reference[name]
             }
         })})
-    console.log(comment)
     return(
         <div className={'w-full  flex flex-col p-2 text-white font-primary pl-[120px]'}>
             <div className={'flex gap-[20px]'}>
