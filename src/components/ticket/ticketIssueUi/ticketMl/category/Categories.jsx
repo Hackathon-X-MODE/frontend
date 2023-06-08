@@ -79,9 +79,13 @@ const Categories = ({comment, order, selectHandler, activeBtn}) => {
                         </div>
                     </>
             }
-            <div className={'pl-[120px] mt-[20px]'}>
-                <button onClick={(e) => handleActiveBtn(e, comment.id)} className={'px-[33px] py-[18px] border rounded-[15px]'}>{active ? 'Сохранить' : 'Редактировать'}</button>
-            </div>
+            {
+                comment?.statusInTicket === 'NOT_PROCESSED'
+                ? <div className={'pl-[120px] mt-[20px]'}>
+                        <button onClick={(e) => handleActiveBtn(e, comment.id)} className={'px-[33px] py-[18px] border rounded-[15px]'}>{active ? 'Сохранить' : 'Редактировать'}</button>
+                    </div>
+                : null
+            }
         </div>
     )
 }

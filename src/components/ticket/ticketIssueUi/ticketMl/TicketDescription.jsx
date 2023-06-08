@@ -3,7 +3,7 @@ import TicketDescriptionHeader from "./TicketDescriptionHeader";
 import TicketComment from "./TicketComment";
 
 const TicketDescription = ({ticket, order, comments, selectHandler, activeBtn, confirm}) => {
-    // console.log('hw',comments)
+    // console.log('hw',ticket)
     return(
         <div className={'w-full flex flex-col  bg-[#5C5F7E] rounded-[15px]  font-primary text-white text-[18px]'}>
             <div className={'px-[30px] py-[20px] flex items-center justify-between text-white font-primary mr-[77px]'}>
@@ -17,9 +17,13 @@ const TicketDescription = ({ticket, order, comments, selectHandler, activeBtn, c
                     }
                 </div>
             }
-            <div className={'w-full bg-[#21243A] rounded-bl-[15px] rounded-br-[15px]'}>
-                <button onClick={() => confirm()} className={'ml-[150px] mb-[20px] px-[30px] py-[18px] bg-[#F62E46] rounded-[15px]'}>Отправить обращение</button>
-            </div>
+            {
+                ticket?.ticketStatus === 'OPEN'
+                ? <div className={'w-full bg-[#21243A] rounded-bl-[15px] rounded-br-[15px]'}>
+                        <button onClick={() => confirm()} className={'ml-[150px] mb-[20px] px-[30px] py-[18px] bg-[#F62E46] rounded-[15px]'}>Отправить обращение</button>
+                    </div>
+                : null
+            }
         </div>
     )
 }

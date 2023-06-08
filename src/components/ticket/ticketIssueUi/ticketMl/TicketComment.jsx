@@ -30,7 +30,7 @@ const TicketComment = ({ticket, order, comment, selectHandler,activeBtn }) => {
         }),
         singleValue: (defaultStyles) => ({...defaultStyles, color: "#fff"}),
     };
-    // console.log('comment', comment)
+    console.log('comment', comment)
     return(
         <div className={'w-full border-b border-b-gray-700 pb-[20px] last:border-b-0'}>
             <TicketDescriptionHeader
@@ -42,18 +42,26 @@ const TicketComment = ({ticket, order, comment, selectHandler,activeBtn }) => {
             <TicketCommentContent comment={comment.comment} />
             <Categories activeBtn={activeBtn} comment={comment} order={order} selectHandler={selectHandler} />
             <div className={'flex flex-col mt-[10px] ml-[120px] '}>
-                <span className={'text-[#6C7094]'}>Место отправки</span>
-                <ReactSelect
-                    isMulti={true}
-                    options={placeRef}
-                    components={{
-                        Option
-                    }}
-                    placeholder={'Место отправки'}
-                    value={comment.problemOwners}
-                    styles={customStyles}
-                    onChange={(e) => selectHandler(e, comment.id,'item','delivery')}
-                />
+                {
+                    comment?.statusInTicket === 'NOT_PROCESSED'
+                    ? <>
+                            <span className={'text-[#6C7094]'}>Место отправки</span>
+                            <ReactSelect
+                                isMulti={true}
+                                options={placeRef}
+                                components={{
+                                    Option
+                                }}
+                                placeholder={'Место отправки'}
+                                value={comment.problemOwners}
+                                styles={customStyles}
+                                onChange={(e) => selectHandler(e, comment.id,'item','delivery')}
+                            />
+                        </>
+                    : <>
+                            <span className={'px-[30px] py-[18px] border rounded-[15px] text-white text-center'}>Отправлен</span>
+                        </>
+                }
             </div>
         </div>
     )
