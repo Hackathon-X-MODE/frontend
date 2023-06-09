@@ -26,7 +26,6 @@ const Tickets = (props) => {
         } else if( type === 'prev' && page !== 0) {
             setPage((prevPage) => prevPage - 1)
         }
-
     }
 
     const handleFilter = (e) => {

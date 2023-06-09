@@ -138,8 +138,15 @@ export const postamatApi = createApi({
                     ]
                     : [{ type: 'Tickets', id: 'LIST' }],
         }),
-
-
+        getComments: build.query({
+            query: (arg) => {
+                const {page} = arg;
+                return {
+                    url: `comments/page?page=${page}&size=20&sort=createDate,DESC`,
+                    method: 'GET'
+                }
+            },
+        }),
         getTicketsById: build.query({
             query: (id) => (
                 {
@@ -301,6 +308,8 @@ export const {
 
     useGetExportsQuery,
     useRequestExportsMutation,
+
+    useGetCommentsQuery,
 
   
 } = postamatApi;
