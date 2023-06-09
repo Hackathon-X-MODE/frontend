@@ -41,7 +41,7 @@ const CommentsTable = (props) => {
     console.log(comments)
     return(
         <div className={'w-full relative  flex flex-col  mt-[50px] font-primary'}>
-            <div className={'mx-[70px] w-5/6 px-[70px] flex flex-col h-[800px]  flex flex bg-[#21243A] rounded-[15px] overflow-y-scroll rounded-tr-[0px]'}>
+            <div className={'mx-[70px] w-5/6 px-[70px] flex flex-col h-[85vh]  flex flex bg-[#21243A] rounded-[15px] overflow-y-scroll rounded-tr-[0px]'}>
                 <CommentsHeader />
                 {
                     comments.length !== 0 && <CommentsBody comments={comments} />
