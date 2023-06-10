@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from "react";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {
-    useGetAllPostamatesQuery, useGetVendorsQuery, useLazyGetPostamatesQuery,
-    useLazyGetVendorByIdQuery, useLazyGetVendorsByPostamatIdQuery
+    useGetAllPostamatesQuery,
+    useGetVendorsQuery,
+    useLazyGetPostamatesQuery,
+    useLazyGetVendorByIdQuery,
+    useLazyGetVendorsByPostamatIdQuery
 } from "../../redux/postamatApi";
-import { Map, ObjectManager, } from "@pbe/react-yandex-maps";
+import {Clusterer, Map, Placemark,} from "@pbe/react-yandex-maps";
 import Loader from "../loader/Loader";
 
 import PostamatInfo from "./PostamatInfo";
@@ -15,17 +18,27 @@ const Postamat = (props) => {
 
     const {data: postamates, isFetching: postamatesFetching, isSuccess: postamatesSuccess} = useGetAllPostamatesQuery()
     const {data: vendorsData, isFetching: vendorsFetching, isSuccess: vendorsSuccess} = useGetVendorsQuery()
-    const [getVendor, {data: currentPostamate, isFetching: currentPostamateFetching, isSuccess: currentPostamateSuccess}] = useLazyGetVendorByIdQuery()
-    const [getPostamates, {data: postamatesData, isFetching: postamatesDataFetching, isSuccess: postamatesDataSuccess}] = useLazyGetPostamatesQuery()
+    const [getVendor, {
+        data: currentPostamate,
+        isFetching: currentPostamateFetching,
+        isSuccess: currentPostamateSuccess
+    }] = useLazyGetVendorByIdQuery()
+    const [getPostamates, {
+        data: postamatesData,
+        isFetching: postamatesDataFetching,
+        isSuccess: postamatesDataSuccess
+    }] = useLazyGetPostamatesQuery()
 
-    const [getPostamateByVendorId, {data: postamateById, isFetching: postamateByIDFetching, isSuccess: sc}] = useLazyGetVendorsByPostamatIdQuery()
+    const [getPostamateByVendorId, {
+        data: postamateById,
+        isFetching: postamateByIDFetching,
+        isSuccess: sc
+    }] = useLazyGetVendorsByPostamatIdQuery()
 
     const [allPostamates, setAllPostamates] = useState([])
     const [vendorsFilter, setVendorsFilter] = useState()
     const [postamatData, setPostamatData] = useState([])
     const [active, setActive] = useState(false)
-
-
 
 
     useEffect(() => {
@@ -51,7 +64,7 @@ const Postamat = (props) => {
         }
         if (vendorsSuccess) {
             const vendorsArray = [...vendorsData]
-            const mappedVendors = vendorsArray.map((v) =>{
+            const mappedVendors = vendorsArray.map((v) => {
                 return {
                     ...v,
                     checked: false
@@ -59,39 +72,22 @@ const Postamat = (props) => {
             })
             setVendorsFilter(mappedVendors)
         }
-    },[postamatesFetching, currentPostamateFetching, sc, postamatesDataFetching, vendorsSuccess])
+    }, [postamatesFetching, currentPostamateFetching, sc, postamatesDataFetching, vendorsSuccess])
 
     const handleFilter = (e, id) => {
         const vendorsArray = [...vendorsFilter]
         const vendorsIndex = vendorsArray.findIndex((i) => i.id === id)
         vendorsArray[vendorsIndex].checked = !vendorsArray[vendorsIndex].checked
-        console.log(vendorsArray[vendorsIndex].name)
         setVendorsFilter(vendorsArray)
         getPostamates(vendorsArray[vendorsIndex].id)
     }
 
 
-    if (!postamatesSuccess) return  <Loader />
+    if (!postamatesSuccess) return <Loader/>
 
 
-    const res = Array.isArray(allPostamates) ?  allPostamates.map((postamate, idx) => {
+    const res = Array.isArray(allPostamates) ? allPostamates.map((postamate, idx) => {
         console.log(allPostamates)
-            return {
-                type: 'Feature',
-                id: idx,
-                externalId: postamate?.externalId,
-                postamatId: postamate?.id,
-                vendorId: postamate?.vendorId,
-                size: postamate?.size,
-                postamatInit: postamate?.postamatInit,
-                lastDateActivity: postamate?.lastDateActivity,
-                videoLink: postamate?.videoLink,
-                geometry: {
-                    type: 'Point',
-                    coordinates: [postamate?.location?.latitude, postamate?.location?.longitude ]
-                }
-            }
-        },) : [allPostamates].map((postamate, idx) => {
         return {
             type: 'Feature',
             id: idx,
@@ -104,7 +100,23 @@ const Postamat = (props) => {
             videoLink: postamate?.videoLink,
             geometry: {
                 type: 'Point',
-                coordinates: [postamate?.location?.latitude, postamate?.location?.longitude ]
+                coordinates: [postamate?.location?.latitude, postamate?.location?.longitude]
+            }
+        }
+    },) : [allPostamates].map((postamate, idx) => {
+        return {
+            type: 'Feature',
+            id: idx,
+            externalId: postamate?.externalId,
+            postamatId: postamate?.id,
+            vendorId: postamate?.vendorId,
+            size: postamate?.size,
+            postamatInit: postamate?.postamatInit,
+            lastDateActivity: postamate?.lastDateActivity,
+            videoLink: postamate?.videoLink,
+            geometry: {
+                type: 'Point',
+                coordinates: [postamate?.location?.latitude, postamate?.location?.longitude]
             }
         }
     },)
@@ -132,7 +144,7 @@ const Postamat = (props) => {
                     "relative"
                 }
             >
-                <PostamatFilter vendors={vendorsFilter} handleFilter={handleFilter} />
+                <PostamatFilter vendors={vendorsFilter} handleFilter={handleFilter}/>
                 {
                     allPostamates.length !== 0 &&
                     <Map
@@ -144,11 +156,7 @@ const Postamat = (props) => {
                             zoom: 10
                         }}
                     >
-                        <ObjectManager
-                            onClick={(e) => {
-                                const eventId = e.get('objectId')
-                                handlePostamate(e.originalEvent.currentTarget.objects.getById(eventId))
-                            }}
+                        <Clusterer
                             options={{
                                 clusterize: true,
                                 gridSize: 32,
@@ -160,21 +168,36 @@ const Postamat = (props) => {
                             clusters={{
                                 preset: 'islands#redClusterIcons',
                             }}
-                            defaultFeatures={{
-                                type: 'FeatureCollection',
-                                features: res
-                            }}
                             modules={[
                                 'objectManager.addon.objectsBalloon',
                                 'objectManager.addon.objectsHint',
                             ]}
                             filter={object => object.id % 2 === 0}
-                        />
+                        >
+                            {res.map((r, index) => (
+                                <Placemark
+                                    key={index}
+                                    geometry={r.geometry}
+                                    properties={{
+                                        source: r
+                                    }}
+                                    options={
+                                        {
+                                            preset: 'islands#icon',
+                                            iconColor: '#b60000'
+                                        }
+                                    }
+                                    onClick={(e) => {
+                                        handlePostamate(e.originalEvent.target.properties._data.source)
+                                    }}
+                                />
+                            ))}
+                        </Clusterer>
                     </Map>
 
                 }
                 {
-                    <PostamatInfo isActive={active} postamatData={postamatData} />
+                    <PostamatInfo isActive={active} postamatData={postamatData}/>
                 }
             </div>
         </>
