@@ -10,7 +10,7 @@ const CommentsBody = ({comments}) => {
         'NEGATIVE': 'bg-gradient-negative',
         'NEUTRAL': 'bg-gradient-neutral',
     }
-    console.log(comments)
+    // console.log(comments)
     return(
         <div className={'flex flex-col gap-2'}>
             {
