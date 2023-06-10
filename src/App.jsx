@@ -5,7 +5,6 @@ import Navigation from "./components/navigation/Navigation";
 import Vendors from "./components/vendor/Vendors";
 import Postamat from "./components/postamat/Postamat";
 import Tickets from "./components/ticket/ticketsUi/Tickets";
-import Files from "./components/export/Files";
 import Feedback from "./components/Mobile/Feedback";
 import Dashboard from "./components/dashboard/Dashboard";
 import TicketMain from "./components/ticket/ticketIssueUi/TicketMain";
@@ -27,7 +26,6 @@ function App() {
                     <Route path={"/view/vendors/"} component={Vendors} />
                     <Route path={"/view/tickets/:ticketId"} component={TicketMain} />
                     <Route path={"/view/tickets/"} component={Tickets} />
-                    <Route path={"/view/files/"} component={Files} />
                     <Route path={"/view/comments"} component={CommentsTable} />
                     <Route path={"/mobile/:code"} component={Feedback} />
                 </Switch>
