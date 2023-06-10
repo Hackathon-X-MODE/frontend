@@ -32,13 +32,14 @@ const PostamatFilter = ({vendors, handleFilter}) => {
                 <span>Месторасположение</span>
                 <div className={'bg-[#5C5F7E] flex items-center py-[11px] px-[16px] rounded-[15px] gap-[15px]'}>
                     <img className={'w-[17px] h-[17px]'} src={searchBlack} />
-                    <input className={'bg-[#5C5F7E] focus:outline-0 border-none'} placeholder={'Место, улица'}/>
+                    <input name={'address'} className={'bg-[#5C5F7E] focus:outline-0 border-none'} placeholder={'Место, улица'}/>
                 </div>
             </div>
             <div className={'flex flex-col text-[18px] gap-[15px]  pb-[27px]'}>
                 <span>Количество ячеек</span>
-                <div className={'bg-[#5C5F7E] flex items-center py-[11px] px-[16px] rounded-[15px] gap-[15px]'}>
-                    <input className={'bg-[#5C5F7E] focus:outline-0 border-none'} placeholder={'От..'}/>
+                <div className={' flex items-center justify-between rounded-[15px] gap-[15px]'}>
+                    <input name={'sizeAt'} className={'bg-[#5C5F7E] px-[11px] py-[16px] rounded-[15px] w-[30%] focus:outline-0 border-none'} placeholder={'От..'}/>
+                    <input name={'sizeTo'} className={'bg-[#5C5F7E] px-[11px] py-[16px] rounded-[15px] w-[30%] focus:outline-0 border-none'} placeholder={'До..'}/>
                 </div>
             </div>
             <div className={'flex flex-col text-[18px] gap-[15px]  pb-[27px]'}>

@@ -3,9 +3,6 @@ import {useParams} from "react-router-dom";
 import {
     useGetAllPostamatesQuery,
     useGetVendorsQuery,
-    useLazyGetPostamatesQuery,
-    useLazyGetVendorByIdQuery,
-    useLazyGetVendorsByPostamatIdQuery
 } from "../../redux/postamatApi";
 import {Clusterer, Map, Placemark,} from "@pbe/react-yandex-maps";
 import Loader from "../loader/Loader";
@@ -15,52 +12,35 @@ import PostamatFilter from "./PostamatFilter";
 
 const Postamat = (props) => {
     const {postamatId} = useParams()
-
-    const {data: postamates, isFetching: postamatesFetching, isSuccess: postamatesSuccess} = useGetAllPostamatesQuery()
-    const {data: vendorsData, isFetching: vendorsFetching, isSuccess: vendorsSuccess} = useGetVendorsQuery()
-    const [getVendor, {
-        data: currentPostamate,
-        isFetching: currentPostamateFetching,
-        isSuccess: currentPostamateSuccess
-    }] = useLazyGetVendorByIdQuery()
-    const [getPostamates, {
-        data: postamatesData,
-        isFetching: postamatesDataFetching,
-        isSuccess: postamatesDataSuccess
-    }] = useLazyGetPostamatesQuery()
-
-    const [getPostamateByVendorId, {
-        data: postamateById,
-        isFetching: postamateByIDFetching,
-        isSuccess: sc
-    }] = useLazyGetVendorsByPostamatIdQuery()
-
     const [allPostamates, setAllPostamates] = useState([])
     const [vendorsFilter, setVendorsFilter] = useState()
     const [postamatData, setPostamatData] = useState([])
     const [active, setActive] = useState(false)
+    const [postamatFilter, setPostamatFilter] = useState({
+        vendors: [''],
+        address: '',
+        sizeAt: '',
+        sizeTo: ''
+    })
+
+
+    const {data: postamates, isFetching: postamatesFetching, isSuccess: postamatesSuccess} = useGetAllPostamatesQuery({vendors: postamatFilter.vendors, address: postamatFilter.address, sizeAt: postamatFilter.sizeAt, sizeTo: postamatFilter.sizeTo})
+    const {data: vendorsData, isFetching: vendorsFetching, isSuccess: vendorsSuccess} = useGetVendorsQuery()
+
+
 
 
     useEffect(() => {
-        if (postamatesDataSuccess) {
-            setAllPostamates(postamatesData)
-            return
-        } else if (postamatId) {
-            getPostamateByVendorId(postamatId)
-            if (sc) {
-                setAllPostamates(postamateById)
-                // console.log(postamateById)
-            }
-        } else {
-            if (postamatesSuccess && !postamatesDataSuccess) {
-                setAllPostamates(postamates)
-            }
-        }
-        if (currentPostamateSuccess) {
-            setPostamatData({
-                ...postamatData,
-                currentPostamate
+
+        if (postamatId) {
+            setPostamatFilter({
+                ...postamatFilter,
+                vendors: [postamatId]
             })
+        }
+
+        if (postamatesSuccess) {
+            setAllPostamates(postamates)
         }
         if (vendorsSuccess) {
             const vendorsArray = [...vendorsData]
@@ -72,14 +52,17 @@ const Postamat = (props) => {
             })
             setVendorsFilter(mappedVendors)
         }
-    }, [postamatesFetching, currentPostamateFetching, sc, postamatesDataFetching, vendorsSuccess])
+    }, [postamatesFetching, vendorsFetching, postamatFilter.vendors.length, postamatFilter.sizeTo, postamatFilter.sizeAt, postamatFilter.address])
 
     const handleFilter = (e, id) => {
         const vendorsArray = [...vendorsFilter]
         const vendorsIndex = vendorsArray.findIndex((i) => i.id === id)
         vendorsArray[vendorsIndex].checked = !vendorsArray[vendorsIndex].checked
         setVendorsFilter(vendorsArray)
-        getPostamates(vendorsArray[vendorsIndex].id)
+        setPostamatFilter({
+            ...postamatFilter,
+            vendors: [postamatFilter.vendors.join(''),e.target.value]
+        })
     }
 
 
@@ -87,7 +70,7 @@ const Postamat = (props) => {
 
 
     const res = Array.isArray(allPostamates) ? allPostamates.map((postamate, idx) => {
-        console.log(allPostamates)
+        // console.log(allPostamates)
         return {
             type: 'Feature',
             id: idx,
@@ -124,8 +107,11 @@ const Postamat = (props) => {
     function handlePostamate(id) {
         if (id?.vendorId !== undefined) {
             setActive(true)
-            getVendor(id.vendorId)
-            console.log(id)
+            // setPostamatFilter({
+            //     ...postamatFilter,
+            //     vendors: [postamatFilter.vendors.join(','),id.vendorId]
+            // })
+            console.log('123')
             setPostamatData({
                 externalId: id.externalId,
                 postamatId: id.postamatId,
@@ -136,7 +122,7 @@ const Postamat = (props) => {
             })
         }
     }
-
+    console.log('123',res)
     return (
         <>
             <div
@@ -181,12 +167,12 @@ const Postamat = (props) => {
                                     properties={{
                                         source: r
                                     }}
-                                    options={
-                                        {
-                                            preset: 'islands#icon',
-                                            iconColor: '#b60000'
-                                        }
-                                    }
+                                    // options={
+                                    //     {
+                                    //         preset: 'islands#icon',
+                                    //         iconColor: '#b60000'
+                                    //     }
+                                    // }
                                     onClick={(e) => {
                                         handlePostamate(e.originalEvent.target.properties._data.source)
                                     }}

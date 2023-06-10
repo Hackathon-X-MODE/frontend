@@ -63,7 +63,13 @@ export const postamatApi = createApi({
             })
         }),
         getAllPostamates: build.query({
-            query: () => `vendors/postamates`,
+            query: (arg) =>{
+                const {vendors, address, sizeAt, sizeTo} = arg
+                return {
+                    url: `vendors/postamates?vendors=${vendors.join(',')}&address=${address}&sizeAt=${sizeAt}&sizeTo=${sizeTo}`,
+                    method: 'GET'
+                }
+            },
             providesTags: (result) =>
                 result
                     ? [
@@ -160,7 +166,7 @@ export const postamatApi = createApi({
                 result
                     ? [
                         // Object.entries(result).map(([k,v]) => console.log(result['id']))
-                          [result].map(({ id }) =>  (console.log(id),{ type: "TicketSubscribe", id })),
+                          [result].map(({ id }) =>  ({ type: "TicketSubscribe", id })),
                           { type: "TicketSubscribe", id: "LIST" }
                       ]
                     : [{ type: "TicketSubscribe", id: "LIST" }]
