@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 
 const PostamatInfo = ({vendors, vendorsList}) => {
+    console.log(vendors)
     // console.log(vendors, vendorsList)
     let postamatVendor;
     if (vendors && vendorsList){
@@ -17,7 +18,7 @@ const PostamatInfo = ({vendors, vendorsList}) => {
                     </div>
                     <div className={'flex'}>
                         <Link
-                            to={`/view/postamates/${vendors.id}`}
+                            to={`/view/postamates?postamate=${vendors.id}`}
                             className={'py-[11px] px-[25px] border border-white bg-[#21243A] rounded-[15px]'}>
                             {/*<img alt={'#'} />*/}
                             <span>На карте</span>

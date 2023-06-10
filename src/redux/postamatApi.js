@@ -64,9 +64,9 @@ export const postamatApi = createApi({
         }),
         getAllPostamates: build.query({
             query: (arg) =>{
-                const {vendors, address, sizeAt, sizeTo} = arg
+                const {postamatId, vendors, address, sizeAt, sizeTo} = arg
                 return {
-                    url: `vendors/postamates?vendors=${vendors.join(',')}&address=${address}&sizeAt=${sizeAt}&sizeTo=${sizeTo}`,
+                    url: `vendors/postamates?vendors=${vendors.join(',')}&postamatId=${postamatId}&address=${address}&sizeAt=${sizeAt}&sizeTo=${sizeTo}`,
                     method: 'GET'
                 }
             },

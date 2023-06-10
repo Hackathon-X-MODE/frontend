@@ -175,7 +175,7 @@ const VendorUpdate = ({ vendor, handleUpdateVendor }) => {
                                 }
                             >
                                 <img src={postaIco} />
-                                <span>Постаматы</span>
+                                <Link to={`/view/postamates?vendor=${vendor.id}`}>Постаматы</Link>
                             </Link>
                         </div>
                     </div>

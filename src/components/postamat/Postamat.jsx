@@ -6,15 +6,19 @@ import Loader from "../loader/Loader";
 
 import PostamatInfo from "./PostamatInfo";
 import PostamatFilter from "./PostamatFilter";
+import qs from "query-string";
 
 const Postamat = (props) => {
-    const {postamatId} = useParams()
+    const params = qs.parse(props.location.search, {ignoreQueryPrefix: true})
+
+
     const [allPostamates, setAllPostamates] = useState([])
     const [vendorsFilter, setVendorsFilter] = useState()
     const [postamatData, setPostamatData] = useState([])
     const [active, setActive] = useState(false)
     const [postamatFilter, setPostamatFilter] = useState({
-        vendors: [],
+        vendors: [params.vendor].filter(i => i !== undefined),
+        postamatId: params.postamate ?? '',
         address: '',
         sizeAt: '',
         sizeTo: ''
@@ -26,6 +30,7 @@ const Postamat = (props) => {
         isFetching: postamatesFetching,
         isSuccess: postamatesSuccess
     } = useGetAllPostamatesQuery({
+        postamatId: postamatFilter.postamatId,
         vendors: postamatFilter.vendors,
         address: postamatFilter.address,
         sizeAt: postamatFilter.sizeAt,
@@ -35,13 +40,6 @@ const Postamat = (props) => {
 
 
     useEffect(() => {
-
-        if (postamatId) {
-            setPostamatFilter({
-                ...postamatFilter,
-                vendors: [postamatId]
-            })
-        }
 
         if (postamatesSuccess) {
             setAllPostamates(postamates)

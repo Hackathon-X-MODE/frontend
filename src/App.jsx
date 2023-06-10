@@ -22,7 +22,7 @@ function App() {
             <div className={"lg:relative w-5/6 w-full overflow-x-hidden overflow-y-scroll"}>
                 <Switch>
                     <Route exact path={"/"} component={Dashboard} />
-                    <Route path={"/view/postamates/:postamatId?"} component={Postamat} />
+                    <Route path={"/view/postamates"} component={Postamat} />
                     <Route path={"/view/vendors/"} component={Vendors} />
                     <Route path={"/view/tickets/:ticketId"} component={TicketMain} />
                     <Route path={"/view/tickets/"} component={Tickets} />
