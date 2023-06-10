@@ -1,23 +1,27 @@
 import React, {useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import {
-    useGetAllPostamatesQuery,
+    useGetAllPostamatesQuery, useGetVendorsQuery, useLazyGetPostamatesQuery,
     useLazyGetVendorByIdQuery, useLazyGetVendorsByPostamatIdQuery
 } from "../../redux/postamatApi";
 import { Map, ObjectManager, } from "@pbe/react-yandex-maps";
 import Loader from "../loader/Loader";
 
 import PostamatInfo from "./PostamatInfo";
+import PostamatFilter from "./PostamatFilter";
 
 const Postamat = (props) => {
     const {postamatId} = useParams()
 
     const {data: postamates, isFetching: postamatesFetching, isSuccess: postamatesSuccess} = useGetAllPostamatesQuery()
+    const {data: vendorsData, isFetching: vendorsFetching, isSuccess: vendorsSuccess} = useGetVendorsQuery()
     const [getVendor, {data: currentPostamate, isFetching: currentPostamateFetching, isSuccess: currentPostamateSuccess}] = useLazyGetVendorByIdQuery()
+    const [getPostamates, {data: postamatesData, isFetching: postamatesDataFetching, isSuccess: postamatesDataSuccess}] = useLazyGetPostamatesQuery()
 
     const [getPostamateByVendorId, {data: postamateById, isFetching: postamateByIDFetching, isSuccess: sc}] = useLazyGetVendorsByPostamatIdQuery()
 
     const [allPostamates, setAllPostamates] = useState([])
+    const [vendorsFilter, setVendorsFilter] = useState()
     const [postamatData, setPostamatData] = useState([])
     const [active, setActive] = useState(false)
 
@@ -25,14 +29,17 @@ const Postamat = (props) => {
 
 
     useEffect(() => {
-        if (postamatId) {
+        if (postamatesDataSuccess) {
+            setAllPostamates(postamatesData)
+            return
+        } else if (postamatId) {
             getPostamateByVendorId(postamatId)
             if (sc) {
                 setAllPostamates(postamateById)
                 // console.log(postamateById)
             }
         } else {
-            if (postamatesSuccess) {
+            if (postamatesSuccess && !postamatesDataSuccess) {
                 setAllPostamates(postamates)
             }
         }
@@ -42,13 +49,33 @@ const Postamat = (props) => {
                 currentPostamate
             })
         }
-    },[postamatesFetching, currentPostamateFetching, sc ])
+        if (vendorsSuccess) {
+            const vendorsArray = [...vendorsData]
+            const mappedVendors = vendorsArray.map((v) =>{
+                return {
+                    ...v,
+                    checked: false
+                }
+            })
+            setVendorsFilter(mappedVendors)
+        }
+    },[postamatesFetching, currentPostamateFetching, sc, postamatesDataFetching  ])
 
+    const handleFilter = (e, id) => {
+        const vendorsArray = [...vendorsFilter]
+        const vendorsIndex = vendorsArray.findIndex((i) => i.id === id)
+        vendorsArray[vendorsIndex].checked = !vendorsArray[vendorsIndex].checked
+        console.log(vendorsArray[vendorsIndex].name)
+        setVendorsFilter(vendorsArray)
+        getPostamates(vendorsArray[vendorsIndex].id)
+    }
 
 
     if (!postamatesSuccess) return  <Loader />
 
+
     const res = Array.isArray(allPostamates) ?  allPostamates.map((postamate, idx) => {
+        console.log(allPostamates)
             return {
                 type: 'Feature',
                 id: idx,
@@ -105,6 +132,7 @@ const Postamat = (props) => {
                     "relative"
                 }
             >
+                <PostamatFilter vendors={vendorsFilter} handleFilter={handleFilter} />
                 {
                     allPostamates.length !== 0 &&
                     <Map

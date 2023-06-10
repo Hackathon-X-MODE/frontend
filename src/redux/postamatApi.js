@@ -277,7 +277,7 @@ export const {
     useUpdateVendorMutation,
     useGetAllPostamatesQuery,
     useLazyGetAllPostamatesQuery,
-    useGetPostamatesQuery,
+    useLazyGetPostamatesQuery,
     useAddPostamatesMutation,
     useUpdatePostamatesMutation,
     useGetTicketsQuery,

@@ -2,7 +2,7 @@ import React from 'react';
 import Loader from "../loader/Loader";
 
 const PostamatInfo = ({isActive, postamatData}) => {
-    console.log(postamatData)
+    // console.log(postamatData)
     return(
         <div className={`${isActive ? 'translate-x-[0px] ' : 'translate-x-[1000px]'} transition duration-500 ease-in-out absolute font-primary text-[18px] flex flex-col w-[330px] text-white h-screen right-0 bg-[#373A54]  top-0 bg-[##373A54] px-[25px] py-[54px]`}>
             {
