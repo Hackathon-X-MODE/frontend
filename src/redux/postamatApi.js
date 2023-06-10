@@ -126,10 +126,10 @@ export const postamatApi = createApi({
 
         getTickets: build.query({
             query: (arg) => {
-                const { page, status } = arg;
+                const { page, status, sortMethod, sort } = arg;
                 console.log('arg: ', arg);
                 return {
-                    url: `tickets/?statuses=${status ? status : 'OPEN'}&page=${page ? page : 0}&size=20&sort=deadline,ASC`,
+                    url: `tickets/?statuses=${status ? status : 'OPEN'}&page=${page ? page : 0}&size=20&sort=${sortMethod},${sort}`,
                     method: 'GET'
                 }
             },

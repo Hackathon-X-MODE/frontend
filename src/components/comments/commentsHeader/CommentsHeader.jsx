@@ -7,7 +7,7 @@ const CommentsHeader = ({total, handleFilter, status}) => {
             <div className={'w-6/12 px-[7px] '}>Всего комментариев: {total}</div>
             <div className={'w-2/12 text-center px-[7px]'}>Вендор</div>
             <button onClick={(e) => handleFilter(e)} name={'rate'} className={`w-2/12 ${status === 'rate' ? 'bg-[#5C5F7E]': '' } rounded-[12px] px-[7px] text-center flex items-center gap-[5px]`}><img src={ascDesc} />Оценка</button>
-            <button onClick={(e) => handleFilter(e)} name={'createDate'} className={`w-2/12 text-center ${status === 'createDate' ? 'bg-[#5C5F7E]': '' } rounded-[10px] px-[7px] translate-x-[20px] flex items-center gap-[5px]`}><img src={ascDesc} />Дата публикация</button>
+            <button onClick={(e) => handleFilter(e)} name={'createDate'} className={`w-2/12 text-center ${status === 'createDate' ? 'bg-[#5C5F7E]': '' } rounded-[12px] px-[7px] translate-x-[20px] flex items-center gap-[5px]`}><img src={ascDesc} />Дата публикация</button>
         </div>
     )
 }

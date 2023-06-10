@@ -107,10 +107,10 @@ const Postamat = (props) => {
     function handlePostamate(id) {
         if (id?.vendorId !== undefined) {
             setActive(true)
-            // setPostamatFilter({
-            //     ...postamatFilter,
-            //     vendors: [postamatFilter.vendors.join(','),id.vendorId]
-            // })
+            setPostamatFilter({
+                ...postamatFilter,
+                vendors: [postamatFilter.vendors.join(','),id.vendorId]
+            })
             console.log('123')
             setPostamatData({
                 externalId: id.externalId,
