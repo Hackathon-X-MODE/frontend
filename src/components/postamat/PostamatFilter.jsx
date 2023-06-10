@@ -28,6 +28,34 @@ const PostamatFilter = ({vendors, handleFilter}) => {
                     })
                 }
             </div>
+            <div className={'flex flex-col text-[18px] gap-[15px]  pb-[27px]'}>
+                <span>Месторасположение</span>
+                <div className={'bg-[#5C5F7E] flex items-center py-[11px] px-[16px] rounded-[15px] gap-[15px]'}>
+                    <img className={'w-[17px] h-[17px]'} src={searchBlack} />
+                    <input className={'bg-[#5C5F7E] focus:outline-0 border-none'} placeholder={'Место, улица'}/>
+                </div>
+            </div>
+            <div className={'flex flex-col text-[18px] gap-[15px]  pb-[27px]'}>
+                <span>Количество ячеек</span>
+                <div className={'bg-[#5C5F7E] flex items-center py-[11px] px-[16px] rounded-[15px] gap-[15px]'}>
+                    <input className={'bg-[#5C5F7E] focus:outline-0 border-none'} placeholder={'От..'}/>
+                </div>
+            </div>
+            <div className={'flex flex-col text-[18px] gap-[15px]  pb-[27px]'}>
+                <span>Загруженность постамата</span>
+                <div  className={'flex items-center  gap-[15px]'}>
+                    <input  type={'checkbox'} />
+                    <label>Низкая</label>
+                </div>
+                <div  className={'flex items-center  gap-[15px]'}>
+                    <input  type={'checkbox'} />
+                    <label>Средняя</label>
+                </div>
+                <div  className={'flex items-center  gap-[15px]'}>
+                    <input  type={'checkbox'} />
+                    <label>Высокая</label>
+                </div>
+            </div>
         </div>
     )
 }
