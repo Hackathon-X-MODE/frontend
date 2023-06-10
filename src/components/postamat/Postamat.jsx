@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {
-    useGetAllPostamatesQuery,
-    useGetVendorsQuery,
-} from "../../redux/postamatApi";
+import {useGetAllPostamatesQuery, useGetVendorsQuery,} from "../../redux/postamatApi";
 import {Clusterer, Map, Placemark,} from "@pbe/react-yandex-maps";
 import Loader from "../loader/Loader";
 
@@ -17,17 +14,24 @@ const Postamat = (props) => {
     const [postamatData, setPostamatData] = useState([])
     const [active, setActive] = useState(false)
     const [postamatFilter, setPostamatFilter] = useState({
-        vendors: [''],
+        vendors: [],
         address: '',
         sizeAt: '',
         sizeTo: ''
     })
 
 
-    const {data: postamates, isFetching: postamatesFetching, isSuccess: postamatesSuccess} = useGetAllPostamatesQuery({vendors: postamatFilter.vendors, address: postamatFilter.address, sizeAt: postamatFilter.sizeAt, sizeTo: postamatFilter.sizeTo})
+    const {
+        data: postamates,
+        isFetching: postamatesFetching,
+        isSuccess: postamatesSuccess
+    } = useGetAllPostamatesQuery({
+        vendors: postamatFilter.vendors,
+        address: postamatFilter.address,
+        sizeAt: postamatFilter.sizeAt,
+        sizeTo: postamatFilter.sizeTo
+    })
     const {data: vendorsData, isFetching: vendorsFetching, isSuccess: vendorsSuccess} = useGetVendorsQuery()
-
-
 
 
     useEffect(() => {
@@ -55,20 +59,29 @@ const Postamat = (props) => {
     }, [postamatesFetching, vendorsFetching, postamatFilter.vendors.length, postamatFilter.sizeTo, postamatFilter.sizeAt, postamatFilter.address])
 
     const handleFilter = (e, id) => {
+        console.log("UP", id)
         const vendorsArray = [...vendorsFilter]
         const vendorsIndex = vendorsArray.findIndex((i) => i.id === id)
         vendorsArray[vendorsIndex].checked = !vendorsArray[vendorsIndex].checked
         setVendorsFilter(vendorsArray)
+        let selectedVendors = new Set(postamatFilter.vendors);
+        if (!selectedVendors.has(id)) {
+            selectedVendors.add(id)
+        } else {
+            selectedVendors.delete(id)
+        }
+        console.log("T", selectedVendors)
+
         setPostamatFilter({
             ...postamatFilter,
-            vendors: [postamatFilter.vendors.join(','),e.target.value]
+            vendors: [...selectedVendors]
         })
     }
 
 
     if (postamatesFetching) return <Loader/>
 
-    console.log('123',allPostamates)
+    console.log('123', postamatFilter)
     const res = Array.isArray(allPostamates) ? allPostamates.map((postamate, idx) => {
         // console.log(allPostamates)
         return {
@@ -109,7 +122,7 @@ const Postamat = (props) => {
             setActive(true)
             setPostamatFilter({
                 ...postamatFilter,
-                vendors: [postamatFilter.vendors.join(','),id.vendorId]
+                vendors: [postamatFilter.vendors.join(','), id.vendorId]
             })
             console.log('123')
             setPostamatData({
@@ -122,6 +135,7 @@ const Postamat = (props) => {
             })
         }
     }
+
     return (
         <>
             <div
@@ -129,7 +143,7 @@ const Postamat = (props) => {
                     "relative"
                 }
             >
-                <PostamatFilter vendors={vendorsFilter} handleFilter={handleFilter}/>
+                <PostamatFilter postamatFilter={postamatFilter} vendors={vendorsData} handleFilter={handleFilter}/>
                 {
                     allPostamates.length !== 0 &&
                     <Map
