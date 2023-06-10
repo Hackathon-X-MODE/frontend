@@ -61,14 +61,14 @@ const Postamat = (props) => {
         setVendorsFilter(vendorsArray)
         setPostamatFilter({
             ...postamatFilter,
-            vendors: [postamatFilter.vendors.join(''),e.target.value]
+            vendors: [postamatFilter.vendors.join(','),e.target.value]
         })
     }
 
 
-    if (!postamatesSuccess) return <Loader/>
+    if (postamatesFetching) return <Loader/>
 
-
+    console.log('123',allPostamates)
     const res = Array.isArray(allPostamates) ? allPostamates.map((postamate, idx) => {
         // console.log(allPostamates)
         return {
@@ -122,7 +122,6 @@ const Postamat = (props) => {
             })
         }
     }
-    console.log('123',res)
     return (
         <>
             <div
