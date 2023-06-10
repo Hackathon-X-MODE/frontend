@@ -59,7 +59,7 @@ const Postamat = (props) => {
             })
             setVendorsFilter(mappedVendors)
         }
-    },[postamatesFetching, currentPostamateFetching, sc, postamatesDataFetching  ])
+    },[postamatesFetching, currentPostamateFetching, sc, postamatesDataFetching, vendorsSuccess])
 
     const handleFilter = (e, id) => {
         const vendorsArray = [...vendorsFilter]
