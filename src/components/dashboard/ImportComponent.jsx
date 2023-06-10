@@ -13,13 +13,18 @@ const ImportComponent = (props) => {
             formData.append("file", e.target.files[0])
             formData.append("X-External-System-ID", 'YM')
             getImport(formData)
+            alert("Загрузка пошла...")
         }
     };
 
 
 
-    const handleBtn = () => {
+    const handleBtn = (e) => {
         ref.current.click()
+        e.target.innerText = 'Загрузка...'
+        setTimeout(() => {
+            e.target.innerText = 'Загрузить'
+        },20000)
     }
 
     return(
