@@ -140,9 +140,9 @@ export const postamatApi = createApi({
         }),
         getComments: build.query({
             query: (arg) => {
-                const {page} = arg;
+                const {page, mood, sort, sortMethod} = arg;
                 return {
-                    url: `comments/page?page=${page}&size=20&sort=createDate,DESC`,
+                    url: `comments/page?page=${page}&size=20&sort=${sortMethod},${sort}&mood=${mood}`,
                     method: 'GET'
                 }
             },
